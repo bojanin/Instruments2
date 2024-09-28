@@ -28,6 +28,7 @@ int main(int, char **) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) !=
       0) {
     printf("Error: %s\n", SDL_GetError());
+    printf("123");
     return -1;
   }
 
@@ -221,7 +222,7 @@ int main(int, char **) {
       ImGui::Text("counter = %d", counter);
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-                  1000.0f / io.Framerate, io.Framerate);
+                  (double)(1000.0f / io.Framerate), (double)io.Framerate);
       ImGui::End();
     }
 
