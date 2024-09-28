@@ -14,14 +14,16 @@
 # CXX = clang++
 
 BUILD_DIR = build
-EXE = $(BUILD_DIR)/example_sdl2_opengl3  # Place executable in the build directory
+EXE = $(BUILD_DIR)/bandicoot  # Place executable in the build directory
 IMGUI_DIR = imgui
+
 SOURCES = main.cc
 SOURCES += $(IMGUI_DIR)/imgui.cpp \
            $(IMGUI_DIR)/imgui_demo.cpp \
            $(IMGUI_DIR)/imgui_draw.cpp \
            $(IMGUI_DIR)/imgui_tables.cpp \
            $(IMGUI_DIR)/imgui_widgets.cpp 
+
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl2.cpp \
            $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 
@@ -29,10 +31,12 @@ OBJS = $(addprefix $(BUILD_DIR)/, $(addsuffix .o, $(basename $(notdir $(SOURCES)
 UNAME_S := $(shell uname -s)
 LINUX_GL_LIBS = -lGL
 
-CXXFLAGS = -std=c++11 -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends
-CXXFLAGS += -g -Wall -Wformat
+CXXFLAGS = -std=c++20 -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends
+CXXFLAGS += -g -O2 -Wall -Wformat -Wextra -Wpedantic
 LIBS =
 
+$(info SOURCES: $(SOURCES))
+$(info OBJS: $(OBJS))
 ##---------------------------------------------------------------------
 ## OPENGL ES
 ##---------------------------------------------------------------------
@@ -77,7 +81,7 @@ $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
 # Pattern rule to compile .cpp files to .o files in the build directory
-$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.cc | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: $(IMGUI_DIR)/%.cpp | $(BUILD_DIR)
