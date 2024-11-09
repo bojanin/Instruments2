@@ -162,7 +162,7 @@ int main(int, char**) {
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    std::string program_name =
+    const std::string program_name =
         std::format("Bandicoot Sanitizing: {}", "SampleProgram");
 
     // Thread summary: ->
@@ -179,11 +179,14 @@ int main(int, char**) {
       ImGui::Begin(program_name.c_str());
       ImGui::Text("This is some useful text.");
       float indent_step = (float)((int)TEXT_BASE_WIDTH / 2);
-      if (ImGui::BeginTable("table1", (int)headers.size(), flags)) {
-        // for (size_t column = 0; column < headers.size(); column++) {
-        //   ImGui::TableSetupColumn(headers[column].c_str(),
-        //                           ImGuiTableFlags_Resizable);
-        // }
+      if (ImGui::BeginTable("Race condition should trigger here?",
+                            (int)headers.size(), flags)) {
+        ImGui::TableSetupColumn("Race Condition Source",
+                                ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn("File:LineNo", ImGuiTableColumnFlags_WidthFixed,
+                                TEXT_BASE_WIDTH * 12.0f);
+        ImGui::TableSetupColumn("RaceType:", ImGuiTableColumnFlags_WidthFixed,
+                                TEXT_BASE_WIDTH * 18.0f);
         ImGui::TableHeadersRow();
         for (int row = 0; row < 4; row++) {
           ImGui::TableNextRow();
