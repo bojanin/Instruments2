@@ -819,7 +819,7 @@ static void ShowDemoWindowWidgets(ImGuiDemoWindowData* demo_data)
         if (clicked & 1)
         {
             ImGui::SameLine();
-            ImGui::Text("Thanks for clicking me!");
+            ImGui::Text("Thanks for clicking me!%i ", clicked);
         }
 
         IMGUI_DEMO_MARKER("Widgets/Basic/Checkbox");

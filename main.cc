@@ -19,12 +19,16 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
+#include "program_state/state.h"
 
 // This example can also compile and run with Emscripten! See
 // 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
+
+// NOTE(bojanin): makes these better than globals
+static bandicoot::Program g_child_program{};
 
 // Main code
 int main(int, char**) {
@@ -177,31 +181,44 @@ int main(int, char**) {
           ImGuiTableFlags_Resizable;
 
       ImGui::Begin(program_name.c_str());
-      ImGui::Text("This is some useful text.");
-      float indent_step = (float)((int)TEXT_BASE_WIDTH / 2);
-      if (ImGui::BeginTable("Race condition should trigger here?",
-                            (int)headers.size(), flags)) {
-        ImGui::TableSetupColumn("Race Condition Source",
-                                ImGuiTableColumnFlags_WidthStretch);
-        ImGui::TableSetupColumn("File:LineNo", ImGuiTableColumnFlags_WidthFixed,
-                                TEXT_BASE_WIDTH * 12.0f);
-        ImGui::TableSetupColumn("RaceType:", ImGuiTableColumnFlags_WidthFixed,
-                                TEXT_BASE_WIDTH * 18.0f);
-        ImGui::TableHeadersRow();
-        for (int row = 0; row < 4; row++) {
-          ImGui::TableNextRow();
-          for (int column = 0; column < (int)headers.size(); column++) {
-            ImGui::Indent(indent_step);
-            ImGui::TableSetColumnIndex(column);
-            ImGui::Text("Row %d Column %d", row, column);
-          }
-        }
-        ImGui::Unindent(indent_step * (float)headers.size());
-        ImGui::EndTable();
+      // Button for program
+      ImGui::InputTextWithHint("MyId", "Path to your executable",
+                               g_child_program.ImGuiRawBuf(),
+                               g_child_program.BufSize());
+      ImGui::SameLine();
+      if (ImGui::Button("Start Sanitizer")) {
+        g_child_program.Start();
       }
 
-      ImGui::End();
+      ImGui::Text("This is some useful text.");
+
+      if (ImGui::TreeNode("StackTrace1")) {
+        ImGui::TreePop();
+        float indent_step = (float)((int)TEXT_BASE_WIDTH / 2);
+        if (ImGui::BeginTable("Race condition should trigger here?",
+                              (int)headers.size(), flags)) {
+          ImGui::TableSetupColumn("Race Condition Source",
+                                  ImGuiTableColumnFlags_WidthStretch);
+          ImGui::TableSetupColumn("File:LineNo",
+                                  ImGuiTableColumnFlags_WidthFixed,
+                                  TEXT_BASE_WIDTH * 12.0f);
+          ImGui::TableSetupColumn("RaceType:", ImGuiTableColumnFlags_WidthFixed,
+                                  TEXT_BASE_WIDTH * 18.0f);
+          ImGui::TableHeadersRow();
+          for (int row = 0; row < 4; row++) {
+            ImGui::TableNextRow();
+            for (int column = 0; column < (int)headers.size(); column++) {
+              ImGui::Indent(indent_step);
+              ImGui::TableSetColumnIndex(column);
+              ImGui::Text("Row %d Column %d", row, column);
+            }
+          }
+          ImGui::Unindent(indent_step * (float)headers.size());
+          ImGui::EndTable();
+        }
+      }
     }
+    ImGui::End();
 
     // 1. Show the big demo window (Most of the sample code is in
     // ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear

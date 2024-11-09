@@ -1,9 +1,26 @@
 #include "state.h"
 
-namespace bandicoot {
-Program::Program(const std::string path) : path_(path) {};
+#include <csignal>
+#include <format>
 
-Program::~Program() {}
+namespace bandicoot {
+Program::Program() : path_() {};
+
+Program::~Program() { Stop(); }
+
+void Program::Start() {
+  std::string_view s = path_;
+  std::printf(
+      "%s\n",
+      std::format("Starting program {} sizeof path: {}", s, s.size()).c_str());
+  // Do Something
+}
+
+void Program::Stop() {
+  if (pid_ != -1) {
+    kill(pid_, 9);
+  }
+}
 
 void AddReport(int report) {}
 

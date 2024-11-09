@@ -27,11 +27,14 @@ SOURCES += $(IMGUI_DIR)/imgui.cpp \
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl2.cpp \
            $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 
+# Add program_state files
+SOURCES += program_state/state.cc
+
 OBJS = $(addprefix $(BUILD_DIR)/, $(addsuffix .o, $(basename $(notdir $(SOURCES)))))
 UNAME_S := $(shell uname -s)
 LINUX_GL_LIBS = -lGL
 
-CXXFLAGS = -std=c++20 -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends
+CXXFLAGS = -std=c++20 -I$(IMGUI_DIR) -I$(IMGUI_DIR)/backends -Iprogram_state
 CXXFLAGS += -g -O2 -Wall -Wformat -Wextra -Wpedantic
 LIBS =
 
@@ -88,6 +91,10 @@ $(BUILD_DIR)/%.o: $(IMGUI_DIR)/%.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: $(IMGUI_DIR)/backends/%.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# Rule for program_state files
+$(BUILD_DIR)/%.o: program_state/%.cc | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 all: $(BUILD_DIR) $(EXE)
