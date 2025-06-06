@@ -3,3 +3,5 @@ build/
 compile_commands.json
 **/*.so
 .DS_Store
+rtlib/tiny_race
+*.dSYM/

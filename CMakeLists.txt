@@ -1,23 +1,42 @@
 cmake_minimum_required(VERSION 3.30)
-
-# Project Name
 project(Bandicoot)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Define the build directory
+# Paths
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
+file(MAKE_DIRECTORY ${BUILD_DIR})
 
-# Find SDL2
+# LLVM & compiler-rt setup
+set(LLVM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/llvm)
+set(LLVM_BINARY_DIR ${CMAKE_BINARY_DIR}/third_party/llvm)
+set(COMPILER_RT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/compiler-rt)
+
+set(LLVM_ENABLE_PROJECTS "compiler-rt" CACHE STRING "" FORCE)
+set(LLVM_RUNTIME_TARGETS "host" CACHE STRING "" FORCE)
+set(LLVM_TARGETS_TO_BUILD "AArch64" CACHE STRING "" FORCE)
+set(LLVM_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
+set(COMPILER_RT_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
+
+# Explicitly turn on sanitizers (TSAN included)
+set(COMPILER_RT_BUILD_SANITIZERS ON CACHE BOOL "" FORCE)
+set(COMPILER_RT_ENABLE_TSAN ON CACHE BOOL "" FORCE)
+
+# Cross-arch settings (just host for now)
+set(LLVM_TARGETS_TO_BUILD "AArch64" CACHE STRING "" FORCE)
+set(CMAKE_OSX_ARCHITECTURES arm64 CACHE STRING "" FORCE)
+
+add_subdirectory(${LLVM_SOURCE_DIR} ${LLVM_BINARY_DIR} EXCLUDE_FROM_ALL)
+add_subdirectory(rtlib)  # Add shared lib subproject
+
+# SDL2
 find_package(SDL2 REQUIRED)
 
-# Add ImGui source files
+# ImGui
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
-
 set(IMGUI_SOURCES
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
@@ -28,20 +47,16 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
-# Add your main source file
+# Main app sources
 set(SOURCES
     main.cc
     ${IMGUI_SOURCES}
     program_state/state.cc
 )
 
-# Create the build directory if it doesn't exist
-file(MAKE_DIRECTORY ${BUILD_DIR})
-
-# Create the executable
+# Executable
 add_executable(bandicoot ${SOURCES})
 
-# Specify include directories
 target_include_directories(bandicoot PRIVATE
     program_state/
     ${IMGUI_DIR}
@@ -49,52 +64,23 @@ target_include_directories(bandicoot PRIVATE
     ${SDL2_INCLUDE_DIRS}
 )
 
-# Link libraries (and frameworks for macOS)
-if(APPLE)
-    target_link_libraries(bandicoot PRIVATE
-        ${SDL2_LIBRARIES}
-        "-framework OpenGL"
-        "-framework Cocoa"
-        "-framework IOKit"
-        "-framework CoreVideo"
-    )
-else()
-    target_link_libraries(bandicoot PRIVATE
-        ${SDL2_LIBRARIES}
-        OpenGL
-    )
-endif()
+target_link_libraries(bandicoot PRIVATE
+    ${SDL2_LIBRARIES}
+    OpenGL
+)
 
+# Build flags
 target_compile_options(bandicoot PRIVATE 
-        -g
-        -O3
-        -Wall
-        -Wno-error
-        -Werror
-        -Wextra # reasonable and standard
-        -Wshadow # warn the user if a variable declaration shadows one from a parent context
-        -Wnon-virtual-dtor # warn the user if a class with virtual functions has a non-virtual destructor. This helps
-        # catch hard to track down memory errors
-        -Wcast-align # warn for potential performance problem casts
-        -Wunused # warn on anything being unused
-        -Woverloaded-virtual # warn if you overload (not override) a virtual function
-        -Wpedantic # warn if non-standard C++ is used
-        -Wconversion # warn on type conversions that may lose data
-        -Wsign-conversion # warn on sign conversions
-        -Wnull-dereference # warn if a null dereference is detected
-        -Wdouble-promotion # warn if float is implicit promoted to double
-        -Wformat=2 # warn on security issues around functions that format output (ie printf)
-        -Wimplicit-fallthrough # warn on statements that fallthrough without an explicit annotation
-        -march=native
-    )
+    -g -O3 -Wall -Werror -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align
+    -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion
+    -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough
+    -march=native
+)
 
-
-# Set output directory for the executable
 set_target_properties(bandicoot PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR}
 )
 
-# Optionally, add a custom command to run the executable
 add_custom_target(run
     COMMAND ${CMAKE_COMMAND} -E env ${BUILD_DIR}/bandicoot
     DEPENDS bandicoot
