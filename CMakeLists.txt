@@ -32,6 +32,7 @@ set(IMGUI_SOURCES
 set(SOURCES
     main.cc
     ${IMGUI_SOURCES}
+    program_state/state.cc
 )
 
 # Create the build directory if it doesn't exist
@@ -42,6 +43,7 @@ add_executable(bandicoot ${SOURCES})
 
 # Specify include directories
 target_include_directories(bandicoot PRIVATE
+    program_state/
     ${IMGUI_DIR}
     ${IMGUI_DIR}/backends
     ${SDL2_INCLUDE_DIRS}
@@ -62,17 +64,12 @@ else()
         OpenGL
     )
 endif()
-set(SANITIZER_OPTS "")
-
-if(ENABLE_TSAN) 
-    # NOTE(bojanin): think about something else here.
-    set(SANITIZER_OPTS "${} -fsanitize=thread")
-endif()
 
 target_compile_options(bandicoot PRIVATE 
         -g
-        -O2
+        -O3
         -Wall
+        -Wno-error
         -Werror
         -Wextra # reasonable and standard
         -Wshadow # warn the user if a variable declaration shadows one from a parent context

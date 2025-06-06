@@ -22,6 +22,6 @@ void Program::Stop() {
   }
 }
 
-void AddReport(int report) {}
+void AddReport(int report) { (void)report; }
 
 }  // namespace bandicoot

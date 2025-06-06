@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <vector>
 
 namespace bandicoot {
@@ -16,7 +15,7 @@ class Program {
   void AddReport(int report);
 
   char* ImGuiRawBuf() { return path_; }
-  ssize_t BufSize() const { return sizeof(path_); }
+  size_t BufSize() const { return sizeof(path_); }
 
  private:
   int pid_ = -1;
