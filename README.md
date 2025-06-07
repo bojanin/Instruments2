@@ -20,12 +20,15 @@ Build Bandicoot:
 
 
 Build TinyRace:
-`clang++ librt/tinyrace.c -fsanitize=thread -O1 -fPIE -pie -g`
+`clang++ librt/tiny_race.cc -fsanitize=thread -g -O1 -o librt/tiny_race`
 
 
 Test your hooks are exported correctly:
 
+MacOS:
 `cmake --build build --target librt && DYLD_INSERT_LIBRARIES=build/librt/liblibrt.dylib DYLD_FORCE_FLAT_NAMESPACE=y ./librt/tiny_race`
+Linux:
+`cmake --build build --target librt && LD_PRELOAD=build/librt/liblibrt.so ./librt/tiny_race`
 
 
 
