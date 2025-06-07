@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 4.0.2)
 project(Bandicoot)
 
 # Set C++ standard
@@ -15,7 +15,8 @@ set(LLVM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/llvm)
 set(LLVM_BINARY_DIR ${CMAKE_BINARY_DIR}/third_party/llvm)
 set(COMPILER_RT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/compiler-rt)
 
-set(LLVM_ENABLE_PROJECTS "compiler-rt" CACHE STRING "" FORCE)
+set(LLVM_ENABLE_RUNTIMES "compiler-rt" CACHE STRING "" FORCE)
+set(LLVM_ENABLE_PROJECTS  "clang"          CACHE STRING "" FORCE)
 set(LLVM_RUNTIME_TARGETS "host" CACHE STRING "" FORCE)
 set(LLVM_TARGETS_TO_BUILD "AArch64" CACHE STRING "" FORCE)
 set(LLVM_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
