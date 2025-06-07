@@ -34,6 +34,7 @@ add_subdirectory(librt)  # Add shared lib subproject
 
 # SDL2
 find_package(SDL2 REQUIRED)
+find_package(OpenGL REQUIRED)
 
 # ImGui
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
@@ -63,10 +64,12 @@ target_include_directories(bandicoot PRIVATE
     ${IMGUI_DIR}/backends
     ${SDL2_INCLUDE_DIRS}
 )
+target_include_directories(bandicoot PRIVATE ${OPENGL_INCLUDE_DIR})
+
 
 target_link_libraries(bandicoot PRIVATE
     ${SDL2_LIBRARIES}
-    OpenGL
+    OpenGL::GL
 )
 
 # Build flags

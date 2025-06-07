@@ -19,5 +19,14 @@ Build the librt, the shared lib that hooks into the tsan runtime and communicate
 Build Bandicoot:
 
 
+Build TinyRace:
+`clang++ librt/tinyrace.c -fsanitize=thread -O1 -fPIE -pie -g`
+
+
+Test your hooks are exported correctly:
+
+`cmake --build build --target librt && DYLD_INSERT_LIBRARIES=build/librt/liblibrt.dylib DYLD_FORCE_FLAT_NAMESPACE=y ./librt/tiny_race`
+
+
 
 
