@@ -30,7 +30,7 @@ set(LLVM_TARGETS_TO_BUILD "AArch64" CACHE STRING "" FORCE)
 set(CMAKE_OSX_ARCHITECTURES arm64 CACHE STRING "" FORCE)
 
 add_subdirectory(${LLVM_SOURCE_DIR} ${LLVM_BINARY_DIR} EXCLUDE_FROM_ALL)
-add_subdirectory(rtlib)  # Add shared lib subproject
+add_subdirectory(librt)  # Add shared lib subproject
 
 # SDL2
 find_package(SDL2 REQUIRED)
