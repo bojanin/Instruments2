@@ -6,7 +6,7 @@ endif()
 project(Bandicoot)
 
 # Set C++ standard
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -56,7 +56,8 @@ set(CMAKE_OSX_ARCHITECTURES
     CACHE STRING "" FORCE)
 
 add_subdirectory(${LLVM_SOURCE_DIR} ${LLVM_BINARY_DIR} EXCLUDE_FROM_ALL)
-add_subdirectory(librt) # Add shared lib subproject
+# LLVM Runtime hooking library
+add_subdirectory(captain_hook) 
 
 # SDL2
 find_package(SDL2 REQUIRED)

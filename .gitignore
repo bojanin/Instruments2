@@ -3,7 +3,7 @@ build/
 compile_commands.json
 **/*.so
 .DS_Store
-rtlib/tiny_race
 *.dSYM/
 *.dylib
-./librt/tiny_race
+librt/tiny_race
+tiny_race
