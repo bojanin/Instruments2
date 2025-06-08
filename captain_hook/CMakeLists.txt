@@ -1,39 +1,28 @@
-project(captain_hook)
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# ---------------------------------------------------------------------------
+add_library(captain_hook SHARED tsan_ipc.cc)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_VERBOSE_MAKEFILE ON)
 
-# captain_hook shared library
-add_library(captain_hook SHARED
-    tsan_ipc.cc
-    # add other sources here
-)
+# Locate clang’s resource directory (cache so sub-dirs can see it)
+execute_process(
+  COMMAND clang -print-resource-dir
+  OUTPUT_VARIABLE CLANG_RESOURCE_DIR
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-# Include sanitizer headers
-# Add compiler-rt include paths
-target_include_directories(captain_hook PRIVATE
-    ${COMPILER_RT_DIR}/include
-    ${COMPILER_RT_DIR}/lib
-    ${COMPILER_RT_DIR}/lib/tsan/rtl
-)
+set(CLANG_RESOURCE_DIR "${CLANG_RESOURCE_DIR}" CACHE INTERNAL "clang resource dir")
 
-target_compile_options(captain_hook PRIVATE
-    -std=c++23
-    -g
-    -fPIC
-    -O3)
 
-set_target_properties(captain_hook PROPERTIES SUFFIX ".so")
+# Headers treated as system
+target_include_directories(captain_hook SYSTEM PUBLIC
+    ${CLANG_RESOURCE_DIR}/include)
+# Compile flags
+target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
+target_link_options(captain_hook PRIVATE -fsanitize=thread)
 
-# Set output dir
 set_target_properties(captain_hook PROPERTIES
+    SUFFIX ".so"
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/captain_hook
-
-)
-set_target_properties(captain_hook PROPERTIES
     CXX_VISIBILITY_PRESET default
     VISIBILITY_INLINES_HIDDEN OFF
     POSITION_INDEPENDENT_CODE ON
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/captain_hook
-)
+    INSTALL_RPATH "@loader_path"
+    BUILD_RPATH   "@loader_path")   # default suffix .dylib on macOS

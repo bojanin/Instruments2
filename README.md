@@ -6,7 +6,6 @@ DoReportFunc
 tsan_rtl_report.cpp:45:1:SANITIZER_WEAK_DEFAULT_IMPL
 ```
 
-
 Run in order:
 
 Configure in release mode

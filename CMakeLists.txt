@@ -13,50 +13,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Paths
 set(BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build)
 file(MAKE_DIRECTORY ${BUILD_DIR})
-
-# LLVM & compiler-rt setup
-set(LLVM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/llvm)
-set(LLVM_BINARY_DIR ${CMAKE_BINARY_DIR}/third_party/llvm)
-set(COMPILER_RT_DIR
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/llvm-project/compiler-rt)
-
-set(LLVM_ENABLE_RUNTIMES
-    "compiler-rt"
-    CACHE STRING "" FORCE)
-set(LLVM_ENABLE_PROJECTS
-    "clang"
-    CACHE STRING "" FORCE)
-set(LLVM_RUNTIME_TARGETS
-    "host"
-    CACHE STRING "" FORCE)
-set(LLVM_TARGETS_TO_BUILD
-    "AArch64"
-    CACHE STRING "" FORCE)
-set(LLVM_INCLUDE_TESTS
-    OFF
-    CACHE BOOL "" FORCE)
-set(COMPILER_RT_INCLUDE_TESTS
-    OFF
-    CACHE BOOL "" FORCE)
-
-# Explicitly turn on sanitizers (TSAN included)
-set(COMPILER_RT_BUILD_SANITIZERS
-    ON
-    CACHE BOOL "" FORCE)
-set(COMPILER_RT_ENABLE_TSAN
-    ON
-    CACHE BOOL "" FORCE)
-
-# Cross-arch settings (just host for now)
-set(LLVM_TARGETS_TO_BUILD
-    "AArch64"
-    CACHE STRING "" FORCE)
 set(CMAKE_OSX_ARCHITECTURES
     arm64
     CACHE STRING "" FORCE)
 
-add_subdirectory(${LLVM_SOURCE_DIR} ${LLVM_BINARY_DIR} EXCLUDE_FROM_ALL)
-# LLVM Runtime hooking library
 add_subdirectory(captain_hook) 
 
 # SDL2

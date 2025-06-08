@@ -1,8 +1,7 @@
+#include <sanitizer/tsan_interface.h>
 #include <stdio.h>
 
 #include <print>
-
-#include "sanitizer/tsan_interface.h"
 __attribute__((constructor)) void Init() {
   //
 }

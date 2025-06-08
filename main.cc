@@ -15,20 +15,17 @@
 
 #include <format>
 #include <string>
+#include <vector>
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
-#include "program_state/state.h"
 
 // This example can also compile and run with Emscripten! See
 // 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
-
-// NOTE(bojanin): makes these better than globals
-static bandicoot::Program g_child_program{};
 
 // Main code
 int main(int, char**) {
@@ -182,13 +179,13 @@ int main(int, char**) {
 
       ImGui::Begin(program_name.c_str());
       // Button for program
-      ImGui::InputTextWithHint("MyId", "Path to your executable",
-                               g_child_program.ImGuiRawBuf(),
-                               g_child_program.BufSize());
-      ImGui::SameLine();
-      if (ImGui::Button("Start Sanitizer")) {
-        g_child_program.Start();
-      }
+      // ImGui::InputTextWithHint("MyId", "Path to your executable",
+      //                         g_child_program.ImGuiRawBuf(),
+      //                         g_child_program.BufSize());
+      // ImGui::SameLine();
+      // if (ImGui::Button("Start Sanitizer")) {
+      //  g_child_program.Start();
+      //}
 
       ImGui::Text("This is some useful text.");
 
