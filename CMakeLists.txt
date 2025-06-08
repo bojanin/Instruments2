@@ -75,7 +75,7 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp)
 
 # Main app sources
-set(SOURCES main.cc ${IMGUI_SOURCES} program_state/state.cc)
+set(SOURCES main.cc ${IMGUI_SOURCES})
 
 # Executable
 add_executable(bandicoot ${SOURCES})
@@ -93,14 +93,14 @@ target_compile_options(
   PRIVATE -g
           -O3
           -Wall
-          -Werror
           -Wextra
+          -Wpedantic
+          -Werror
           -Wshadow
           -Wnon-virtual-dtor
           -Wcast-align
           -Wunused
           -Woverloaded-virtual
-          -Wpedantic
           -Wconversion
           -Wsign-conversion
           -Wnull-dereference
