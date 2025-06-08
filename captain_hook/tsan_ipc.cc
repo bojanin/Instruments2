@@ -2,11 +2,24 @@
 #include <stdio.h>
 
 #include <print>
+#include <thread>
+
+#include "captain_hook/server.h"
+
+std::thread gServerThread;
+
 __attribute__((constructor)) void Init() {
-  //
+  // TODO(bojanin): start flag.
+  captain_hook::IPCServer::CreateServer();
+  gServerThread =
+      std::thread([]() { captain_hook::IPCServer::Shared()->RunForever(); });
 }
 
 __attribute__((destructor)) void Deinit() {
+  captain_hook::IPCServer::Shared()->SetExitFlag(true);
+  if (gServerThread.joinable()) {
+    gServerThread.join();
+  }
   //
 }
 

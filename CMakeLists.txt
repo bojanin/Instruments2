@@ -41,10 +41,11 @@ set(SOURCES main.cc ${IMGUI_SOURCES})
 add_executable(bandicoot ${SOURCES})
 
 target_include_directories(
-  bandicoot PRIVATE program_state/ ${IMGUI_DIR} ${IMGUI_DIR}/backends
+  bandicoot PRIVATE ${IMGUI_DIR} ${IMGUI_DIR}/backends
                     ${SDL2_INCLUDE_DIRS})
 target_include_directories(bandicoot PRIVATE ${OPENGL_INCLUDE_DIR})
 
+target_include_directories(bandicoot SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(bandicoot PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
 
 # Build flags
