@@ -1,25 +1,30 @@
 #include <sanitizer/tsan_interface.h>
+#include <spdlog/spdlog.h>
 #include <stdio.h>
+#include <tsb/log_reporter.h>
 
 #include <print>
-#include <thread>
 
 #include "captain_hook/server.h"
 
 std::thread gServerThread;
 
 __attribute__((constructor)) void Init() {
-  // TODO(bojanin): start flag.
-  captain_hook::IPCServer::CreateServer();
+  tsb::LogReporter::Create();
+  SPDLOG_INFO("Init");
+  captain_hook::IPCServer::Create();
   gServerThread =
       std::thread([]() { captain_hook::IPCServer::Shared()->RunForever(); });
+  SPDLOG_WARN("Init Complete");
 }
 
 __attribute__((destructor)) void Deinit() {
+  SPDLOG_INFO("Deinit Started");
   captain_hook::IPCServer::Shared()->SetExitFlag(true);
   if (gServerThread.joinable()) {
     gServerThread.join();
   }
+  SPDLOG_INFO("Deinit Complete");
   //
 }
 

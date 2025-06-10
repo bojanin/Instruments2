@@ -18,7 +18,7 @@ class IPCServer {
   // Init related functions
   IPCServer(int port);
   static std::shared_ptr<IPCServer> Shared();
-  static void CreateServer();
+  static void Create();
   TSB_DISALLOW_COPY_AND_ASSIGN(IPCServer);
   TSB_DISALLOW_MOVE(IPCServer);
 

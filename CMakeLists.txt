@@ -18,10 +18,12 @@ set(CMAKE_OSX_ARCHITECTURES
     CACHE STRING "" FORCE)
 
 add_subdirectory(captain_hook) 
+add_subdirectory(tsb) 
 
-# SDL2
+# External packages
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(spdlog REQUIRED)
 
 # ImGui
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
@@ -37,6 +39,9 @@ set(IMGUI_SOURCES
 # Main app sources
 set(SOURCES main.cc ${IMGUI_SOURCES})
 
+SET(BASEPATH "${CMAKE_SOURCE_DIR}")
+INCLUDE_DIRECTORIES("${BASEPATH}")
+
 # Executable
 add_executable(bandicoot ${SOURCES})
 
@@ -46,7 +51,11 @@ target_include_directories(
 target_include_directories(bandicoot PRIVATE ${OPENGL_INCLUDE_DIR})
 
 target_include_directories(bandicoot SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
+
 target_link_libraries(bandicoot PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
+# https://github.com/gabime/spdlog/blob/v1.x/example/CMakeLists.txt
+target_link_libraries(bandicoot PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
+
 
 # Build flags
 target_compile_options(

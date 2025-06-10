@@ -21,6 +21,11 @@ target_include_directories(captain_hook SYSTEM PUBLIC
 # Compile flags
 target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
 target_link_options(captain_hook PRIVATE -fsanitize=thread)
+find_package(spdlog REQUIRED)
+
+target_link_libraries(captain_hook PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
+target_link_libraries(captain_hook PRIVATE tsb)
+
 
 set_target_properties(captain_hook PROPERTIES
     SUFFIX ".so"

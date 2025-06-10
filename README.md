@@ -1,5 +1,13 @@
 # bandicoot
 
+requirements:
+- clang (ALL versions that have tsan support)
+- spdlog 
+  - MAC:
+  - `brew install spdlog`
+  - Linux:
+  - `sudo apt install libspdlog-dev`
+
 What we override that powers this.
 DoReportFunc
 ```
@@ -14,8 +22,8 @@ Configure in release mode
 Build the captain_hook, the shared lib that hooks into the tsan runtime and communicates back to bandicoot
 `ninja -C build -v captain_hook -j12`
 
-
 Build Bandicoot:
+`cmake --build build --target bandicoot`
 
 
 Build TinyRace:
