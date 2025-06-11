@@ -2,7 +2,6 @@
 #include <pbtypes/bandicoot.grpc.pb.h>
 #include <tsb/macros.h>
 
-#include <atomic>
 #include <memory>
 
 namespace captain_hook {
@@ -25,6 +24,7 @@ class IPCServer : public bandicoot::DesktopApp::Service {
 
   // Init related functions
   IPCServer(int port);
+  ~IPCServer();
   static std::shared_ptr<IPCServer> Shared();
   static void Create();
   TSB_DISALLOW_COPY_AND_ASSIGN(IPCServer);

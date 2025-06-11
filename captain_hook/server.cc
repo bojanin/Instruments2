@@ -29,6 +29,10 @@ std::shared_ptr<IPCServer> IPCServer::Shared() {
 }
 
 IPCServer::IPCServer(int port) : port_(port) {}
+IPCServer::~IPCServer() {
+  SPDLOG_INFO("IPC Server destructing");
+  grpc_server_->Shutdown();
+}
 
 void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
 

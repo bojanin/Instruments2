@@ -30,7 +30,7 @@ __attribute__((constructor)) void Init() {
 
 __attribute__((destructor)) void Deinit() {
   SPDLOG_INFO("Deinit Started");
-  // TODO(bojanin): figure out why this crashes
+  // TODO(bojanin): figure out why this crashes (stupid static storage duration)
   // captain_hook::IPCServer::Shared()->SetExitFlag();
   // if (gServerThread.joinable()) {
   //   gServerThread.join();
