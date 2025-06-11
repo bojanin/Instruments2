@@ -1,10 +1,23 @@
 #pragma once
+#include <grpc++/grpc++.h>
 #include <pbtypes/bandicoot.grpc.pb.h>
 #include <tsb/macros.h>
 
 #include <memory>
 
 namespace captain_hook {
+
+class IPCClient {
+ public:
+  IPCClient() {
+    std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(
+        "localhost:50001", grpc::InsecureChannelCredentials());
+
+    stub_ = bandicoot::DesktopApp::NewStub(channel);
+  }
+
+  std::unique_ptr<bandicoot::DesktopApp::Stub> stub_;
+};
 
 // IPC server that talks to Bandicoot via grpc.
 // Server will listen on BANDICOOT_SERVER_PORT thats in the users env
@@ -17,10 +30,7 @@ class IPCServer : public bandicoot::DesktopApp::Service {
 
   ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
                                    const bandicoot::TestMsg* msg,
-                                   bandicoot::Void* out) override {
-    abort();
-    return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-  }
+                                   bandicoot::Void* out) override;
 
   // Init related functions
   IPCServer(int port);

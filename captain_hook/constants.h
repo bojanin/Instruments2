@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include <cstdint>
 
 namespace captain_hook {
 constexpr const char* kServerPortEnvVar = "BANDICOOT_SERVER_PORT";

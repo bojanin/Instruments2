@@ -56,6 +56,7 @@ target_include_directories(bandicoot SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(bandicoot PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
 # https://github.com/gabime/spdlog/blob/v1.x/example/CMakeLists.txt
 target_link_libraries(bandicoot PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
+target_link_libraries(bandicoot PRIVATE captain_hook)
 
 
 # Build flags

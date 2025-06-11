@@ -16,15 +16,12 @@
 
 #include "captain_hook/server.h"
 
-std::thread gServerThread;
 static char gSymbolicationScratchPad[8196];
+static std::unique_ptr<captain_hook::IPCClient> client =
+    std::make_unique<captain_hook::IPCClient>();
 
 __attribute__((constructor)) void Init() {
   tsb::LogReporter::Create();
-  SPDLOG_INFO("Init");
-  captain_hook::IPCServer::Create();
-  gServerThread =
-      std::thread([]() { captain_hook::IPCServer::Shared()->RunForever(); });
   SPDLOG_WARN("Init Complete");
 }
 
@@ -115,6 +112,18 @@ extern "C" void __tsan_on_report(void* report) {
   int mutex_cnt = 0, thr_cnt = 0, uniq_tid_cnt = 0;
   void* sleep_trace[16] = {};
 
+  ::grpc::ClientContext context;
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::milliseconds(500));
+  context.set_wait_for_ready(true);
+
+  ::bandicoot::TestMsg request;
+  request.set_first("hello");
+  request.set_second("world");
+  ::bandicoot::Void response;
+  ::grpc::Status status =
+      client->stub_->OnSanitizerReport(&context, request, &response);
+  SPDLOG_INFO("RPC {}", status.ok() ? "succeeded" : status.error_message());
   __tsan_get_report_data(report, &desc, &count, &stack_cnt, &mop_cnt, &loc_cnt,
                          &mutex_cnt, &thr_cnt, &uniq_tid_cnt, sleep_trace, 16);
 

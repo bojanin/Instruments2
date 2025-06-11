@@ -34,10 +34,16 @@ IPCServer::~IPCServer() {
   grpc_server_->Shutdown();
 }
 
+::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
+                                            const bandicoot::TestMsg* msg,
+                                            bandicoot::Void* out) {
+  SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
+  return grpc::Status::OK;
+}
 void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
 
 void IPCServer::RunForever() {
-  std::string server_address(fmt::format("127.0.0.1:{}", port_));
+  std::string server_address(fmt::format("localhost:{}", port_));
 
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());

@@ -11,7 +11,9 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <captain_hook/server.h>
 #include <stdio.h>
+#include <tsb/log_reporter.h>
 
 #include <format>
 #include <string>
@@ -26,9 +28,14 @@
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
+std::thread gServerThread;
 
 // Main code
 int main(int, char**) {
+  tsb::LogReporter::Create();
+  captain_hook::IPCServer::Create();
+  gServerThread =
+      std::thread([]() { captain_hook::IPCServer::Shared()->RunForever(); });
   // Setup SDL
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) !=
       0) {
@@ -36,6 +43,7 @@ int main(int, char**) {
     printf("123");
     return -1;
   }
+  SPDLOG_INFO("HERE2");
 
   // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
@@ -121,6 +129,7 @@ int main(int, char**) {
   bool show_demo_window = true;
   // bool show_another_window = false;
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+  SPDLOG_INFO("starting main loop!");
 
   // Main loop
   bool done = false;
