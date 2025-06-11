@@ -19,6 +19,7 @@ set(CMAKE_OSX_ARCHITECTURES
 
 add_subdirectory(captain_hook) 
 add_subdirectory(tsb) 
+add_subdirectory(pbtypes) 
 
 # External packages
 find_package(SDL2 REQUIRED)

@@ -33,6 +33,10 @@ target_compile_options(captain_hook PRIVATE
 target_link_options(captain_hook PRIVATE -fsanitize=thread)
 
 
+add_executable( ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(bar ${Protobuf_LIBRARIES})
+
+
 set_target_properties(captain_hook PROPERTIES
     SUFFIX ".so"
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/captain_hook
