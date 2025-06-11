@@ -1,7 +1,4 @@
-#include <llvm/DebugInfo/DIContext.h>
-#include <llvm/DebugInfo/Symbolize/Symbolize.h>
-#include <llvm/Object/ObjectFile.h>
-#include <llvm/Support/raw_ostream.h>
+#include <sanitizer/common_interface_defs.h>
 #include <sanitizer/tsan_interface.h>
 #include <spdlog/spdlog.h>
 #include <stdio.h>
@@ -39,66 +36,45 @@ __attribute__((destructor)) void Deinit() {
   SPDLOG_INFO("Deinit Complete");
   //
 }
-static std::string GetExecutablePath() {
-#if defined(__APPLE__)
-  uint32_t size = 0;
-  _NSGetExecutablePath(nullptr, &size);
-  std::string path(size, '\0');
-  _NSGetExecutablePath(path.data(), &size);
-  return path;
-#elif defined(__linux__)
-  char path[PATH_MAX];
-  ssize_t len = readlink("/proc/self/exe", path, sizeof(path) - 1);
-  return len > 0 ? std::string(path, len) : "";
-#else
-  return "<unsupported>";
-#endif
+
+// Here's the full list of available placeholders:
+//   %% - represents a '%' character;
+//   %n - frame number (copy of frame_no);
+//   %p - PC in hex format;
+//   %m - path to module (binary or shared object);
+//   %o - offset in the module in hex format;
+//   %f - function name;
+//   %q - offset in the function in hex format (*if available*);
+//   %s - path to source file;
+//   %l - line in the source file;
+//   %c - column in the source file;
+//   %F - if function is known to be <foo>, prints "in <foo>", possibly
+//        followed by the offset in this function, but only if source file
+//        is unknown;
+//   %S - prints file/line/column information;
+//   %L - prints location information: file/line/column, if it is known, or
+//        module+offset if it is known, or (<unknown module>) string.
+//   %M - prints module basename and offset, if it is known, or PC.
+static inline std::string TsanSymbolizePC(void* pc) {
+  char buf[1024];  // enough for one inline frame
+
+  // The sanitizer API returns one C-string per inline frame,
+  // terminated by an empty string. We loop until that empty one.
+  __sanitizer_symbolize_pc(pc,
+                           "%n %L%M",  // same placeholders TSan uses
+                           buf, sizeof(buf));
+
+  return std::string(buf);
 }
 
-std::string GetPc(void* pc, bool absolute) {
-  Dl_info info{};
-  if (!dladdr(pc, &info) || !info.dli_fname)
-    return fmt::format("{} <no dladdr>", pc);
+static inline std::string TsanSymbolizeMOP(void* addr) {
+  char buf[1024];  // enough for one inline frame
 
-  const char* module_path = info.dli_fname;
-  uint64_t address = reinterpret_cast<uintptr_t>(pc);
+  __sanitizer_symbolize_global(addr,
+                               "%n %S %L%M",  // same placeholders TSan uses
+                               buf, sizeof(buf));
 
-  llvm::symbolize::LLVMSymbolizer::Options opts;
-  opts.PathStyle = llvm::DILineInfoSpecifier::FileLineInfoKind::BaseNameOnly;
-  opts.UseSymbolTable = true;
-  opts.Demangle = true;
-  if (absolute) {
-    opts.RelativeAddresses = false;
-  } else {
-    opts.RelativeAddresses = true;
-    uint64_t module_base = reinterpret_cast<uintptr_t>(info.dli_fbase);
-    address = reinterpret_cast<uintptr_t>(pc) - module_base;
-    // TODO(bojanin): Explain this instead of YOLOing it.
-    address += 0x100000000;
-// TODO(bojanin): Explain this instead of YOLOing it.
-#ifdef __aarch64__
-    address -= 4;
-#endif
-  }
-  // NOTE(bojanin): this doesn't need to be set if you're passing in DSYM paths
-  llvm::symbolize::SectionedAddress addr{
-      address, llvm::object::SectionedAddress::UndefSection};
-
-  llvm::symbolize::LLVMSymbolizer sym(opts);
-  llvm::Expected<llvm::DILineInfo> expected =
-      sym.symbolizeCode(info.dli_fname, addr);
-  SPDLOG_INFO("Symbolizing address:{}", (void*)addr.Address);
-
-  if (!expected)
-    return fmt::format("{} <symbolize error: {}>", pc,
-                       llvm::toString(expected.takeError()));
-
-  const llvm::DILineInfo& frame = *expected;
-  if (frame.FileName.empty())
-    return fmt::format("{} <unknown>", (void*)address);
-
-  return fmt::format("{}:({}:{})", frame.FunctionName, frame.FileName,
-                     frame.Line);
+  return std::string(buf);
 }
 
 extern "C" void __tsan_on_report(void* report) {
@@ -122,6 +98,7 @@ extern "C" void __tsan_on_report(void* report) {
     __tsan_get_report_mop(report, m, &mop_tid, &addr, &size, &is_write,
                           &is_atomic, trace, 64);
 
+    SPDLOG_INFO("INFO: {}", TsanSymbolizeMOP(addr));
     SPDLOG_INFO("─── MOP #{} on addr {:#018x} (tid={}, {}{}{})", m,
                 reinterpret_cast<std::uintptr_t>(addr), mop_tid,
                 is_write ? "write" : "read", is_atomic ? ", atomic" : "",
@@ -137,16 +114,7 @@ extern "C" void __tsan_on_report(void* report) {
       for (int f = 0; f < 64 && trace[f]; ++f) {
         Dl_info info{};
         dladdr(trace[f], &info);
-        SPDLOG_INFO("module base: {}@{} found symbol: {}@{}", info.dli_fname,
-                    info.dli_fbase, info.dli_sname, info.dli_saddr);
-        SPDLOG_INFO("LLVM: {}", GetPc(trace[f], false));
-        if (info.dli_fname &&
-            strstr(info.dli_fname, "libclang_rt.tsan") == nullptr) {
-          // This is a user frame – print it the same way TSan does
-
-          printf("  #%d %s+0x%lx\n", f, info.dli_fname,
-                 (char*)trace[f] - (char*)info.dli_fbase);
-        }
+        SPDLOG_INFO("Race: {}", TsanSymbolizePC(trace[f]));
       }
     }
   }
