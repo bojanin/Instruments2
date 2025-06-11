@@ -13,18 +13,36 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 set(CLANG_RESOURCE_DIR "${CLANG_RESOURCE_DIR}" CACHE INTERNAL "clang resource dir")
+find_package(spdlog REQUIRED)
+set(LLVM_DIR "/opt/homebrew/opt/llvm/lib/cmake/llvm" CACHE PATH "Path to LLVMConfig.cmake")
+find_package(LLVM REQUIRED CONFIG)
+add_definitions(${LLVM_DEFINITIONS})
 
+# 💡 THIS is what defines llvm_map_components_to_libnames
+include(LLVMConfig) # safe redundancy
+include(HandleLLVMOptions) # best practice when using LLVM's libs
+llvm_map_components_to_libnames(LLVM_LIBS
+  Support
+  DebugInfoDWARF
+  Object
+  Symbolize
+)
+
+include_directories(${LLVM_INCLUDE_DIRS})
 target_include_directories(captain_hook SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
-# Headers treated as system
 target_include_directories(captain_hook SYSTEM PUBLIC
     ${CLANG_RESOURCE_DIR}/include)
-# Compile flags
-target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
-target_link_options(captain_hook PRIVATE -fsanitize=thread)
-find_package(spdlog REQUIRED)
 
+target_link_libraries(captain_hook PRIVATE ${LLVM_LIBS})
 target_link_libraries(captain_hook PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
 target_link_libraries(captain_hook PRIVATE tsb)
+
+
+
+
+# Options
+target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
+target_link_options(captain_hook PRIVATE -fsanitize=thread)
 
 
 set_target_properties(captain_hook PROPERTIES

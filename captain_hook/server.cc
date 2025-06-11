@@ -17,7 +17,7 @@ std::shared_ptr<IPCServer> IPCServer::Shared() {
   if (TSB_LIKELY(shared)) {
     return shared;
   }
-  const char* port = std::getenv(kServerPortEnvVar.c_str());
+  const char* port = std::getenv(kServerPortEnvVar);
   if (TSB_LIKELY(port == NULL)) {
     shared = std::make_shared<IPCServer>(kDefaultServerPort);
   } else {

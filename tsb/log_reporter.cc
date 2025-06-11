@@ -1,8 +1,10 @@
 #include "tsb/log_reporter.h"
 
+#include <spdlog/sinks/stdout_color_sinks.h>
+
 namespace tsb {
 
-void LogReporter::Create() { LogReporter::Shared()->SetupLogger(); }
+void LogReporter::Create() { (void)LogReporter::Shared(); }
 
 std::shared_ptr<LogReporter> LogReporter::Shared() {
   static std::shared_ptr<LogReporter> reporter;
@@ -18,8 +20,6 @@ LogReporter::LogReporter() {
   console->set_pattern("[%L] [%DT%H:%M:%S.%f]%^ [%s:%#] %v%$");
   console->enable_backtrace(64);
   spdlog::set_default_logger(console);
-  spdlog::enable_backtrace(64);
-  // spdlog::set_pattern("[%D %H:%M:%S.%f][%L:%t] %@: %v");
 }
 
 }  // namespace tsb
