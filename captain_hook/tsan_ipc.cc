@@ -55,39 +55,49 @@ static std::string GetExecutablePath() {
 #endif
 }
 
-std::string GetPc(void* pc) {
+std::string GetPc(void* pc, bool absolute) {
   Dl_info info{};
   if (!dladdr(pc, &info) || !info.dli_fname)
     return fmt::format("{} <no dladdr>", pc);
 
   const char* module_path = info.dli_fname;
-  uint64_t module_base = reinterpret_cast<uintptr_t>(info.dli_fbase);
-  uint64_t module_offset = reinterpret_cast<uintptr_t>(pc) - module_base;
-
-// For ARM64 subtract 4 so it points at the call instruction, exactly
-#ifdef __aarch64__
-  module_offset -= 4;
-#endif
+  uint64_t address = reinterpret_cast<uintptr_t>(pc);
 
   llvm::symbolize::LLVMSymbolizer::Options opts;
-  opts.PathStyle =
-      llvm::DILineInfoSpecifier::FileLineInfoKind::AbsoluteFilePath;
-  opts.RelativeAddresses = true;  // ← default
+  opts.PathStyle = llvm::DILineInfoSpecifier::FileLineInfoKind::BaseNameOnly;
+  opts.UseSymbolTable = true;
   opts.Demangle = true;
+  if (absolute) {
+    opts.RelativeAddresses = false;
+  } else {
+    opts.RelativeAddresses = true;
+    uint64_t module_base = reinterpret_cast<uintptr_t>(info.dli_fbase);
+    address = reinterpret_cast<uintptr_t>(pc) - module_base;
+    // TODO(bojanin): Explain this instead of YOLOing it.
+    address += 0x100000000;
+// TODO(bojanin): Explain this instead of YOLOing it.
+#ifdef __aarch64__
+    address -= 4;
+#endif
+  }
+  // NOTE(bojanin): this doesn't need to be set if you're passing in DSYM paths
   llvm::symbolize::SectionedAddress addr{
-      module_offset, llvm::object::SectionedAddress::UndefSection};
-  addr.Address += 0x100000000;
+      address, llvm::object::SectionedAddress::UndefSection};
 
   llvm::symbolize::LLVMSymbolizer sym(opts);
-  auto expected = sym.symbolizeCode(info.dli_fname, addr);
+  llvm::Expected<llvm::DILineInfo> expected =
+      sym.symbolizeCode(info.dli_fname, addr);
+  SPDLOG_INFO("Symbolizing address:{}", (void*)addr.Address);
+
   if (!expected)
     return fmt::format("{} <symbolize error: {}>", pc,
                        llvm::toString(expected.takeError()));
 
   const llvm::DILineInfo& frame = *expected;
-  if (frame.FileName.empty()) return fmt::format("{} <unknown>", module_offset);
+  if (frame.FileName.empty())
+    return fmt::format("{} <unknown>", (void*)address);
 
-  return fmt::format("{}:{}({})", frame.FunctionName, frame.FileName,
+  return fmt::format("{}:({}:{})", frame.FunctionName, frame.FileName,
                      frame.Line);
 }
 
@@ -129,7 +139,7 @@ extern "C" void __tsan_on_report(void* report) {
         dladdr(trace[f], &info);
         SPDLOG_INFO("module base: {}@{} found symbol: {}@{}", info.dli_fname,
                     info.dli_fbase, info.dli_sname, info.dli_saddr);
-        SPDLOG_INFO("LLVM: {}", GetPc(trace[f]));
+        SPDLOG_INFO("LLVM: {}", GetPc(trace[f], false));
         if (info.dli_fname &&
             strstr(info.dli_fname, "libclang_rt.tsan") == nullptr) {
           // This is a user frame – print it the same way TSan does
