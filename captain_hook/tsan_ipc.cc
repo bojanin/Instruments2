@@ -64,7 +64,7 @@ std::string TsanSymbolizePC(void* pc) {
   // TODO(bojanin): Extract out each item.
   // std::memset(gSymbolicationScratchPad, 0, sizeof(gSymbolicationScratchPad));
 
-  return std::string(buf);
+  return std::string(gSymbolicationScratchPad);
 }
 
 static inline std::string TsanSymbolizeMOP(void* addr) {

@@ -28,6 +28,8 @@ target_link_libraries(captain_hook PRIVATE tsb)
 
 # Options
 target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
+target_compile_options(captain_hook PRIVATE
+                           -resource-dir=${CLANG_RESOURCE_DIR})
 target_link_options(captain_hook PRIVATE -fsanitize=thread)
 
 
