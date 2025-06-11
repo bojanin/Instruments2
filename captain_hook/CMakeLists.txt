@@ -14,6 +14,7 @@ execute_process(
 
 set(CLANG_RESOURCE_DIR "${CLANG_RESOURCE_DIR}" CACHE INTERNAL "clang resource dir")
 find_package(spdlog REQUIRED)
+find_package(grpc CONFIG REQUIRED)
 
 
 target_include_directories(captain_hook SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
@@ -21,8 +22,7 @@ target_include_directories(captain_hook SYSTEM PUBLIC
     ${CLANG_RESOURCE_DIR}/include)
 
 target_link_libraries(captain_hook PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
-target_link_libraries(captain_hook PRIVATE tsb)
-
+target_link_libraries(captain_hook PUBLIC tsb gRPC::grpc++)
 
 
 

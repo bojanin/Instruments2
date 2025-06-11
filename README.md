@@ -34,7 +34,7 @@ Build TinyRace:
 Test your hooks are exported correctly:
 
 MacOS:
-`cmake --build build --target captain_hook && DYLD_INSERT_LIBRARIES=build/captain_hook/libcaptain_hook.dylib ./captain_hook/tiny_race`
+`cmake --build build --target captain_hook -j12 && DYLD_INSERT_LIBRARIES=build/captain_hook/libcaptain_hook.so ./captain_hook/tiny_race`
 
 Linux:
 `cmake --build build --target captain_hook && LD_PRELOAD=build/captain_hook/libcaptain_hook.so ./captain_hook/tiny_race`
