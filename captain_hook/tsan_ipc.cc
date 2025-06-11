@@ -17,6 +17,7 @@
 #include "captain_hook/server.h"
 
 std::thread gServerThread;
+static char gSymbolicationScratchPad[8196];
 
 __attribute__((constructor)) void Init() {
   tsb::LogReporter::Create();
@@ -55,26 +56,56 @@ __attribute__((destructor)) void Deinit() {
 //   %L - prints location information: file/line/column, if it is known, or
 //        module+offset if it is known, or (<unknown module>) string.
 //   %M - prints module basename and offset, if it is known, or PC.
-static inline std::string TsanSymbolizePC(void* pc) {
-  char buf[1024];  // enough for one inline frame
+std::string TsanSymbolizePC(void* pc) {
+  std::memset(gSymbolicationScratchPad, 0, sizeof(gSymbolicationScratchPad));
 
-  // The sanitizer API returns one C-string per inline frame,
-  // terminated by an empty string. We loop until that empty one.
-  __sanitizer_symbolize_pc(pc,
-                           "%n %f %L%M",  // same placeholders TSan uses
-                           buf, sizeof(buf));
+  __sanitizer_symbolize_pc(pc, "%n %f %L%M", gSymbolicationScratchPad,
+                           sizeof(gSymbolicationScratchPad));
+  // TODO(bojanin): Extract out each item.
+  // std::memset(gSymbolicationScratchPad, 0, sizeof(gSymbolicationScratchPad));
 
   return std::string(buf);
 }
 
 static inline std::string TsanSymbolizeMOP(void* addr) {
-  char buf[1024];  // enough for one inline frame
+  char buf[8192];  // enough for one inline frame
 
-  __sanitizer_symbolize_global(addr,
-                               "%n %S %L%M",  // same placeholders TSan uses
-                               buf, sizeof(buf));
+  __sanitizer_symbolize_global(
+      addr,
+      "%n %S %L%M '%c'",  // same placeholders TSan uses
+      buf, sizeof(buf));
 
   return std::string(buf);
+}
+
+// Prints: "Location is stack of thread 0."  (or heap / global / etc.)
+static void PrintLocationBlock(void* report, unsigned long mop_index) {
+  const char* loc_type = nullptr;
+  void* loc_addr = nullptr;
+  void* loc_start = nullptr;
+  unsigned long loc_size = 0;
+  int loc_tid = 0;
+  int loc_fd = 0;
+  int suppressable = 0;
+  void* trace_loc[64] = {};
+
+  // Returns 1 on success with the *new* prototype you pasted.
+  if (__tsan_get_report_loc(report, mop_index, &loc_type, &loc_addr, &loc_start,
+                            &loc_size, &loc_tid, &loc_fd, &suppressable,
+                            trace_loc, 64) == 1 &&
+      loc_type) {
+    if (strcmp(loc_type, "stack") == 0) {
+      SPDLOG_INFO("  Location is stack of thread {}.", loc_tid);
+    } else if (strcmp(loc_type, "heap") == 0) {
+      SPDLOG_INFO("  Location is heap block allocated by thread {}.", loc_tid);
+    } else if (strcmp(loc_type, "global") == 0) {
+      SPDLOG_INFO("  Location is global @ {:#x}.",
+                  reinterpret_cast<uintptr_t>(loc_addr));
+    } else {
+      SPDLOG_INFO("  Location is {} of thread {}.", loc_type, loc_tid);
+    }
+    SPDLOG_INFO("");  // blank line just like TSan
+  }
 }
 
 extern "C" void __tsan_on_report(void* report) {
@@ -87,35 +118,30 @@ extern "C" void __tsan_on_report(void* report) {
                          &mutex_cnt, &thr_cnt, &uniq_tid_cnt, sleep_trace, 16);
 
   SPDLOG_INFO("══════════ TSan report: {}", desc ? desc : "<nullptr>");
-  SPDLOG_INFO("threads={}  mops={}  stacks={}", thr_cnt, mop_cnt, stack_cnt);
+  SPDLOG_INFO(
+      "threads={}  mops={}  stacks={} duplicates={} loc_cnt={} mutex_cnt={} "
+      "uniq={}",
+      thr_cnt, mop_cnt, stack_cnt, count, loc_cnt, mutex_cnt, uniq_tid_cnt);
 
-  // Iterate over every MOP (read/write) that participates in the race
   for (int m = 0; m < mop_cnt; ++m) {
-    int mop_tid = 0, size = 0, is_write = 0, is_atomic = 0;
+    int tid = 0, size = 0, is_write = 0, is_atomic = 0;
     void* addr = nullptr;
     void* trace[64] = {};
+    __tsan_get_report_mop(report, m, &tid, &addr, &size, &is_write, &is_atomic,
+                          trace, 64);
 
-    __tsan_get_report_mop(report, m, &mop_tid, &addr, &size, &is_write,
-                          &is_atomic, trace, 64);
+    SPDLOG_INFO("  {} of size {} at {:#018x} by {} thread:",
+                is_write ? "Write" : "Read", size,
+                reinterpret_cast<std::uintptr_t>(addr),
+                tid == 0 ? "main" : fmt::format("thread T{}", tid));
 
-    SPDLOG_INFO("INFO: {}", TsanSymbolizeMOP(addr));
-    SPDLOG_INFO("─── MOP #{} on addr {:#018x} (tid={}, {}{}{})", m,
-                reinterpret_cast<std::uintptr_t>(addr), mop_tid,
-                is_write ? "write" : "read", is_atomic ? ", atomic" : "",
-                size ? fmt::format(", size={}", size) : "");
-
-    // Print backtrace, skipping frames in the TSan runtime itself
-    for (int m = 0; m < mop_cnt; ++m) {
-      int tid, size, is_write, is_atomic;
-      void *addr, *trace[64] = {};
-      __tsan_get_report_mop(report, m, &tid, &addr, &size, &is_write,
-                            &is_atomic, trace, 64);
-
-      for (int f = 0; f < 64 && trace[f]; ++f) {
-        Dl_info info{};
-        dladdr(trace[f], &info);
-        SPDLOG_INFO("Race: {}", TsanSymbolizePC(trace[f]));
-      }
+    int frame_no = 0;
+    for (int f = 0; trace[f]; ++f) {
+      std::string line = TsanSymbolizePC(trace[f]);
+      if (line.find("libclang_rt.tsan") != std::string::npos) continue;
+      SPDLOG_INFO("    #{:<2} {}", frame_no++, line);
     }
+
+    // PrintLocationBlock(report, m);  // ← now uses the new API
   }
 }

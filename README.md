@@ -5,6 +5,8 @@ requirements:
 - spdlog 
   - MAC:
   - `brew install spdlog`
+  - `brew install llvm`
+  - ensure llvm in path
   - Linux:
   - `sudo apt install libspdlog-dev`
 
@@ -25,10 +27,9 @@ Build the captain_hook, the shared lib that hooks into the tsan runtime and comm
 Build Bandicoot:
 `cmake --build build --target bandicoot`
 
-
 Build TinyRace:
-`clang++ -std=c++23 -fno-omit-frame-pointer captain_hook/tiny_race.cc -fsanitize=thread -g -O1 -o captain_hook/tiny_race`
-
+`clang++ -std=c++23 captain_hook/tiny_race.cc -fsanitize=thread -g -O2 -o captain_hook/tiny_race`
+- Recommend `-O2`.Stack traces are hard to reach otherwise
 
 Test your hooks are exported correctly:
 
@@ -39,4 +40,5 @@ Linux:
 `cmake --build build --target captain_hook && LD_PRELOAD=build/captain_hook/libcaptain_hook.so ./captain_hook/tiny_race`
 
 How to standalone compile captain_hook:
-`clang++ -std=c++23 -g -fsanitize=thread -shared -fPIC -o libtsan_interceptor.so tsan_ipc.cc`
+`clang++ -std=c++23 -g -fsanitize=thread -shared -fPIC -o libcaptain_hook.so tsan_ipc.cc`
+
