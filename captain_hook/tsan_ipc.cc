@@ -1,3 +1,4 @@
+#include <llvm/DebugInfo/DIContext.h>
 #include <llvm/DebugInfo/Symbolize/Symbolize.h>
 #include <llvm/Object/ObjectFile.h>
 #include <llvm/Support/raw_ostream.h>
@@ -55,12 +56,9 @@ static std::string GetExecutablePath() {
 }
 
 std::string GetPc(void* pc) {
-  llvm::symbolize::LLVMSymbolizer::Options opts;
-  opts.RelativeAddresses = true;
-  opts.Demangle = true;
-
   Dl_info info{};
-  dladdr(pc, &info);  // pc is still absolute
+  if (!dladdr(pc, &info) || !info.dli_fname)
+    return fmt::format("{} <no dladdr>", pc);
 
   const char* module_path = info.dli_fname;
   uint64_t module_base = reinterpret_cast<uintptr_t>(info.dli_fbase);
@@ -71,29 +69,26 @@ std::string GetPc(void* pc) {
   module_offset -= 4;
 #endif
 
-  llvm::object::SectionedAddress addr{
+  llvm::symbolize::LLVMSymbolizer::Options opts;
+  opts.PathStyle =
+      llvm::DILineInfoSpecifier::FileLineInfoKind::AbsoluteFilePath;
+  opts.RelativeAddresses = true;  // ← default
+  opts.Demangle = true;
+  llvm::symbolize::SectionedAddress addr{
       module_offset, llvm::object::SectionedAddress::UndefSection};
+  addr.Address += 0x100000000;
 
   llvm::symbolize::LLVMSymbolizer sym(opts);
-  addr.Address += 0x100000000;
-  auto result = sym.symbolizeCode(module_path, addr);
+  auto expected = sym.symbolizeCode(info.dli_fname, addr);
+  if (!expected)
+    return fmt::format("{} <symbolize error: {}>", pc,
+                       llvm::toString(expected.takeError()));
 
-  SPDLOG_INFO("Symbolizing PC {} from {}", (void*)addr.Address, module_path);
+  const llvm::DILineInfo& frame = *expected;
+  if (frame.FileName.empty()) return fmt::format("{} <unknown>", module_offset);
 
-  if (!result) {
-    return fmt::format("{} <symbolization failed>", pc);
-  }
-
-  const auto& frame = *result;
-  if (frame.FunctionName.empty() && frame.FileName.empty()) {
-    return fmt::format("{} <unknown>", pc);
-  }
-  SPDLOG_INFO("ERROR: {}", llvm::toString(result.takeError()));
-
-  std::string output;
-  llvm::raw_string_ostream oss(output);
-  oss << frame.FunctionName << " at " << frame.FileName << ":" << frame.Line;
-  return oss.str();
+  return fmt::format("{}:{}({})", frame.FunctionName, frame.FileName,
+                     frame.Line);
 }
 
 extern "C" void __tsan_on_report(void* report) {
@@ -134,7 +129,7 @@ extern "C" void __tsan_on_report(void* report) {
         dladdr(trace[f], &info);
         SPDLOG_INFO("module base: {}@{} found symbol: {}@{}", info.dli_fname,
                     info.dli_fbase, info.dli_sname, info.dli_saddr);
-        SPDLOG_INFO("LLVM: Output for same symbol={}", GetPc(trace[f]));
+        SPDLOG_INFO("LLVM: {}", GetPc(trace[f]));
         if (info.dli_fname &&
             strstr(info.dli_fname, "libclang_rt.tsan") == nullptr) {
           // This is a user frame – print it the same way TSan does
