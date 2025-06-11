@@ -27,7 +27,7 @@ Build Bandicoot:
 
 
 Build TinyRace:
-`clang++ -stdlib=c++17 captain_hook/tiny_race.cc -fsanitize=thread -g -O1 -o captain_hook/tiny_race`
+`clang++ -std=c++23 -fno-omit-frame-pointer captain_hook/tiny_race.cc -fsanitize=thread -g -O1 -o captain_hook/tiny_race`
 
 
 Test your hooks are exported correctly:
