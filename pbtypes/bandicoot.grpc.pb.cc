@@ -22,6 +22,67 @@
 #include <grpcpp/ports_def.inc>
 namespace bandicoot {
 
+static const char* DesktopApp_method_names[] = {
+  "/bandicoot.DesktopApp/OnSanitizerReport",
+};
+
+std::unique_ptr< DesktopApp::Stub> DesktopApp::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
+  std::unique_ptr< DesktopApp::Stub> stub(new DesktopApp::Stub(channel, options));
+  return stub;
+}
+
+DesktopApp::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
+  : channel_(channel), rpcmethod_OnSanitizerReport_(DesktopApp_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  {}
+
+::grpc::Status DesktopApp::Stub::OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::bandicoot::Void* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::bandicoot::TestMsg, ::bandicoot::Void, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_OnSanitizerReport_, context, request, response);
+}
+
+void DesktopApp::Stub::async::OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::bandicoot::TestMsg, ::bandicoot::Void, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_OnSanitizerReport_, context, request, response, std::move(f));
+}
+
+void DesktopApp::Stub::async::OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_OnSanitizerReport_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* DesktopApp::Stub::PrepareAsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::bandicoot::Void, ::bandicoot::TestMsg, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_OnSanitizerReport_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* DesktopApp::Stub::AsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncOnSanitizerReportRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+DesktopApp::Service::Service() {
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DesktopApp_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DesktopApp::Service, ::bandicoot::TestMsg, ::bandicoot::Void, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DesktopApp::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::bandicoot::TestMsg* req,
+             ::bandicoot::Void* resp) {
+               return service->OnSanitizerReport(ctx, req, resp);
+             }, this)));
+}
+
+DesktopApp::Service::~Service() {
+}
+
+::grpc::Status DesktopApp::Service::OnSanitizerReport(::grpc::ServerContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+
 }  // namespace bandicoot
 #include <grpcpp/ports_undef.inc>
 

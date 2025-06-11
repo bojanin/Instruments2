@@ -30,10 +30,11 @@ __attribute__((constructor)) void Init() {
 
 __attribute__((destructor)) void Deinit() {
   SPDLOG_INFO("Deinit Started");
-  captain_hook::IPCServer::Shared()->SetExitFlag(true);
-  if (gServerThread.joinable()) {
-    gServerThread.join();
-  }
+  // TODO(bojanin): figure out why this crashes
+  // captain_hook::IPCServer::Shared()->SetExitFlag();
+  // if (gServerThread.joinable()) {
+  //   gServerThread.join();
+  // }
   SPDLOG_INFO("Deinit Complete");
   //
 }

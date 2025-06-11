@@ -1,9 +1,11 @@
 #include "captain_hook/server.h"
 
-#include <chrono>
+#include <fmt/format.h>
+#include <grpc++/grpc++.h>
+#include <pbtypes/bandicoot.grpc.pb.h>
+#include <spdlog/spdlog.h>
+
 #include <cstdlib>
-// Remove later
-#include <thread>
 
 #include "captain_hook/constants.h"
 namespace captain_hook {
@@ -28,10 +30,17 @@ std::shared_ptr<IPCServer> IPCServer::Shared() {
 
 IPCServer::IPCServer(int port) : port_(port) {}
 
+void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
+
 void IPCServer::RunForever() {
-  while (!exit_) {
-    std::this_thread::sleep_for(std::chrono::seconds(5));
-  }
+  std::string server_address(fmt::format("127.0.0.1:{}", port_));
+
+  grpc::ServerBuilder builder;
+  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+  builder.RegisterService(this);
+  grpc_server_ = builder.BuildAndStart();
+  SPDLOG_INFO("Server Listening on: {}", server_address);
+  grpc_server_->Wait();
 }
 
 }  // namespace captain_hook

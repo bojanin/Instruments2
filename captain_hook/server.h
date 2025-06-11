@@ -1,4 +1,5 @@
 #pragma once
+#include <pbtypes/bandicoot.grpc.pb.h>
 #include <tsb/macros.h>
 
 #include <atomic>
@@ -8,12 +9,19 @@ namespace captain_hook {
 
 // IPC server that talks to Bandicoot via grpc.
 // Server will listen on BANDICOOT_SERVER_PORT thats in the users env
-class IPCServer {
+class IPCServer : public bandicoot::DesktopApp::Service {
  public:
   // Will create a server if it hasnt been created already
-  void SetExitFlag(bool exit) { exit_ = exit; }
+  void SetExitFlag();
   void RunForever();
   int32_t Port() const { return port_; }
+
+  ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
+                                   const bandicoot::TestMsg* msg,
+                                   bandicoot::Void* out) override {
+    abort();
+    return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+  }
 
   // Init related functions
   IPCServer(int port);
@@ -23,8 +31,8 @@ class IPCServer {
   TSB_DISALLOW_MOVE(IPCServer);
 
  private:
+  std::unique_ptr<grpc::Server> grpc_server_;
   const int port_;
-  std::atomic_bool exit_ = false;
 };
 
 }  // namespace captain_hook

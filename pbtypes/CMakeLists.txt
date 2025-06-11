@@ -6,7 +6,7 @@ add_library(pbtypes bandicoot.proto)
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-protobuf_generate(TARGET pbtypes)
+protobuf_generate(TARGET pbtypes PROTOC_OUT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 protobuf_generate(
     TARGET pbtypes
     LANGUAGE grpc

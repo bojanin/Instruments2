@@ -16,7 +16,7 @@ std::shared_ptr<LogReporter> LogReporter::Shared() {
 }
 
 LogReporter::LogReporter() {
-  auto console = spdlog::stdout_color_st("Bandicoot");
+  auto console = spdlog::stdout_color_mt("Bandicoot");
   console->set_pattern("[%L] [%DT%H:%M:%S.%f]%^ [%s:%#] %v%$");
   console->enable_backtrace(64);
   spdlog::set_default_logger(console);
