@@ -1,36 +1,45 @@
 #pragma once
+#include <fmt/format.h>
 #include <grpc++/grpc++.h>
 #include <pbtypes/bandicoot.grpc.pb.h>
+#include <spdlog/spdlog.h>
 #include <tsb/macros.h>
 
 #include <memory>
+
+#include "captain_hook/constants.h"
 
 namespace captain_hook {
 
 class IPCClient {
  public:
   IPCClient() {
-    std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(
-        "localhost:50001", grpc::InsecureChannelCredentials());
+    const std::string server_ip =
+        fmt::format("localhost:{}", kDefaultServerPort);
+    std::shared_ptr<grpc::Channel> channel =
+        grpc::CreateChannel(server_ip, grpc::InsecureChannelCredentials());
 
     stub_ = bandicoot::DesktopApp::NewStub(channel);
+    SPDLOG_INFO("Initialized client that talks to {}", server_ip);
   }
 
   std::unique_ptr<bandicoot::DesktopApp::Stub> stub_;
 };
 
+class Server2 : public bandicoot::DesktopApp::Service {
+  ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
+                                   const bandicoot::TestMsg* msg,
+                                   bandicoot::Void* out) override;
+};
+
 // IPC server that talks to Bandicoot via grpc.
 // Server will listen on BANDICOOT_SERVER_PORT thats in the users env
-class IPCServer : public bandicoot::DesktopApp::Service {
+class IPCServer {
  public:
   // Will create a server if it hasnt been created already
   void SetExitFlag();
   void RunForever();
   int32_t Port() const { return port_; }
-
-  ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
-                                   const bandicoot::TestMsg* msg,
-                                   bandicoot::Void* out) override;
 
   // Init related functions
   IPCServer(int port);

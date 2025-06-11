@@ -2,7 +2,6 @@
 add_library(captain_hook 
     SHARED
     tsan_ipc.cc
-    server.cc
 )
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

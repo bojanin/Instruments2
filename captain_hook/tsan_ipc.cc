@@ -12,13 +12,11 @@
 #include <unistd.h>
 #endif
 
+#include <tsb/server.h>
+
 #include <print>
 
-#include "captain_hook/server.h"
-
 static char gSymbolicationScratchPad[8196];
-static std::unique_ptr<captain_hook::IPCClient> client =
-    std::make_unique<captain_hook::IPCClient>();
 
 __attribute__((constructor)) void Init() {
   tsb::LogReporter::Create();
@@ -113,16 +111,14 @@ extern "C" void __tsan_on_report(void* report) {
   void* sleep_trace[16] = {};
 
   ::grpc::ClientContext context;
-  context.set_deadline(std::chrono::system_clock::now() +
-                       std::chrono::milliseconds(500));
-  context.set_wait_for_ready(true);
+  captain_hook::IPCClient client{};
 
   ::bandicoot::TestMsg request;
   request.set_first("hello");
   request.set_second("world");
   ::bandicoot::Void response;
   ::grpc::Status status =
-      client->stub_->OnSanitizerReport(&context, request, &response);
+      client.stub_->OnSanitizerReport(&context, request, &response);
   SPDLOG_INFO("RPC {}", status.ok() ? "succeeded" : status.error_message());
   __tsan_get_report_data(report, &desc, &count, &stack_cnt, &mop_cnt, &loc_cnt,
                          &mutex_cnt, &thr_cnt, &uniq_tid_cnt, sleep_trace, 16);

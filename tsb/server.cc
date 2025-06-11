@@ -1,13 +1,9 @@
-#include "captain_hook/server.h"
-
-#include <fmt/format.h>
 #include <grpc++/grpc++.h>
 #include <pbtypes/bandicoot.grpc.pb.h>
-#include <spdlog/spdlog.h>
+#include <tsb/server.h>
 
 #include <cstdlib>
 
-#include "captain_hook/constants.h"
 namespace captain_hook {
 
 // Shared will construct the server automatically if it hasn't been create
@@ -34,23 +30,26 @@ IPCServer::~IPCServer() {
   grpc_server_->Shutdown();
 }
 
-::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
-                                            const bandicoot::TestMsg* msg,
-                                            bandicoot::Void* out) {
+::grpc::Status Server2::OnSanitizerReport(grpc::ServerContext* context,
+                                          const bandicoot::TestMsg* msg,
+                                          bandicoot::Void* out) {
   SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
   return grpc::Status::OK;
 }
 void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
 
 void IPCServer::RunForever() {
-  std::string server_address(fmt::format("localhost:{}", port_));
+  const std::string server_address = fmt::format("localhost:{}", port_);
+  grpc::EnableDefaultHealthCheckService(true);
+  Server2 server{};
 
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-  builder.RegisterService(this);
+  builder.RegisterService(&server);
   grpc_server_ = builder.BuildAndStart();
   SPDLOG_INFO("Server Listening on: {}", server_address);
   grpc_server_->Wait();
+  SPDLOG_INFO("Server Shutting down...");
 }
 
 }  // namespace captain_hook

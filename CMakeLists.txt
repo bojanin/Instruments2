@@ -25,6 +25,7 @@ add_subdirectory(pbtypes)
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(grpc CONFIG REQUIRED)
 
 # ImGui
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
@@ -56,7 +57,7 @@ target_include_directories(bandicoot SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(bandicoot PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
 # https://github.com/gabime/spdlog/blob/v1.x/example/CMakeLists.txt
 target_link_libraries(bandicoot PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
-target_link_libraries(bandicoot PRIVATE captain_hook)
+target_link_libraries(bandicoot PUBLIC tsb gRPC::grpc++ pbtypes)
 
 
 # Build flags
