@@ -10,5 +10,6 @@ protobuf_generate(TARGET pbtypes)
 protobuf_generate(
     TARGET pbtypes
     LANGUAGE grpc
+    PROTOC_OUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}
     PLUGIN protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
     GENERATE_EXTENSIONS .grpc.pb.h .grpc.pb.cc)

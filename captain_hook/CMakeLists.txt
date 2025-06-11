@@ -22,7 +22,7 @@ target_include_directories(captain_hook SYSTEM PUBLIC
     ${CLANG_RESOURCE_DIR}/include)
 
 target_link_libraries(captain_hook PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
-target_link_libraries(captain_hook PUBLIC tsb gRPC::grpc++)
+target_link_libraries(captain_hook PUBLIC tsb gRPC::grpc++ pbtypes)
 
 
 
@@ -31,10 +31,6 @@ target_compile_options(captain_hook PRIVATE -g -O3 -fPIC)
 target_compile_options(captain_hook PRIVATE
                            -resource-dir=${CLANG_RESOURCE_DIR})
 target_link_options(captain_hook PRIVATE -fsanitize=thread)
-
-
-add_executable( ${PROTO_SRCS} ${PROTO_HDRS})
-target_link_libraries(bar ${Protobuf_LIBRARIES})
 
 
 set_target_properties(captain_hook PROPERTIES

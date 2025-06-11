@@ -42,3 +42,6 @@ Linux:
 How to standalone compile captain_hook:
 `clang++ -std=c++23 -g -fsanitize=thread -shared -fPIC -o libcaptain_hook.so tsan_ipc.cc`
 
+PBTypes:
+`cmake --build build --target pbtypes -j12`
+
