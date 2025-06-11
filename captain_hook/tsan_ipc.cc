@@ -61,7 +61,7 @@ static inline std::string TsanSymbolizePC(void* pc) {
   // The sanitizer API returns one C-string per inline frame,
   // terminated by an empty string. We loop until that empty one.
   __sanitizer_symbolize_pc(pc,
-                           "%n %L%M",  // same placeholders TSan uses
+                           "%n %f %L%M",  // same placeholders TSan uses
                            buf, sizeof(buf));
 
   return std::string(buf);
