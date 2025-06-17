@@ -39,7 +39,7 @@ IPCServer::~IPCServer() {
 void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
 
 void IPCServer::RunForever() {
-  const std::string server_address = fmt::format("localhost:{}", port_);
+  const std::string server_address = fmt::format("127.0.0.1:{}", port_);
   grpc::EnableDefaultHealthCheckService(true);
   Server2 server{};
 

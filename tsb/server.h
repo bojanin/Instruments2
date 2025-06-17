@@ -15,7 +15,7 @@ class IPCClient {
  public:
   IPCClient() {
     const std::string server_ip =
-        fmt::format("localhost:{}", kDefaultServerPort);
+        fmt::format("127.0.0.1:{}", kDefaultServerPort);
     std::shared_ptr<grpc::Channel> channel =
         grpc::CreateChannel(server_ip, grpc::InsecureChannelCredentials());
 

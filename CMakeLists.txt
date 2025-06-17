@@ -64,6 +64,7 @@ target_link_libraries(bandicoot PUBLIC tsb gRPC::grpc++ pbtypes)
 target_compile_options(
   bandicoot
   PRIVATE -g
+          -gcolumn-info
           -O3
           -Wall
           -Wextra

@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <tsb/log_reporter.h>
 
+#include <chrono>
+#include <thread>
+
 #ifdef __APPLE__
 #include <dlfcn.h>
 #include <mach-o/dyld.h>
@@ -12,24 +15,33 @@
 #include <unistd.h>
 #endif
 
+#include <tsb/dispatch_queue.h>
 #include <tsb/server.h>
 
 #include <print>
 
 static char gSymbolicationScratchPad[8196];
+static tsb::DispatchQueue& GetQueue() {
+  static tsb::DispatchQueue q;
+  return q;
+}
+
+static captain_hook::IPCClient& GetClient() {
+  static captain_hook::IPCClient c;
+  return c;
+}
 
 __attribute__((constructor)) void Init() {
   tsb::LogReporter::Create();
+  // Spin up threads in contructor because tsan will deadlock if you do it
+  // before.
+  (void)GetClient();
+  GetQueue().Dispatch([]() {});
   SPDLOG_WARN("Init Complete");
 }
 
 __attribute__((destructor)) void Deinit() {
   SPDLOG_INFO("Deinit Started");
-  // TODO(bojanin): figure out why this crashes (stupid static storage duration)
-  // captain_hook::IPCServer::Shared()->SetExitFlag();
-  // if (gServerThread.joinable()) {
-  //   gServerThread.join();
-  // }
   SPDLOG_INFO("Deinit Complete");
   //
 }
@@ -90,7 +102,7 @@ static void PrintLocationBlock(void* report, unsigned long mop_index) {
                             &loc_size, &loc_tid, &loc_fd, &suppressable,
                             trace_loc, 64) == 1 &&
       loc_type) {
-    if (strcmp(loc_type, "stack") == 0) {
+    if (strcmp(loc_type, "stack") == 1) {
       SPDLOG_INFO("  Location is stack of thread {}.", loc_tid);
     } else if (strcmp(loc_type, "heap") == 0) {
       SPDLOG_INFO("  Location is heap block allocated by thread {}.", loc_tid);
@@ -104,22 +116,14 @@ static void PrintLocationBlock(void* report, unsigned long mop_index) {
   }
 }
 
+// RULES:
+// Do not spawn fucking threads in here!!! TSAN will DEADLOCK.
 extern "C" void __tsan_on_report(void* report) {
   const char* desc = nullptr;
   int count = 0, stack_cnt = 0, mop_cnt = 0, loc_cnt = 0;
   int mutex_cnt = 0, thr_cnt = 0, uniq_tid_cnt = 0;
   void* sleep_trace[16] = {};
 
-  ::grpc::ClientContext context;
-  captain_hook::IPCClient client{};
-
-  ::bandicoot::TestMsg request;
-  request.set_first("hello");
-  request.set_second("world");
-  ::bandicoot::Void response;
-  ::grpc::Status status =
-      client.stub_->OnSanitizerReport(&context, request, &response);
-  SPDLOG_INFO("RPC {}", status.ok() ? "succeeded" : status.error_message());
   __tsan_get_report_data(report, &desc, &count, &stack_cnt, &mop_cnt, &loc_cnt,
                          &mutex_cnt, &thr_cnt, &uniq_tid_cnt, sleep_trace, 16);
 
@@ -144,10 +148,22 @@ extern "C" void __tsan_on_report(void* report) {
     int frame_no = 0;
     for (int f = 0; trace[f]; ++f) {
       std::string line = TsanSymbolizePC(trace[f]);
-      if (line.find("libclang_rt.tsan") != std::string::npos) continue;
       SPDLOG_INFO("    #{:<2} {}", frame_no++, line);
     }
 
+    SPDLOG_INFO("END");
+
     // PrintLocationBlock(report, m);  // ← now uses the new API
   }
+
+  GetQueue().Dispatch([]() {
+    ::grpc::ClientContext context;
+    static int x = 0;
+    ::bandicoot::TestMsg request;
+    request.set_first(fmt::format("hello: {}", x++));
+    request.set_second("world");
+    ::bandicoot::Void response;
+    ::grpc::Status status =
+        GetClient().stub_->OnSanitizerReport(&context, request, &response);
+  });
 }

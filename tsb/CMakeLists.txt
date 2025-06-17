@@ -2,6 +2,7 @@ add_library(tsb
     STATIC
     log_reporter.cc
     server.cc
+    dispatch_queue.cc
 )
 
 SET(BASEPATH "${CMAKE_SOURCE_DIR}")
