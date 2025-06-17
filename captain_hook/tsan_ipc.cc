@@ -147,10 +147,6 @@ extern "C" void __tsan_on_report(void* report) {
       std::string line = TsanSymbolizePC(trace[f]);
       SPDLOG_INFO("    #{:<2} {}", frame_no++, line);
     }
-
-    SPDLOG_INFO("END");
-
-    // PrintLocationBlock(report, m);  // ← now uses the new API
   }
 
   GetQueue().Dispatch([]() {
@@ -163,4 +159,5 @@ extern "C" void __tsan_on_report(void* report) {
     ::grpc::Status status =
         GetClient().stub_->OnSanitizerReport(&context, request, &response);
   });
+  SPDLOG_INFO("TSAN ON REPORT END");
 }
