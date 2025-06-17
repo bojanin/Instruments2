@@ -30,9 +30,9 @@ IPCServer::~IPCServer() {
   grpc_server_->Shutdown();
 }
 
-::grpc::Status Server2::OnSanitizerReport(grpc::ServerContext* context,
-                                          const bandicoot::TestMsg* msg,
-                                          bandicoot::Void* out) {
+::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
+                                            const bandicoot::TestMsg* msg,
+                                            bandicoot::Void* out) {
   SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
   return grpc::Status::OK;
 }
@@ -41,11 +41,10 @@ void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
 void IPCServer::RunForever() {
   const std::string server_address = fmt::format("127.0.0.1:{}", port_);
   grpc::EnableDefaultHealthCheckService(true);
-  Server2 server{};
 
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-  builder.RegisterService(&server);
+  builder.RegisterService(this);
   grpc_server_ = builder.BuildAndStart();
   SPDLOG_INFO("Server Listening on: {}", server_address);
   grpc_server_->Wait();

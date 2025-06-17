@@ -26,20 +26,17 @@ class IPCClient {
   std::unique_ptr<bandicoot::DesktopApp::Stub> stub_;
 };
 
-class Server2 : public bandicoot::DesktopApp::Service {
-  ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
-                                   const bandicoot::TestMsg* msg,
-                                   bandicoot::Void* out) override;
-};
-
 // IPC server that talks to Bandicoot via grpc.
 // Server will listen on BANDICOOT_SERVER_PORT thats in the users env
-class IPCServer {
+class IPCServer : public bandicoot::DesktopApp::Service {
  public:
   // Will create a server if it hasnt been created already
   void SetExitFlag();
   void RunForever();
   int32_t Port() const { return port_; }
+  ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
+                                   const bandicoot::TestMsg* msg,
+                                   bandicoot::Void* out) override;
 
   // Init related functions
   IPCServer(int port);
