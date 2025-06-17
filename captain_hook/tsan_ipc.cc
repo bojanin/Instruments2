@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include <tsb/log_reporter.h>
 
-#include <chrono>
-#include <thread>
-
 #ifdef __APPLE__
 #include <dlfcn.h>
 #include <mach-o/dyld.h>
