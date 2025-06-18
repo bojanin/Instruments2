@@ -11,6 +11,7 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <pbtypes/instruments2.pb.h>
 #include <stdio.h>
 #include <tsb/ipc.h>
 #include <tsb/log_reporter.h>
@@ -22,14 +23,64 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
+template <typename Range, typename DrawFn>
+static void ShowArray(const char* name, const Range& range,
+                      DrawFn&& draw_elem)  // <- accept any callable
+{
+  using std::begin;
+  using std::end;
+  const bool empty = (begin(range) == end(range));
 
+  if (empty) {  // grey, non-openable header
+    ImGui::BeginDisabled();
+    ImGui::TreeNodeEx(
+        name, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+    ImGui::EndDisabled();
+    return;
+  }
+
+  if (ImGui::TreeNode(name)) {  // normal expandable branch
+    if (draw_elem) {
+      for (const auto& elem : range) {
+        draw_elem(elem);
+      }
+    }
+    ImGui::TreePop();
+  }
+}
+// -----------------------------------------------------------------------------
+// Pretty-print one stack’s frames as plain rows (no bullet)
+// -----------------------------------------------------------------------------
+static void DrawStackFrames(const instruments2::Stack& st) {
+  ImGui::Indent();  // keep the block one level deeper
+  for (int i = 0; i < st.frames_size(); ++i) {
+    const auto& f = st.frames(i);
+
+    //  #0  path/to/file.cc:123  in  myFunc()
+    ImGui::Text("#%-2d  %s:%u  in  %s()", i, f.file_name().c_str(), f.line(),
+                f.function().c_str());
+  }
+  ImGui::Unindent();
+}
 std::thread gServerThread;
+
+std::mutex reports_mu_;
+std::vector<instruments2::TsanReport> reports{};
 
 // Main code
 int main(int, char**) {
+  reports.reserve(100);
   tsb::LogReporter::Create();
   tsb::IPCServer::Create();
-  gServerThread = std::thread([]() { tsb::IPCServer::Shared()->RunForever(); });
+  gServerThread = std::thread([]() {
+    tsb::IPCServer::Shared()->AddTsanHandler(
+        [](const instruments2::TsanReport& report) {
+          std::scoped_lock<std::mutex> sl{reports_mu_};
+          reports.emplace_back(report);
+        });
+
+    tsb::IPCServer::Shared()->RunForever();
+  });
   // Setup SDL
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) !=
       0) {
@@ -159,57 +210,54 @@ int main(int, char**) {
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    const std::string program_name =
-        std::format("Instruments2 Sanitizing: {}", "SampleProgram");
+    ImGui::Begin("Instruments2");
+    for (size_t i = 0; i < reports.size(); ++i) {
+      auto& r = reports[i];
+      ImGui::PushID(static_cast<int>(i));  // ensure stable IDs
 
-    // Thread summary: ->
-    //  Thread T1, Write info -> (stack)
-    //  Thread T2, Read info -> (stack
-    const float TEXT_BASE_WIDTH = ImGui::CalcTextSize("A").x;
-    {
-      const ImGuiTableFlags flags =
-          ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_ScrollX |
-          ImGuiTableFlags_ScrollY | ImGuiTableFlags_RowBg |
-          ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
-          ImGuiTableFlags_Resizable;
-
-      ImGui::Begin(program_name.c_str());
-      // Button for program
-      // ImGui::InputTextWithHint("MyId", "Path to your executable",
-      //                         g_child_program.ImGuiRawBuf(),
-      //                         g_child_program.BufSize());
-      // ImGui::SameLine();
-      // if (ImGui::Button("Start Sanitizer")) {
-      //  g_child_program.Start();
-      //}
-
-      ImGui::Text("This is some useful text.");
-
-      if (ImGui::TreeNode("StackTrace1")) {
-        ImGui::TreePop();
-        float indent_step = (float)((int)TEXT_BASE_WIDTH / 2);
-        if (ImGui::BeginTable("Race condition should trigger here?",
-                              (int)headers.size(), flags)) {
-          ImGui::TableSetupColumn("Race Condition Source",
-                                  ImGuiTableColumnFlags_WidthStretch);
-          ImGui::TableSetupColumn("File:LineNo",
-                                  ImGuiTableColumnFlags_WidthFixed,
-                                  TEXT_BASE_WIDTH * 12.0f);
-          ImGui::TableSetupColumn("RaceType:", ImGuiTableColumnFlags_WidthFixed,
-                                  TEXT_BASE_WIDTH * 18.0f);
-          ImGui::TableHeadersRow();
-          for (int row = 0; row < 4; row++) {
-            ImGui::TableNextRow();
-            for (int column = 0; column < (int)headers.size(); column++) {
-              ImGui::Indent(indent_step);
-              ImGui::TableSetColumnIndex(column);
-              ImGui::Text("Row %d Column %d", row, column);
-            }
+      std::string hdr = std::format("[{}]  {}", i, r.description());
+      if (ImGui::CollapsingHeader(hdr.c_str(),
+                                  ImGuiTreeNodeFlags_DefaultOpen)) {
+        // ── Stacks ────────────────────────────────
+        ShowArray("Stacks", r.stacks(), [](const instruments2::Stack& s) {
+          // Each Stack is itself a mini-tree
+          std::string label = std::format("Stack #{}", s.idx());
+          if (ImGui::TreeNode(label.c_str())) {
+            DrawStackFrames(s);
+            ImGui::TreePop();
           }
-          ImGui::Unindent(indent_step * (float)headers.size());
-          ImGui::EndTable();
-        }
+        });
+
+        // ── Memory ops ───────────────────────────
+        ShowArray("Memory Accesses", r.mops(), [](const instruments2::Mop& m) {
+          // WRITE / READ + optional “atomic” tag
+          const char* op = m.write() ? "Write" : "Read";
+          const char* atom = m.atomic() ? " (atomic)" : "";
+          const std::string tid =
+              m.tid() == 0 ? "0 (main thread)" : std::format("{}", m.tid());
+
+          // 0xADDR + size + tid
+          const std::string lbl = std::format(
+              "{}{} addr: 0x{:X}  size: {}B  tid:{}",  // <-- everything but
+                                                       // idx & trace
+              op, atom, m.addr(), m.size(), tid);
+          if (ImGui::TreeNode(lbl.c_str())) {
+            DrawStackFrames(m.trace());
+            ImGui::TreePop();
+          }
+        });
+
+        // Locs, Mutexes, Threads, … (same pattern) …
+        ShowArray("Memory Locations", r.locs(),
+                  [](const instruments2::Loc& loc) { (void)loc; });
+        ShowArray("Mutexes", r.mutexes(),
+                  [](const instruments2::MutexInfo& mut) { (void)mut; });
+        ShowArray("Threads", r.threads(),
+                  [](const instruments2::ThreadInfo& thread_info) {
+                    (void)thread_info;
+                  });
       }
+      ImGui::PopID();
     }
     ImGui::End();
 

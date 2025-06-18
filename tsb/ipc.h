@@ -36,6 +36,15 @@ class IPCServer : public instruments2::DesktopApp::Service {
   ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
                                    const instruments2::TsanReport* msg,
                                    instruments2::Void* out) override;
+  void AddTsanHandler(
+      std::function<void(const instruments2::TsanReport&)> handler) {
+    tsan_handler_ = handler;
+  };
+
+  void RemoveTsanHandler(
+      std::function<void(const instruments2::TsanReport&)> handler) {
+    tsan_handler_ = handler;
+  };
 
   // Init related functions
   IPCServer(int port);
@@ -46,6 +55,7 @@ class IPCServer : public instruments2::DesktopApp::Service {
   TSB_DISALLOW_MOVE(IPCServer);
 
  private:
+  std::function<void(const instruments2::TsanReport&)> tsan_handler_ = nullptr;
   std::unique_ptr<grpc::Server> grpc_server_;
   const int port_;
 };

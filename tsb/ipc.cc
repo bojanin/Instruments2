@@ -38,8 +38,9 @@ IPCServer::~IPCServer() {
 ::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
                                             const instruments2::TsanReport* msg,
                                             instruments2::Void* out) {
-  SPDLOG_INFO("GOt Something");
-  SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
+  if (tsan_handler_) {
+    tsan_handler_(*msg);
+  }
   return grpc::Status::OK;
 }
 void IPCServer::SetExitFlag() { grpc_server_->Shutdown(); }
