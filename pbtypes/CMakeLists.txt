@@ -1,7 +1,7 @@
 find_package(gRPC CONFIG REQUIRED)
 find_package(Protobuf REQUIRED)
 
-add_library(pbtypes bandicoot.proto)
+add_library(pbtypes instruments2.proto)
 
 include_directories(${Protobuf_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

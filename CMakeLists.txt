@@ -3,7 +3,7 @@ if(APPLE)
 else()
   cmake_minimum_required(VERSION 3.22)
 endif()
-project(Bandicoot)
+project(instruments2)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 23)
@@ -45,24 +45,24 @@ SET(BASEPATH "${CMAKE_SOURCE_DIR}")
 INCLUDE_DIRECTORIES("${BASEPATH}")
 
 # Executable
-add_executable(bandicoot ${SOURCES})
+add_executable(instruments2 ${SOURCES})
 
 target_include_directories(
-  bandicoot PRIVATE ${IMGUI_DIR} ${IMGUI_DIR}/backends
+  instruments2 PRIVATE ${IMGUI_DIR} ${IMGUI_DIR}/backends
                     ${SDL2_INCLUDE_DIRS})
-target_include_directories(bandicoot PRIVATE ${OPENGL_INCLUDE_DIR})
+target_include_directories(instruments2 PRIVATE ${OPENGL_INCLUDE_DIR})
 
-target_include_directories(bandicoot SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
+target_include_directories(instruments2 SYSTEM PRIVATE ${PROJECT_SOURCE_DIR})
 
-target_link_libraries(bandicoot PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
+target_link_libraries(instruments2 PRIVATE ${SDL2_LIBRARIES} OpenGL::GL)
 # https://github.com/gabime/spdlog/blob/v1.x/example/CMakeLists.txt
-target_link_libraries(bandicoot PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
-target_link_libraries(bandicoot PUBLIC tsb gRPC::grpc++ pbtypes)
+target_link_libraries(instruments2 PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
+target_link_libraries(instruments2 PUBLIC tsb gRPC::grpc++ pbtypes)
 
 
 # Build flags
 target_compile_options(
-  bandicoot
+  instruments2
   PRIVATE -g
           -gcolumn-info
           -O3
@@ -83,11 +83,5 @@ target_compile_options(
           -Wimplicit-fallthrough
           -march=native)
 
-set_target_properties(bandicoot PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+set_target_properties(instruments2 PROPERTIES RUNTIME_OUTPUT_DIRECTORY
                                            ${BUILD_DIR})
-
-add_custom_target(
-  run
-  COMMAND ${CMAKE_COMMAND} -E env ${BUILD_DIR}/bandicoot
-  DEPENDS bandicoot
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

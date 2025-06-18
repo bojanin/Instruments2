@@ -1,4 +1,4 @@
-# bandicoot
+# Instruments2
 
 requirements:
 - clang (ALL versions that have tsan support)
@@ -23,11 +23,12 @@ Run in order:
 Configure in release mode
 `cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release`
 
-Build the captain_hook, the shared lib that hooks into the tsan runtime and communicates back to bandicoot
+Build the captain_hook, the shared lib that hooks into the tsan runtime and communicates back to
+instruments2
 `ninja -C build -v captain_hook -j12`
 
-Build Bandicoot:
-`cmake --build build --target bandicoot`
+Build Instruments2:
+`cmake --build build --target instruments2`
 
 Build TinyRace:
 `clang++ -std=c++23 captain_hook/tiny_race.cc -fsanitize=thread -g -O2 -o captain_hook/tiny_race`

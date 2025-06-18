@@ -1,10 +1,10 @@
 #include <grpc++/grpc++.h>
-#include <pbtypes/bandicoot.grpc.pb.h>
-#include <tsb/server.h>
+#include <pbtypes/instruments2.grpc.pb.h>
+#include <tsb/ipc.h>
 
 #include <cstdlib>
 
-namespace captain_hook {
+namespace tsb {
 
 // Shared will construct the server automatically if it hasn't been create
 // already.
@@ -15,9 +15,9 @@ std::shared_ptr<IPCServer> IPCServer::Shared() {
   if (TSB_LIKELY(shared)) {
     return shared;
   }
-  const char* port = std::getenv(kServerPortEnvVar);
+  const char* port = std::getenv(tsb::kServerPortEnvVar);
   if (TSB_LIKELY(port == NULL)) {
-    shared = std::make_shared<IPCServer>(kDefaultServerPort);
+    shared = std::make_shared<IPCServer>(tsb::kDefaultServerPort);
   } else {
     shared = std::make_shared<IPCServer>(std::atoi(port));
   }
@@ -28,7 +28,7 @@ IPCServer::IPCServer(int port) : port_(port) {
   SPDLOG_INFO("using protobuf {}", google::protobuf::internal::VersionString(
                                        GOOGLE_PROTOBUF_VERSION));
   SPDLOG_INFO("TsanReport: {}",
-              bandicoot::TsanReport::descriptor()->DebugString());
+              instruments2::TsanReport::descriptor()->DebugString());
 }
 IPCServer::~IPCServer() {
   SPDLOG_INFO("IPC Server destructing");
@@ -36,8 +36,8 @@ IPCServer::~IPCServer() {
 }
 
 ::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
-                                            const bandicoot::TsanReport* msg,
-                                            bandicoot::Void* out) {
+                                            const instruments2::TsanReport* msg,
+                                            instruments2::Void* out) {
   SPDLOG_INFO("GOt Something");
   SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
   return grpc::Status::OK;
@@ -57,4 +57,4 @@ void IPCServer::RunForever() {
   SPDLOG_INFO("Server Shutting down...");
 }
 
-}  // namespace captain_hook
+}  // namespace tsb

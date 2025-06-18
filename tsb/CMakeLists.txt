@@ -1,7 +1,7 @@
 add_library(tsb 
     STATIC
     log_reporter.cc
-    server.cc
+    ipc.cc
     dispatch_queue.cc
 )
 

@@ -12,8 +12,8 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <stdio.h>
+#include <tsb/ipc.h>
 #include <tsb/log_reporter.h>
-#include <tsb/server.h>
 
 #include <format>
 #include <string>
@@ -33,9 +33,8 @@ std::thread gServerThread;
 // Main code
 int main(int, char**) {
   tsb::LogReporter::Create();
-  captain_hook::IPCServer::Create();
-  gServerThread =
-      std::thread([]() { captain_hook::IPCServer::Shared()->RunForever(); });
+  tsb::IPCServer::Create();
+  gServerThread = std::thread([]() { tsb::IPCServer::Shared()->RunForever(); });
   // Setup SDL
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) !=
       0) {
@@ -173,7 +172,7 @@ int main(int, char**) {
     ImGui::NewFrame();
 
     const std::string program_name =
-        std::format("Bandicoot Sanitizing: {}", "SampleProgram");
+        std::format("Instruments2 Sanitizing: {}", "SampleProgram");
 
     // Thread summary: ->
     //  Thread T1, Write info -> (stack)

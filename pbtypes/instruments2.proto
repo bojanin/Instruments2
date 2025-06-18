@@ -1,5 +1,5 @@
 syntax = "proto3";
-package bandicoot;
+package instruments2;
 
 // ───────── low-level frames ─────────
 message StackFrame {
