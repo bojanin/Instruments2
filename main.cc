@@ -49,6 +49,12 @@ static void ShowArray(const char* name, const Range& range,
     ImGui::TreePop();
   }
 }
+static std::string MakeTid(const uint32_t tid) {
+  if (tid == 0) {
+    return "0 (main thread)";
+  }
+  return std::format("{}", tid);
+}
 // -----------------------------------------------------------------------------
 // Pretty-print one stack’s frames as plain rows (no bullet)
 // -----------------------------------------------------------------------------
@@ -57,7 +63,7 @@ static void DrawStackFrames(const instruments2::Stack& st) {
   for (int i = 0; i < st.frames_size(); ++i) {
     const auto& f = st.frames(i);
 
-    //  #0  path/to/file.cc:123  in  myFunc()
+    //  #0  path/to/file.cc:123  in  myFunc() (libmylib+offset)
     ImGui::Text("#%-2d  %s:%u in %s() %s", i, f.file_name().c_str(), f.line(),
                 f.function().c_str(), f.repr().c_str());
   }
@@ -234,8 +240,7 @@ int main(int, char**) {
           // WRITE / READ + optional “atomic” tag
           const char* op = m.write() ? "Write" : "Read";
           const char* atom = m.atomic() ? " (atomic)" : "";
-          const std::string tid =
-              m.tid() == 0 ? "0 (main thread)" : std::format("{}", m.tid());
+          const std::string tid = MakeTid(m.tid());
 
           // 0xADDR + size + tid
           const std::string lbl = std::format(
@@ -251,16 +256,25 @@ int main(int, char**) {
         // Locs, Mutexes, Threads, … (same pattern) …
         ShowArray(
             "Memory Locations", r.locs(), [](const instruments2::Loc& loc) {
-              // title:   <type>  @0xSTART-0xEND  size:N  tid:M  [suppressible]
-              std::string label = std::format(
-                  "{}  @0x{:X}-0x{:X}  size:{}B  tid:{}{}", loc.type(),
-                  loc.start(), loc.start() + loc.size(), loc.size(), loc.tid(),
-                  loc.suppressable() ? "  [suppressible]" : "");
+              // title:   location=<type>  @0xSTART-0xEND  size:N  tid:M
+              // [suppressible] <no stack trace if none exists>
+              const std::string label =
+                  std::format("location={}  0x{:X}-0x{:X}  size:{}B  tid:{}{}",
+                              loc.type(), loc.start(), loc.start() + loc.size(),
+                              loc.size(), MakeTid(loc.tid()),
+                              loc.suppressable() ? "  [suppressible]" : "");
 
               if (ImGui::TreeNode(label.c_str())) {
-                if (loc.fd() >= 0) ImGui::Text("fd: %d", loc.fd());
+                // TODO(bojanin): should this be >2, should we show all?
+                if (loc.fd() > 0) {
+                  ImGui::Text("fd: %d", loc.fd());
+                }
 
-                DrawStackFrames(loc.trace());  // <-- helper from earlier
+                if (loc.trace().frames().empty()) {
+                  ImGui::Text("<No stack trace available>");
+                } else {
+                  DrawStackFrames(loc.trace());
+                }
                 ImGui::TreePop();
               }
             });
