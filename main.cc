@@ -58,8 +58,8 @@ static void DrawStackFrames(const instruments2::Stack& st) {
     const auto& f = st.frames(i);
 
     //  #0  path/to/file.cc:123  in  myFunc()
-    ImGui::Text("#%-2d  %s:%u  in  %s() [%s]", i, f.file_name().c_str(),
-                f.line(), f.function().c_str(), f.repr().c_str());
+    ImGui::Text("#%-2d  %s:%u in %s() %s", i, f.file_name().c_str(), f.line(),
+                f.function().c_str(), f.repr().c_str());
   }
   ImGui::Unindent();
 }
