@@ -23,11 +23,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
 
-// This example can also compile and run with Emscripten! See
-// 'Makefile.emscripten' for details.
-#ifdef __EMSCRIPTEN__
-#include "../libs/emscripten/emscripten_mainloop_stub.h"
-#endif
 std::thread gServerThread;
 
 // Main code
@@ -82,9 +77,9 @@ int main(int, char**) {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
                         SDL_WINDOW_ALLOW_HIGHDPI);
-  SDL_Window* window = SDL_CreateWindow(
-      "Dear ImGui SDL2+OpenGL3 example", SDL_WINDOWPOS_CENTERED,
-      SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+  SDL_Window* window =
+      SDL_CreateWindow("Instruments2", SDL_WINDOWPOS_CENTERED,
+                       SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
   if (window == nullptr) {
     printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
     return -1;
@@ -101,11 +96,13 @@ int main(int, char**) {
   (void)io;
   io.ConfigFlags |=
       ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-  io.ConfigFlags |=
-      ImGuiConfigFlags_NavEnableGamepad;             // Enable Gamepad Controls
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;  // Enable Docking
-  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;  // Enable Multi-Viewport
-  // io.ConfigViewportsNoAutoMerge = true;
+                                           // io.ConfigFlags |=
+  //     ImGuiConfigFlags_NavEnableGamepad;             // Enable Gamepad
+  //     Controls
+  // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;    // Enable Docking
+  // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;  // Enable
+  io.ConfigFlags |= ImGuiWindowFlags_NoTitleBar;
+  // Multi-Viewport io.ConfigViewportsNoAutoMerge = true;
   // io.ConfigViewportsNoTaskBarIcon = true;
 
   // Setup Dear ImGui style
@@ -133,16 +130,7 @@ int main(int, char**) {
   // Main loop
   bool done = false;
   std::vector<std::string> headers = {"Stack Frame", "File Info", "Extra"};
-#ifdef __EMSCRIPTEN__
-  // For an Emscripten build we are disabling file-system access, so let's not
-  // attempt to do a fopen() of the imgui.ini file. You may manually call
-  // LoadIniSettingsFromMemory() to load settings from your own storage.
-  io.IniFilename = nullptr;
-  EMSCRIPTEN_MAINLOOP_BEGIN
-#else
-  while (!done)
-#endif
-  {
+  while (!done) {
     // Poll and handle events (inputs, window resize, etc.)
     // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to
     // tell if dear imgui wants to use your inputs.
@@ -253,9 +241,6 @@ int main(int, char**) {
 
     SDL_GL_SwapWindow(window);
   }
-#ifdef __EMSCRIPTEN__
-  EMSCRIPTEN_MAINLOOP_END;
-#endif
 
   // Cleanup
   ImGui_ImplOpenGL3_Shutdown();
