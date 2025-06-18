@@ -6,6 +6,8 @@ requirements:
   - MAC:
   - `brew install spdlog`
   - `brew install llvm`
+  - `brew install protobuf`
+    - must be > 31, if not `brew --reinstall-from-source protobuf`
   - ensure llvm in path
   - Linux:
   - `sudo apt install libspdlog-dev`

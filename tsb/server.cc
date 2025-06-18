@@ -24,7 +24,12 @@ std::shared_ptr<IPCServer> IPCServer::Shared() {
   return shared;
 }
 
-IPCServer::IPCServer(int port) : port_(port) {}
+IPCServer::IPCServer(int port) : port_(port) {
+  SPDLOG_INFO("using protobuf {}", google::protobuf::internal::VersionString(
+                                       GOOGLE_PROTOBUF_VERSION));
+  SPDLOG_INFO("TsanReport: {}",
+              bandicoot::TsanReport::descriptor()->DebugString());
+}
 IPCServer::~IPCServer() {
   SPDLOG_INFO("IPC Server destructing");
   grpc_server_->Shutdown();

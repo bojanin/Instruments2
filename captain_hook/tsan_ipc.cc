@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <tsb/log_reporter.h>
 
+#include <fstream>
+
 #ifdef __APPLE__
 #include <dlfcn.h>
 #include <mach-o/dyld.h>
@@ -34,7 +36,10 @@ __attribute__((constructor)) void Init() {
   // before.
   (void)GetClient();
   GetQueue().Dispatch([]() {});
-  SPDLOG_WARN("Init Complete");
+  SPDLOG_INFO("==TSAN SHLIB Init==");
+  SPDLOG_INFO("using protobuf {}", google::protobuf::internal::VersionString(
+                                       GOOGLE_PROTOBUF_VERSION));
+  SPDLOG_INFO("==TSAN SHLIB End Init==");
 }
 
 __attribute__((destructor)) void Deinit() {
@@ -211,12 +216,10 @@ static bandicoot::StackFrame makeFrame(void* pc) {
 }
 
 // Append user frames from |trace| into proto repeated<StackFrame>.
-template <class RepeatedPtrField>
-static void appendFrames(void** trace, RepeatedPtrField* dst) {
+static void appendFrames(void** trace, bandicoot::Stack& dst) {
   for (int i = 0; trace[i] && i < TRACE_MAX; ++i) {
     std::string txt = makeFrame(trace[i]).repr();
-    if (txt.find("libclang_rt.tsan") != std::string::npos) continue;
-    *dst->Add() = makeFrame(trace[i]);
+    *dst.add_frames() = makeFrame(trace[i]);
   }
 }
 
@@ -267,7 +270,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
   rep.set_description(desc ? desc : "");
   rep.set_duplicate_count(static_cast<uint32_t>(dup));
   for (int i = 0; i < TRACE_MAX && sleep_trace[i]; ++i) {
-    appendFrames(sleep_trace, rep.mutable_sleep_trace()->mutable_frames());
+    appendFrames(sleep_trace, *rep.mutable_sleep_trace());
   }
 
   raw = "==================\n";
@@ -281,7 +284,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
     __tsan_get_report_stack(report, i, trace, TRACE_MAX);
     auto* stk = rep.add_stacks();
     stk->set_idx(i);
-    appendFrames(trace, stk->mutable_frames());
+    appendFrames(trace, *stk);
   }
 
   // ── MOPS (and remember first read/write) -----------------------------------
@@ -301,7 +304,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
     mp->set_write(wr);
     mp->set_atomic(at);
     mp->set_addr(reinterpret_cast<uint64_t>(addr));
-    appendFrames(trace, mp->mutable_trace()->mutable_frames());
+    appendFrames(trace, *mp->mutable_trace());
 
     if (wr && first_write == -1) first_write = i;
     if (!wr && first_read == -1) first_read = i;
@@ -327,7 +330,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
     lp->set_tid(tid);
     lp->set_fd(fd);
     lp->set_suppressable(sup);
-    appendFrames(trace, lp->mutable_trace()->mutable_frames());
+    appendFrames(trace, *lp->mutable_trace());
   }
 
   // ── MUTEXES ----------------------------------------------------------------
@@ -345,7 +348,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
     mp->set_mutex_id(mid);
     mp->set_addr(reinterpret_cast<uint64_t>(addr));
     mp->set_destroyed(destroyed);
-    appendFrames(trace, mp->mutable_trace()->mutable_frames());
+    appendFrames(trace, *mp->mutable_trace());
   }
 
   // ── THREADS ----------------------------------------------------------------
@@ -365,7 +368,7 @@ bandicoot::TsanReport BuildTsanReport(void* report) {
     tp->set_running(running);
     if (name) tp->set_name(name);
     tp->set_parent_tid(ptid);
-    appendFrames(trace, tp->mutable_trace()->mutable_frames());
+    appendFrames(trace, *tp->mutable_trace());
   }
 
   // ── UNIQUE TIDs ------------------------------------------------------------
@@ -399,6 +402,8 @@ extern "C" void __tsan_on_report(void* report) {
                   status.error_message());
     }
   });
-
+  std::string blob;
+  pb_repr.SerializeToString(&blob);
+  std::ofstream("tsan.bin", std::ios::binary).write(blob.data(), blob.size());
   SPDLOG_INFO("Sent: {}", pb_repr.DebugString());
 }
