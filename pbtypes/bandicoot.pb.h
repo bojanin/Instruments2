@@ -53,9 +53,30 @@ struct TableStruct_bandicoot_2eproto {
 extern const ::google::protobuf::internal::DescriptorTable
     descriptor_table_bandicoot_2eproto;
 namespace bandicoot {
-class TestMsg;
-struct TestMsgDefaultTypeInternal;
-extern TestMsgDefaultTypeInternal _TestMsg_default_instance_;
+class Loc;
+struct LocDefaultTypeInternal;
+extern LocDefaultTypeInternal _Loc_default_instance_;
+class Mop;
+struct MopDefaultTypeInternal;
+extern MopDefaultTypeInternal _Mop_default_instance_;
+class MutexInfo;
+struct MutexInfoDefaultTypeInternal;
+extern MutexInfoDefaultTypeInternal _MutexInfo_default_instance_;
+class Stack;
+struct StackDefaultTypeInternal;
+extern StackDefaultTypeInternal _Stack_default_instance_;
+class StackFrame;
+struct StackFrameDefaultTypeInternal;
+extern StackFrameDefaultTypeInternal _StackFrame_default_instance_;
+class ThreadInfo;
+struct ThreadInfoDefaultTypeInternal;
+extern ThreadInfoDefaultTypeInternal _ThreadInfo_default_instance_;
+class TsanReport;
+struct TsanReportDefaultTypeInternal;
+extern TsanReportDefaultTypeInternal _TsanReport_default_instance_;
+class UniqueTid;
+struct UniqueTidDefaultTypeInternal;
+extern UniqueTidDefaultTypeInternal _UniqueTid_default_instance_;
 class Void;
 struct VoidDefaultTypeInternal;
 extern VoidDefaultTypeInternal _Void_default_instance_;
@@ -130,7 +151,7 @@ class Void final : public ::google::protobuf::internal::ZeroFieldsBase
     return reinterpret_cast<const Void*>(
         &_Void_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 1;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(Void& a, Void& b) { a.Swap(&b); }
   inline void Swap(Void* other) {
     if (other == this) return;
@@ -217,31 +238,31 @@ class Void final : public ::google::protobuf::internal::ZeroFieldsBase
 };
 // -------------------------------------------------------------------
 
-class TestMsg final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:bandicoot.TestMsg) */ {
+class UniqueTid final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.UniqueTid) */ {
  public:
-  inline TestMsg() : TestMsg(nullptr) {}
-  ~TestMsg() PROTOBUF_FINAL;
+  inline UniqueTid() : UniqueTid(nullptr) {}
+  ~UniqueTid() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(TestMsg* msg, std::destroying_delete_t) {
+  void operator delete(UniqueTid* msg, std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(TestMsg));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(UniqueTid));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR TestMsg(
+  explicit PROTOBUF_CONSTEXPR UniqueTid(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline TestMsg(const TestMsg& from) : TestMsg(nullptr, from) {}
-  inline TestMsg(TestMsg&& from) noexcept
-      : TestMsg(nullptr, std::move(from)) {}
-  inline TestMsg& operator=(const TestMsg& from) {
+  inline UniqueTid(const UniqueTid& from) : UniqueTid(nullptr, from) {}
+  inline UniqueTid(UniqueTid&& from) noexcept
+      : UniqueTid(nullptr, std::move(from)) {}
+  inline UniqueTid& operator=(const UniqueTid& from) {
     CopyFrom(from);
     return *this;
   }
-  inline TestMsg& operator=(TestMsg&& from) noexcept {
+  inline UniqueTid& operator=(UniqueTid&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -269,16 +290,16 @@ class TestMsg final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const TestMsg& default_instance() {
+  static const UniqueTid& default_instance() {
     return *internal_default_instance();
   }
-  static inline const TestMsg* internal_default_instance() {
-    return reinterpret_cast<const TestMsg*>(
-        &_TestMsg_default_instance_);
+  static inline const UniqueTid* internal_default_instance() {
+    return reinterpret_cast<const UniqueTid*>(
+        &_UniqueTid_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 0;
-  friend void swap(TestMsg& a, TestMsg& b) { a.Swap(&b); }
-  inline void Swap(TestMsg* other) {
+  static constexpr int kIndexInFileMessages = 6;
+  friend void swap(UniqueTid& a, UniqueTid& b) { a.Swap(&b); }
+  inline void Swap(UniqueTid* other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -286,7 +307,7 @@ class TestMsg final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(TestMsg* other) {
+  void UnsafeArenaSwap(UniqueTid* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -294,13 +315,13 @@ class TestMsg final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  TestMsg* New(::google::protobuf::Arena* arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<TestMsg>(arena);
+  UniqueTid* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<UniqueTid>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const TestMsg& from);
+  void CopyFrom(const UniqueTid& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const TestMsg& from) { TestMsg::MergeImpl(*this, from); }
+  void MergeFrom(const UniqueTid& from) { UniqueTid::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -337,18 +358,18 @@ class TestMsg final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(TestMsg* other);
+  void InternalSwap(UniqueTid* other);
  private:
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "bandicoot.TestMsg"; }
+  static ::absl::string_view FullMessageName() { return "bandicoot.UniqueTid"; }
 
  protected:
-  explicit TestMsg(::google::protobuf::Arena* arena);
-  TestMsg(::google::protobuf::Arena* arena, const TestMsg& from);
-  TestMsg(::google::protobuf::Arena* arena, TestMsg&& from) noexcept
-      : TestMsg(arena) {
+  explicit UniqueTid(::google::protobuf::Arena* arena);
+  UniqueTid(::google::protobuf::Arena* arena, const UniqueTid& from);
+  UniqueTid(::google::protobuf::Arena* arena, UniqueTid&& from) noexcept
+      : UniqueTid(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
@@ -363,48 +384,36 @@ class TestMsg final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kFirstFieldNumber = 1,
-    kSecondFieldNumber = 2,
+    kIdxFieldNumber = 1,
+    kTidFieldNumber = 2,
   };
-  // string first = 1;
-  void clear_first() ;
-  const std::string& first() const;
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_first(Arg_&& arg, Args_... args);
-  std::string* mutable_first();
-  PROTOBUF_NODISCARD std::string* release_first();
-  void set_allocated_first(std::string* value);
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
 
   private:
-  const std::string& _internal_first() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_first(
-      const std::string& value);
-  std::string* _internal_mutable_first();
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
 
   public:
-  // string second = 2;
-  void clear_second() ;
-  const std::string& second() const;
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_second(Arg_&& arg, Args_... args);
-  std::string* mutable_second();
-  PROTOBUF_NODISCARD std::string* release_second();
-  void set_allocated_second(std::string* value);
+  // uint32 tid = 2;
+  void clear_tid() ;
+  ::uint32_t tid() const;
+  void set_tid(::uint32_t value);
 
   private:
-  const std::string& _internal_second() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_second(
-      const std::string& value);
-  std::string* _internal_mutable_second();
+  ::uint32_t _internal_tid() const;
+  void _internal_set_tid(::uint32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:bandicoot.TestMsg)
+  // @@protoc_insertion_point(class_scope:bandicoot.UniqueTid)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       1, 2, 0,
-      37, 2>
+      0, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -420,10 +429,1905 @@ class TestMsg final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena);
     inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
                           ::google::protobuf::Arena* arena, const Impl_& from,
-                          const TestMsg& from_msg);
-    ::google::protobuf::internal::ArenaStringPtr first_;
-    ::google::protobuf::internal::ArenaStringPtr second_;
+                          const UniqueTid& from_msg);
+    ::uint32_t idx_;
+    ::uint32_t tid_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class StackFrame final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.StackFrame) */ {
+ public:
+  inline StackFrame() : StackFrame(nullptr) {}
+  ~StackFrame() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(StackFrame* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(StackFrame));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR StackFrame(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline StackFrame(const StackFrame& from) : StackFrame(nullptr, from) {}
+  inline StackFrame(StackFrame&& from) noexcept
+      : StackFrame(nullptr, std::move(from)) {}
+  inline StackFrame& operator=(const StackFrame& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StackFrame& operator=(StackFrame&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const StackFrame& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const StackFrame* internal_default_instance() {
+    return reinterpret_cast<const StackFrame*>(
+        &_StackFrame_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 0;
+  friend void swap(StackFrame& a, StackFrame& b) { a.Swap(&b); }
+  inline void Swap(StackFrame* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StackFrame* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  StackFrame* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<StackFrame>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const StackFrame& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const StackFrame& from) { StackFrame::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(StackFrame* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.StackFrame"; }
+
+ protected:
+  explicit StackFrame(::google::protobuf::Arena* arena);
+  StackFrame(::google::protobuf::Arena* arena, const StackFrame& from);
+  StackFrame(::google::protobuf::Arena* arena, StackFrame&& from) noexcept
+      : StackFrame(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kFileNameFieldNumber = 1,
+    kFunctionFieldNumber = 3,
+    kReprFieldNumber = 4,
+    kLineFieldNumber = 2,
+  };
+  // string file_name = 1;
+  void clear_file_name() ;
+  const std::string& file_name() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_file_name(Arg_&& arg, Args_... args);
+  std::string* mutable_file_name();
+  PROTOBUF_NODISCARD std::string* release_file_name();
+  void set_allocated_file_name(std::string* value);
+
+  private:
+  const std::string& _internal_file_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_name(
+      const std::string& value);
+  std::string* _internal_mutable_file_name();
+
+  public:
+  // string function = 3;
+  void clear_function() ;
+  const std::string& function() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_function(Arg_&& arg, Args_... args);
+  std::string* mutable_function();
+  PROTOBUF_NODISCARD std::string* release_function();
+  void set_allocated_function(std::string* value);
+
+  private:
+  const std::string& _internal_function() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_function(
+      const std::string& value);
+  std::string* _internal_mutable_function();
+
+  public:
+  // string repr = 4;
+  void clear_repr() ;
+  const std::string& repr() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_repr(Arg_&& arg, Args_... args);
+  std::string* mutable_repr();
+  PROTOBUF_NODISCARD std::string* release_repr();
+  void set_allocated_repr(std::string* value);
+
+  private:
+  const std::string& _internal_repr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_repr(
+      const std::string& value);
+  std::string* _internal_mutable_repr();
+
+  public:
+  // uint32 line = 2;
+  void clear_line() ;
+  ::uint32_t line() const;
+  void set_line(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_line() const;
+  void _internal_set_line(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.StackFrame)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      2, 4, 0,
+      50, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const StackFrame& from_msg);
+    ::google::protobuf::internal::ArenaStringPtr file_name_;
+    ::google::protobuf::internal::ArenaStringPtr function_;
+    ::google::protobuf::internal::ArenaStringPtr repr_;
+    ::uint32_t line_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Stack final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.Stack) */ {
+ public:
+  inline Stack() : Stack(nullptr) {}
+  ~Stack() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(Stack* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Stack));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR Stack(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline Stack(const Stack& from) : Stack(nullptr, from) {}
+  inline Stack(Stack&& from) noexcept
+      : Stack(nullptr, std::move(from)) {}
+  inline Stack& operator=(const Stack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Stack& operator=(Stack&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Stack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Stack* internal_default_instance() {
+    return reinterpret_cast<const Stack*>(
+        &_Stack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 1;
+  friend void swap(Stack& a, Stack& b) { a.Swap(&b); }
+  inline void Swap(Stack* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Stack* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Stack* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Stack>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Stack& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const Stack& from) { Stack::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(Stack* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.Stack"; }
+
+ protected:
+  explicit Stack(::google::protobuf::Arena* arena);
+  Stack(::google::protobuf::Arena* arena, const Stack& from);
+  Stack(::google::protobuf::Arena* arena, Stack&& from) noexcept
+      : Stack(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kFramesFieldNumber = 2,
+    kIdxFieldNumber = 1,
+  };
+  // repeated .bandicoot.StackFrame frames = 2;
+  int frames_size() const;
+  private:
+  int _internal_frames_size() const;
+
+  public:
+  void clear_frames() ;
+  ::bandicoot::StackFrame* mutable_frames(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>* mutable_frames();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>& _internal_frames() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>* _internal_mutable_frames();
+  public:
+  const ::bandicoot::StackFrame& frames(int index) const;
+  ::bandicoot::StackFrame* add_frames();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>& frames() const;
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.Stack)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      1, 2, 1,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const Stack& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::StackFrame > frames_;
+    ::uint32_t idx_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ThreadInfo final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.ThreadInfo) */ {
+ public:
+  inline ThreadInfo() : ThreadInfo(nullptr) {}
+  ~ThreadInfo() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ThreadInfo* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ThreadInfo));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ThreadInfo(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline ThreadInfo(const ThreadInfo& from) : ThreadInfo(nullptr, from) {}
+  inline ThreadInfo(ThreadInfo&& from) noexcept
+      : ThreadInfo(nullptr, std::move(from)) {}
+  inline ThreadInfo& operator=(const ThreadInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ThreadInfo& operator=(ThreadInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ThreadInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ThreadInfo* internal_default_instance() {
+    return reinterpret_cast<const ThreadInfo*>(
+        &_ThreadInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 5;
+  friend void swap(ThreadInfo& a, ThreadInfo& b) { a.Swap(&b); }
+  inline void Swap(ThreadInfo* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ThreadInfo* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ThreadInfo* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ThreadInfo>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ThreadInfo& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ThreadInfo& from) { ThreadInfo::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ThreadInfo* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.ThreadInfo"; }
+
+ protected:
+  explicit ThreadInfo(::google::protobuf::Arena* arena);
+  ThreadInfo(::google::protobuf::Arena* arena, const ThreadInfo& from);
+  ThreadInfo(::google::protobuf::Arena* arena, ThreadInfo&& from) noexcept
+      : ThreadInfo(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kNameFieldNumber = 5,
+    kTraceFieldNumber = 7,
+    kIdxFieldNumber = 1,
+    kTidFieldNumber = 2,
+    kOsIdFieldNumber = 3,
+    kRunningFieldNumber = 4,
+    kParentTidFieldNumber = 6,
+  };
+  // string name = 5;
+  void clear_name() ;
+  const std::string& name() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_name(Arg_&& arg, Args_... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* value);
+
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(
+      const std::string& value);
+  std::string* _internal_mutable_name();
+
+  public:
+  // .bandicoot.Stack trace = 7;
+  bool has_trace() const;
+  void clear_trace() ;
+  const ::bandicoot::Stack& trace() const;
+  PROTOBUF_NODISCARD ::bandicoot::Stack* release_trace();
+  ::bandicoot::Stack* mutable_trace();
+  void set_allocated_trace(::bandicoot::Stack* value);
+  void unsafe_arena_set_allocated_trace(::bandicoot::Stack* value);
+  ::bandicoot::Stack* unsafe_arena_release_trace();
+
+  private:
+  const ::bandicoot::Stack& _internal_trace() const;
+  ::bandicoot::Stack* _internal_mutable_trace();
+
+  public:
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
+
+  public:
+  // uint32 tid = 2;
+  void clear_tid() ;
+  ::uint32_t tid() const;
+  void set_tid(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tid() const;
+  void _internal_set_tid(::uint32_t value);
+
+  public:
+  // uint64 os_id = 3;
+  void clear_os_id() ;
+  ::uint64_t os_id() const;
+  void set_os_id(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_os_id() const;
+  void _internal_set_os_id(::uint64_t value);
+
+  public:
+  // bool running = 4;
+  void clear_running() ;
+  bool running() const;
+  void set_running(bool value);
+
+  private:
+  bool _internal_running() const;
+  void _internal_set_running(bool value);
+
+  public:
+  // uint32 parent_tid = 6;
+  void clear_parent_tid() ;
+  ::uint32_t parent_tid() const;
+  void set_parent_tid(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_parent_tid() const;
+  void _internal_set_parent_tid(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.ThreadInfo)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 7, 1,
+      33, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const ThreadInfo& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr name_;
+    ::bandicoot::Stack* trace_;
+    ::uint32_t idx_;
+    ::uint32_t tid_;
+    ::uint64_t os_id_;
+    bool running_;
+    ::uint32_t parent_tid_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MutexInfo final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.MutexInfo) */ {
+ public:
+  inline MutexInfo() : MutexInfo(nullptr) {}
+  ~MutexInfo() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(MutexInfo* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(MutexInfo));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR MutexInfo(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline MutexInfo(const MutexInfo& from) : MutexInfo(nullptr, from) {}
+  inline MutexInfo(MutexInfo&& from) noexcept
+      : MutexInfo(nullptr, std::move(from)) {}
+  inline MutexInfo& operator=(const MutexInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MutexInfo& operator=(MutexInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MutexInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MutexInfo* internal_default_instance() {
+    return reinterpret_cast<const MutexInfo*>(
+        &_MutexInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 4;
+  friend void swap(MutexInfo& a, MutexInfo& b) { a.Swap(&b); }
+  inline void Swap(MutexInfo* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MutexInfo* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MutexInfo* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<MutexInfo>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MutexInfo& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const MutexInfo& from) { MutexInfo::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(MutexInfo* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.MutexInfo"; }
+
+ protected:
+  explicit MutexInfo(::google::protobuf::Arena* arena);
+  MutexInfo(::google::protobuf::Arena* arena, const MutexInfo& from);
+  MutexInfo(::google::protobuf::Arena* arena, MutexInfo&& from) noexcept
+      : MutexInfo(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kTraceFieldNumber = 5,
+    kMutexIdFieldNumber = 2,
+    kIdxFieldNumber = 1,
+    kDestroyedFieldNumber = 4,
+    kAddrFieldNumber = 3,
+  };
+  // .bandicoot.Stack trace = 5;
+  bool has_trace() const;
+  void clear_trace() ;
+  const ::bandicoot::Stack& trace() const;
+  PROTOBUF_NODISCARD ::bandicoot::Stack* release_trace();
+  ::bandicoot::Stack* mutable_trace();
+  void set_allocated_trace(::bandicoot::Stack* value);
+  void unsafe_arena_set_allocated_trace(::bandicoot::Stack* value);
+  ::bandicoot::Stack* unsafe_arena_release_trace();
+
+  private:
+  const ::bandicoot::Stack& _internal_trace() const;
+  ::bandicoot::Stack* _internal_mutable_trace();
+
+  public:
+  // uint64 mutex_id = 2;
+  void clear_mutex_id() ;
+  ::uint64_t mutex_id() const;
+  void set_mutex_id(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_mutex_id() const;
+  void _internal_set_mutex_id(::uint64_t value);
+
+  public:
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
+
+  public:
+  // bool destroyed = 4;
+  void clear_destroyed() ;
+  bool destroyed() const;
+  void set_destroyed(bool value);
+
+  private:
+  bool _internal_destroyed() const;
+  void _internal_set_destroyed(bool value);
+
+  public:
+  // uint64 addr = 3;
+  void clear_addr() ;
+  ::uint64_t addr() const;
+  void set_addr(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_addr() const;
+  void _internal_set_addr(::uint64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.MutexInfo)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 5, 1,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const MutexInfo& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::bandicoot::Stack* trace_;
+    ::uint64_t mutex_id_;
+    ::uint32_t idx_;
+    bool destroyed_;
+    ::uint64_t addr_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Mop final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.Mop) */ {
+ public:
+  inline Mop() : Mop(nullptr) {}
+  ~Mop() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(Mop* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Mop));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR Mop(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline Mop(const Mop& from) : Mop(nullptr, from) {}
+  inline Mop(Mop&& from) noexcept
+      : Mop(nullptr, std::move(from)) {}
+  inline Mop& operator=(const Mop& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Mop& operator=(Mop&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Mop& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Mop* internal_default_instance() {
+    return reinterpret_cast<const Mop*>(
+        &_Mop_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 2;
+  friend void swap(Mop& a, Mop& b) { a.Swap(&b); }
+  inline void Swap(Mop* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Mop* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Mop* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Mop>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Mop& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const Mop& from) { Mop::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(Mop* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.Mop"; }
+
+ protected:
+  explicit Mop(::google::protobuf::Arena* arena);
+  Mop(::google::protobuf::Arena* arena, const Mop& from);
+  Mop(::google::protobuf::Arena* arena, Mop&& from) noexcept
+      : Mop(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kTraceFieldNumber = 7,
+    kIdxFieldNumber = 1,
+    kTidFieldNumber = 2,
+    kSizeFieldNumber = 3,
+    kWriteFieldNumber = 4,
+    kAtomicFieldNumber = 5,
+    kAddrFieldNumber = 6,
+  };
+  // .bandicoot.Stack trace = 7;
+  bool has_trace() const;
+  void clear_trace() ;
+  const ::bandicoot::Stack& trace() const;
+  PROTOBUF_NODISCARD ::bandicoot::Stack* release_trace();
+  ::bandicoot::Stack* mutable_trace();
+  void set_allocated_trace(::bandicoot::Stack* value);
+  void unsafe_arena_set_allocated_trace(::bandicoot::Stack* value);
+  ::bandicoot::Stack* unsafe_arena_release_trace();
+
+  private:
+  const ::bandicoot::Stack& _internal_trace() const;
+  ::bandicoot::Stack* _internal_mutable_trace();
+
+  public:
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
+
+  public:
+  // uint32 tid = 2;
+  void clear_tid() ;
+  ::uint32_t tid() const;
+  void set_tid(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tid() const;
+  void _internal_set_tid(::uint32_t value);
+
+  public:
+  // uint32 size = 3;
+  void clear_size() ;
+  ::uint32_t size() const;
+  void set_size(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_size() const;
+  void _internal_set_size(::uint32_t value);
+
+  public:
+  // bool write = 4;
+  void clear_write() ;
+  bool write() const;
+  void set_write(bool value);
+
+  private:
+  bool _internal_write() const;
+  void _internal_set_write(bool value);
+
+  public:
+  // bool atomic = 5;
+  void clear_atomic() ;
+  bool atomic() const;
+  void set_atomic(bool value);
+
+  private:
+  bool _internal_atomic() const;
+  void _internal_set_atomic(bool value);
+
+  public:
+  // uint64 addr = 6;
+  void clear_addr() ;
+  ::uint64_t addr() const;
+  void set_addr(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_addr() const;
+  void _internal_set_addr(::uint64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.Mop)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      3, 7, 1,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const Mop& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::bandicoot::Stack* trace_;
+    ::uint32_t idx_;
+    ::uint32_t tid_;
+    ::uint32_t size_;
+    bool write_;
+    bool atomic_;
+    ::uint64_t addr_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Loc final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.Loc) */ {
+ public:
+  inline Loc() : Loc(nullptr) {}
+  ~Loc() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(Loc* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Loc));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR Loc(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline Loc(const Loc& from) : Loc(nullptr, from) {}
+  inline Loc(Loc&& from) noexcept
+      : Loc(nullptr, std::move(from)) {}
+  inline Loc& operator=(const Loc& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Loc& operator=(Loc&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Loc& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Loc* internal_default_instance() {
+    return reinterpret_cast<const Loc*>(
+        &_Loc_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 3;
+  friend void swap(Loc& a, Loc& b) { a.Swap(&b); }
+  inline void Swap(Loc* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Loc* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Loc* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Loc>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Loc& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const Loc& from) { Loc::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(Loc* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.Loc"; }
+
+ protected:
+  explicit Loc(::google::protobuf::Arena* arena);
+  Loc(::google::protobuf::Arena* arena, const Loc& from);
+  Loc(::google::protobuf::Arena* arena, Loc&& from) noexcept
+      : Loc(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kTypeFieldNumber = 2,
+    kTraceFieldNumber = 9,
+    kAddrFieldNumber = 3,
+    kIdxFieldNumber = 1,
+    kTidFieldNumber = 6,
+    kStartFieldNumber = 4,
+    kSizeFieldNumber = 5,
+    kFdFieldNumber = 7,
+    kSuppressableFieldNumber = 8,
+  };
+  // string type = 2;
+  void clear_type() ;
+  const std::string& type() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_type(Arg_&& arg, Args_... args);
+  std::string* mutable_type();
+  PROTOBUF_NODISCARD std::string* release_type();
+  void set_allocated_type(std::string* value);
+
+  private:
+  const std::string& _internal_type() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_type(
+      const std::string& value);
+  std::string* _internal_mutable_type();
+
+  public:
+  // .bandicoot.Stack trace = 9;
+  bool has_trace() const;
+  void clear_trace() ;
+  const ::bandicoot::Stack& trace() const;
+  PROTOBUF_NODISCARD ::bandicoot::Stack* release_trace();
+  ::bandicoot::Stack* mutable_trace();
+  void set_allocated_trace(::bandicoot::Stack* value);
+  void unsafe_arena_set_allocated_trace(::bandicoot::Stack* value);
+  ::bandicoot::Stack* unsafe_arena_release_trace();
+
+  private:
+  const ::bandicoot::Stack& _internal_trace() const;
+  ::bandicoot::Stack* _internal_mutable_trace();
+
+  public:
+  // uint64 addr = 3;
+  void clear_addr() ;
+  ::uint64_t addr() const;
+  void set_addr(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_addr() const;
+  void _internal_set_addr(::uint64_t value);
+
+  public:
+  // uint32 idx = 1;
+  void clear_idx() ;
+  ::uint32_t idx() const;
+  void set_idx(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_idx() const;
+  void _internal_set_idx(::uint32_t value);
+
+  public:
+  // uint32 tid = 6;
+  void clear_tid() ;
+  ::uint32_t tid() const;
+  void set_tid(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tid() const;
+  void _internal_set_tid(::uint32_t value);
+
+  public:
+  // uint64 start = 4;
+  void clear_start() ;
+  ::uint64_t start() const;
+  void set_start(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_start() const;
+  void _internal_set_start(::uint64_t value);
+
+  public:
+  // uint64 size = 5;
+  void clear_size() ;
+  ::uint64_t size() const;
+  void set_size(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_size() const;
+  void _internal_set_size(::uint64_t value);
+
+  public:
+  // int32 fd = 7;
+  void clear_fd() ;
+  ::int32_t fd() const;
+  void set_fd(::int32_t value);
+
+  private:
+  ::int32_t _internal_fd() const;
+  void _internal_set_fd(::int32_t value);
+
+  public:
+  // bool suppressable = 8;
+  void clear_suppressable() ;
+  bool suppressable() const;
+  void set_suppressable(bool value);
+
+  private:
+  bool _internal_suppressable() const;
+  void _internal_set_suppressable(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.Loc)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      4, 9, 1,
+      34, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const Loc& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr type_;
+    ::bandicoot::Stack* trace_;
+    ::uint64_t addr_;
+    ::uint32_t idx_;
+    ::uint32_t tid_;
+    ::uint64_t start_;
+    ::uint64_t size_;
+    ::int32_t fd_;
+    bool suppressable_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_bandicoot_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TsanReport final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:bandicoot.TsanReport) */ {
+ public:
+  inline TsanReport() : TsanReport(nullptr) {}
+  ~TsanReport() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(TsanReport* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(TsanReport));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR TsanReport(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline TsanReport(const TsanReport& from) : TsanReport(nullptr, from) {}
+  inline TsanReport(TsanReport&& from) noexcept
+      : TsanReport(nullptr, std::move(from)) {}
+  inline TsanReport& operator=(const TsanReport& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TsanReport& operator=(TsanReport&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TsanReport& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TsanReport* internal_default_instance() {
+    return reinterpret_cast<const TsanReport*>(
+        &_TsanReport_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 7;
+  friend void swap(TsanReport& a, TsanReport& b) { a.Swap(&b); }
+  inline void Swap(TsanReport* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TsanReport* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TsanReport* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<TsanReport>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const TsanReport& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const TsanReport& from) { TsanReport::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(TsanReport* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "bandicoot.TsanReport"; }
+
+ protected:
+  explicit TsanReport(::google::protobuf::Arena* arena);
+  TsanReport(::google::protobuf::Arena* arena, const TsanReport& from);
+  TsanReport(::google::protobuf::Arena* arena, TsanReport&& from) noexcept
+      : TsanReport(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kStacksFieldNumber = 4,
+    kMopsFieldNumber = 5,
+    kLocsFieldNumber = 6,
+    kMutexesFieldNumber = 7,
+    kThreadsFieldNumber = 8,
+    kUniqueTidsFieldNumber = 9,
+    kDescriptionFieldNumber = 1,
+    kRawOutputFieldNumber = 10,
+    kSleepTraceFieldNumber = 3,
+    kDuplicateCountFieldNumber = 2,
+  };
+  // repeated .bandicoot.Stack stacks = 4;
+  int stacks_size() const;
+  private:
+  int _internal_stacks_size() const;
+
+  public:
+  void clear_stacks() ;
+  ::bandicoot::Stack* mutable_stacks(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>* mutable_stacks();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>& _internal_stacks() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>* _internal_mutable_stacks();
+  public:
+  const ::bandicoot::Stack& stacks(int index) const;
+  ::bandicoot::Stack* add_stacks();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>& stacks() const;
+  // repeated .bandicoot.Mop mops = 5;
+  int mops_size() const;
+  private:
+  int _internal_mops_size() const;
+
+  public:
+  void clear_mops() ;
+  ::bandicoot::Mop* mutable_mops(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>* mutable_mops();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>& _internal_mops() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>* _internal_mutable_mops();
+  public:
+  const ::bandicoot::Mop& mops(int index) const;
+  ::bandicoot::Mop* add_mops();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>& mops() const;
+  // repeated .bandicoot.Loc locs = 6;
+  int locs_size() const;
+  private:
+  int _internal_locs_size() const;
+
+  public:
+  void clear_locs() ;
+  ::bandicoot::Loc* mutable_locs(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>* mutable_locs();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>& _internal_locs() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>* _internal_mutable_locs();
+  public:
+  const ::bandicoot::Loc& locs(int index) const;
+  ::bandicoot::Loc* add_locs();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>& locs() const;
+  // repeated .bandicoot.MutexInfo mutexes = 7;
+  int mutexes_size() const;
+  private:
+  int _internal_mutexes_size() const;
+
+  public:
+  void clear_mutexes() ;
+  ::bandicoot::MutexInfo* mutable_mutexes(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>* mutable_mutexes();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>& _internal_mutexes() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>* _internal_mutable_mutexes();
+  public:
+  const ::bandicoot::MutexInfo& mutexes(int index) const;
+  ::bandicoot::MutexInfo* add_mutexes();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>& mutexes() const;
+  // repeated .bandicoot.ThreadInfo threads = 8;
+  int threads_size() const;
+  private:
+  int _internal_threads_size() const;
+
+  public:
+  void clear_threads() ;
+  ::bandicoot::ThreadInfo* mutable_threads(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>* mutable_threads();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>& _internal_threads() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>* _internal_mutable_threads();
+  public:
+  const ::bandicoot::ThreadInfo& threads(int index) const;
+  ::bandicoot::ThreadInfo* add_threads();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>& threads() const;
+  // repeated .bandicoot.UniqueTid unique_tids = 9;
+  int unique_tids_size() const;
+  private:
+  int _internal_unique_tids_size() const;
+
+  public:
+  void clear_unique_tids() ;
+  ::bandicoot::UniqueTid* mutable_unique_tids(int index);
+  ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>* mutable_unique_tids();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>& _internal_unique_tids() const;
+  ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>* _internal_mutable_unique_tids();
+  public:
+  const ::bandicoot::UniqueTid& unique_tids(int index) const;
+  ::bandicoot::UniqueTid* add_unique_tids();
+  const ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>& unique_tids() const;
+  // string description = 1;
+  void clear_description() ;
+  const std::string& description() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_description(Arg_&& arg, Args_... args);
+  std::string* mutable_description();
+  PROTOBUF_NODISCARD std::string* release_description();
+  void set_allocated_description(std::string* value);
+
+  private:
+  const std::string& _internal_description() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_description(
+      const std::string& value);
+  std::string* _internal_mutable_description();
+
+  public:
+  // string raw_output = 10;
+  void clear_raw_output() ;
+  const std::string& raw_output() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_raw_output(Arg_&& arg, Args_... args);
+  std::string* mutable_raw_output();
+  PROTOBUF_NODISCARD std::string* release_raw_output();
+  void set_allocated_raw_output(std::string* value);
+
+  private:
+  const std::string& _internal_raw_output() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_raw_output(
+      const std::string& value);
+  std::string* _internal_mutable_raw_output();
+
+  public:
+  // .bandicoot.Stack sleep_trace = 3;
+  bool has_sleep_trace() const;
+  void clear_sleep_trace() ;
+  const ::bandicoot::Stack& sleep_trace() const;
+  PROTOBUF_NODISCARD ::bandicoot::Stack* release_sleep_trace();
+  ::bandicoot::Stack* mutable_sleep_trace();
+  void set_allocated_sleep_trace(::bandicoot::Stack* value);
+  void unsafe_arena_set_allocated_sleep_trace(::bandicoot::Stack* value);
+  ::bandicoot::Stack* unsafe_arena_release_sleep_trace();
+
+  private:
+  const ::bandicoot::Stack& _internal_sleep_trace() const;
+  ::bandicoot::Stack* _internal_mutable_sleep_trace();
+
+  public:
+  // uint32 duplicate_count = 2;
+  void clear_duplicate_count() ;
+  ::uint32_t duplicate_count() const;
+  void set_duplicate_count(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_duplicate_count() const;
+  void _internal_set_duplicate_count(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:bandicoot.TsanReport)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      4, 10, 7,
+      58, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const TsanReport& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::Stack > stacks_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::Mop > mops_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::Loc > locs_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::MutexInfo > mutexes_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::ThreadInfo > threads_;
+    ::google::protobuf::RepeatedPtrField< ::bandicoot::UniqueTid > unique_tids_;
+    ::google::protobuf::internal::ArenaStringPtr description_;
+    ::google::protobuf::internal::ArenaStringPtr raw_output_;
+    ::bandicoot::Stack* sleep_trace_;
+    ::uint32_t duplicate_count_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -444,102 +2348,1787 @@ class TestMsg final : public ::google::protobuf::Message
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 
-// TestMsg
+// StackFrame
 
-// string first = 1;
-inline void TestMsg::clear_first() {
+// string file_name = 1;
+inline void StackFrame::clear_file_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.first_.ClearToEmpty();
+  _impl_.file_name_.ClearToEmpty();
 }
-inline const std::string& TestMsg::first() const
+inline const std::string& StackFrame::file_name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:bandicoot.TestMsg.first)
-  return _internal_first();
+  // @@protoc_insertion_point(field_get:bandicoot.StackFrame.file_name)
+  return _internal_file_name();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void TestMsg::set_first(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void StackFrame::set_file_name(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.first_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:bandicoot.TestMsg.first)
+  _impl_.file_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.StackFrame.file_name)
 }
-inline std::string* TestMsg::mutable_first() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  std::string* _s = _internal_mutable_first();
-  // @@protoc_insertion_point(field_mutable:bandicoot.TestMsg.first)
+inline std::string* StackFrame::mutable_file_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_file_name();
+  // @@protoc_insertion_point(field_mutable:bandicoot.StackFrame.file_name)
   return _s;
 }
-inline const std::string& TestMsg::_internal_first() const {
+inline const std::string& StackFrame::_internal_file_name() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.first_.Get();
+  return _impl_.file_name_.Get();
 }
-inline void TestMsg::_internal_set_first(const std::string& value) {
+inline void StackFrame::_internal_set_file_name(const std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.first_.Set(value, GetArena());
+  _impl_.file_name_.Set(value, GetArena());
 }
-inline std::string* TestMsg::_internal_mutable_first() {
+inline std::string* StackFrame::_internal_mutable_file_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.first_.Mutable( GetArena());
+  return _impl_.file_name_.Mutable( GetArena());
 }
-inline std::string* TestMsg::release_first() {
+inline std::string* StackFrame::release_file_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:bandicoot.TestMsg.first)
-  return _impl_.first_.Release();
+  // @@protoc_insertion_point(field_release:bandicoot.StackFrame.file_name)
+  return _impl_.file_name_.Release();
 }
-inline void TestMsg::set_allocated_first(std::string* value) {
+inline void StackFrame::set_allocated_file_name(std::string* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.first_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.first_.IsDefault()) {
-    _impl_.first_.Set("", GetArena());
+  _impl_.file_name_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.file_name_.IsDefault()) {
+    _impl_.file_name_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:bandicoot.TestMsg.first)
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.StackFrame.file_name)
 }
 
-// string second = 2;
-inline void TestMsg::clear_second() {
+// uint32 line = 2;
+inline void StackFrame::clear_line() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.second_.ClearToEmpty();
+  _impl_.line_ = 0u;
 }
-inline const std::string& TestMsg::second() const
+inline ::uint32_t StackFrame::line() const {
+  // @@protoc_insertion_point(field_get:bandicoot.StackFrame.line)
+  return _internal_line();
+}
+inline void StackFrame::set_line(::uint32_t value) {
+  _internal_set_line(value);
+  // @@protoc_insertion_point(field_set:bandicoot.StackFrame.line)
+}
+inline ::uint32_t StackFrame::_internal_line() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.line_;
+}
+inline void StackFrame::_internal_set_line(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.line_ = value;
+}
+
+// string function = 3;
+inline void StackFrame::clear_function() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.function_.ClearToEmpty();
+}
+inline const std::string& StackFrame::function() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:bandicoot.TestMsg.second)
-  return _internal_second();
+  // @@protoc_insertion_point(field_get:bandicoot.StackFrame.function)
+  return _internal_function();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void TestMsg::set_second(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void StackFrame::set_function(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.second_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:bandicoot.TestMsg.second)
+  _impl_.function_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.StackFrame.function)
 }
-inline std::string* TestMsg::mutable_second() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  std::string* _s = _internal_mutable_second();
-  // @@protoc_insertion_point(field_mutable:bandicoot.TestMsg.second)
+inline std::string* StackFrame::mutable_function() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_function();
+  // @@protoc_insertion_point(field_mutable:bandicoot.StackFrame.function)
   return _s;
 }
-inline const std::string& TestMsg::_internal_second() const {
+inline const std::string& StackFrame::_internal_function() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.second_.Get();
+  return _impl_.function_.Get();
 }
-inline void TestMsg::_internal_set_second(const std::string& value) {
+inline void StackFrame::_internal_set_function(const std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.second_.Set(value, GetArena());
+  _impl_.function_.Set(value, GetArena());
 }
-inline std::string* TestMsg::_internal_mutable_second() {
+inline std::string* StackFrame::_internal_mutable_function() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.second_.Mutable( GetArena());
+  return _impl_.function_.Mutable( GetArena());
 }
-inline std::string* TestMsg::release_second() {
+inline std::string* StackFrame::release_function() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:bandicoot.TestMsg.second)
-  return _impl_.second_.Release();
+  // @@protoc_insertion_point(field_release:bandicoot.StackFrame.function)
+  return _impl_.function_.Release();
 }
-inline void TestMsg::set_allocated_second(std::string* value) {
+inline void StackFrame::set_allocated_function(std::string* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.second_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.second_.IsDefault()) {
-    _impl_.second_.Set("", GetArena());
+  _impl_.function_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.function_.IsDefault()) {
+    _impl_.function_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:bandicoot.TestMsg.second)
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.StackFrame.function)
+}
+
+// string repr = 4;
+inline void StackFrame::clear_repr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.repr_.ClearToEmpty();
+}
+inline const std::string& StackFrame::repr() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.StackFrame.repr)
+  return _internal_repr();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void StackFrame::set_repr(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.repr_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.StackFrame.repr)
+}
+inline std::string* StackFrame::mutable_repr() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_repr();
+  // @@protoc_insertion_point(field_mutable:bandicoot.StackFrame.repr)
+  return _s;
+}
+inline const std::string& StackFrame::_internal_repr() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.repr_.Get();
+}
+inline void StackFrame::_internal_set_repr(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.repr_.Set(value, GetArena());
+}
+inline std::string* StackFrame::_internal_mutable_repr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.repr_.Mutable( GetArena());
+}
+inline std::string* StackFrame::release_repr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.StackFrame.repr)
+  return _impl_.repr_.Release();
+}
+inline void StackFrame::set_allocated_repr(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.repr_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.repr_.IsDefault()) {
+    _impl_.repr_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.StackFrame.repr)
+}
+
+// -------------------------------------------------------------------
+
+// Stack
+
+// uint32 idx = 1;
+inline void Stack::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t Stack::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Stack.idx)
+  return _internal_idx();
+}
+inline void Stack::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Stack.idx)
+}
+inline ::uint32_t Stack::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void Stack::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// repeated .bandicoot.StackFrame frames = 2;
+inline int Stack::_internal_frames_size() const {
+  return _internal_frames().size();
+}
+inline int Stack::frames_size() const {
+  return _internal_frames_size();
+}
+inline void Stack::clear_frames() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.frames_.Clear();
+}
+inline ::bandicoot::StackFrame* Stack::mutable_frames(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.Stack.frames)
+  return _internal_mutable_frames()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>* Stack::mutable_frames()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.Stack.frames)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_frames();
+}
+inline const ::bandicoot::StackFrame& Stack::frames(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.Stack.frames)
+  return _internal_frames().Get(index);
+}
+inline ::bandicoot::StackFrame* Stack::add_frames() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::StackFrame* _add = _internal_mutable_frames()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.Stack.frames)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>& Stack::frames() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.Stack.frames)
+  return _internal_frames();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>&
+Stack::_internal_frames() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.frames_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::StackFrame>*
+Stack::_internal_mutable_frames() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.frames_;
+}
+
+// -------------------------------------------------------------------
+
+// Mop
+
+// uint32 idx = 1;
+inline void Mop::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t Mop::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.idx)
+  return _internal_idx();
+}
+inline void Mop::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.idx)
+}
+inline ::uint32_t Mop::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void Mop::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// uint32 tid = 2;
+inline void Mop::clear_tid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = 0u;
+}
+inline ::uint32_t Mop::tid() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.tid)
+  return _internal_tid();
+}
+inline void Mop::set_tid(::uint32_t value) {
+  _internal_set_tid(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.tid)
+}
+inline ::uint32_t Mop::_internal_tid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tid_;
+}
+inline void Mop::_internal_set_tid(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = value;
+}
+
+// uint32 size = 3;
+inline void Mop::clear_size() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.size_ = 0u;
+}
+inline ::uint32_t Mop::size() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.size)
+  return _internal_size();
+}
+inline void Mop::set_size(::uint32_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.size)
+}
+inline ::uint32_t Mop::_internal_size() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.size_;
+}
+inline void Mop::_internal_set_size(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.size_ = value;
+}
+
+// bool write = 4;
+inline void Mop::clear_write() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.write_ = false;
+}
+inline bool Mop::write() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.write)
+  return _internal_write();
+}
+inline void Mop::set_write(bool value) {
+  _internal_set_write(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.write)
+}
+inline bool Mop::_internal_write() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.write_;
+}
+inline void Mop::_internal_set_write(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.write_ = value;
+}
+
+// bool atomic = 5;
+inline void Mop::clear_atomic() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.atomic_ = false;
+}
+inline bool Mop::atomic() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.atomic)
+  return _internal_atomic();
+}
+inline void Mop::set_atomic(bool value) {
+  _internal_set_atomic(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.atomic)
+}
+inline bool Mop::_internal_atomic() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.atomic_;
+}
+inline void Mop::_internal_set_atomic(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.atomic_ = value;
+}
+
+// uint64 addr = 6;
+inline void Mop::clear_addr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = ::uint64_t{0u};
+}
+inline ::uint64_t Mop::addr() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.addr)
+  return _internal_addr();
+}
+inline void Mop::set_addr(::uint64_t value) {
+  _internal_set_addr(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Mop.addr)
+}
+inline ::uint64_t Mop::_internal_addr() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.addr_;
+}
+inline void Mop::_internal_set_addr(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = value;
+}
+
+// .bandicoot.Stack trace = 7;
+inline bool Mop::has_trace() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.trace_ != nullptr);
+  return value;
+}
+inline void Mop::clear_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ != nullptr) _impl_.trace_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::bandicoot::Stack& Mop::_internal_trace() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::bandicoot::Stack* p = _impl_.trace_;
+  return p != nullptr ? *p : reinterpret_cast<const ::bandicoot::Stack&>(::bandicoot::_Stack_default_instance_);
+}
+inline const ::bandicoot::Stack& Mop::trace() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.Mop.trace)
+  return _internal_trace();
+}
+inline void Mop::unsafe_arena_set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.trace_);
+  }
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:bandicoot.Mop.trace)
+}
+inline ::bandicoot::Stack* Mop::release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* released = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::bandicoot::Stack* Mop::unsafe_arena_release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.Mop.trace)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* temp = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  return temp;
+}
+inline ::bandicoot::Stack* Mop::_internal_mutable_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::bandicoot::Stack>(GetArena());
+    _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(p);
+  }
+  return _impl_.trace_;
+}
+inline ::bandicoot::Stack* Mop::mutable_trace() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::bandicoot::Stack* _msg = _internal_mutable_trace();
+  // @@protoc_insertion_point(field_mutable:bandicoot.Mop.trace)
+  return _msg;
+}
+inline void Mop::set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete (_impl_.trace_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.Mop.trace)
+}
+
+// -------------------------------------------------------------------
+
+// Loc
+
+// uint32 idx = 1;
+inline void Loc::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t Loc::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.idx)
+  return _internal_idx();
+}
+inline void Loc::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.idx)
+}
+inline ::uint32_t Loc::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void Loc::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// string type = 2;
+inline void Loc::clear_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_.ClearToEmpty();
+}
+inline const std::string& Loc::type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.type)
+  return _internal_type();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void Loc::set_type(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.type)
+}
+inline std::string* Loc::mutable_type() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_type();
+  // @@protoc_insertion_point(field_mutable:bandicoot.Loc.type)
+  return _s;
+}
+inline const std::string& Loc::_internal_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.type_.Get();
+}
+inline void Loc::_internal_set_type(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_.Set(value, GetArena());
+}
+inline std::string* Loc::_internal_mutable_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.type_.Mutable( GetArena());
+}
+inline std::string* Loc::release_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.Loc.type)
+  return _impl_.type_.Release();
+}
+inline void Loc::set_allocated_type(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.type_.IsDefault()) {
+    _impl_.type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.Loc.type)
+}
+
+// uint64 addr = 3;
+inline void Loc::clear_addr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = ::uint64_t{0u};
+}
+inline ::uint64_t Loc::addr() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.addr)
+  return _internal_addr();
+}
+inline void Loc::set_addr(::uint64_t value) {
+  _internal_set_addr(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.addr)
+}
+inline ::uint64_t Loc::_internal_addr() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.addr_;
+}
+inline void Loc::_internal_set_addr(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = value;
+}
+
+// uint64 start = 4;
+inline void Loc::clear_start() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.start_ = ::uint64_t{0u};
+}
+inline ::uint64_t Loc::start() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.start)
+  return _internal_start();
+}
+inline void Loc::set_start(::uint64_t value) {
+  _internal_set_start(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.start)
+}
+inline ::uint64_t Loc::_internal_start() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.start_;
+}
+inline void Loc::_internal_set_start(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.start_ = value;
+}
+
+// uint64 size = 5;
+inline void Loc::clear_size() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.size_ = ::uint64_t{0u};
+}
+inline ::uint64_t Loc::size() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.size)
+  return _internal_size();
+}
+inline void Loc::set_size(::uint64_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.size)
+}
+inline ::uint64_t Loc::_internal_size() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.size_;
+}
+inline void Loc::_internal_set_size(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.size_ = value;
+}
+
+// uint32 tid = 6;
+inline void Loc::clear_tid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = 0u;
+}
+inline ::uint32_t Loc::tid() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.tid)
+  return _internal_tid();
+}
+inline void Loc::set_tid(::uint32_t value) {
+  _internal_set_tid(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.tid)
+}
+inline ::uint32_t Loc::_internal_tid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tid_;
+}
+inline void Loc::_internal_set_tid(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = value;
+}
+
+// int32 fd = 7;
+inline void Loc::clear_fd() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.fd_ = 0;
+}
+inline ::int32_t Loc::fd() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.fd)
+  return _internal_fd();
+}
+inline void Loc::set_fd(::int32_t value) {
+  _internal_set_fd(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.fd)
+}
+inline ::int32_t Loc::_internal_fd() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.fd_;
+}
+inline void Loc::_internal_set_fd(::int32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.fd_ = value;
+}
+
+// bool suppressable = 8;
+inline void Loc::clear_suppressable() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.suppressable_ = false;
+}
+inline bool Loc::suppressable() const {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.suppressable)
+  return _internal_suppressable();
+}
+inline void Loc::set_suppressable(bool value) {
+  _internal_set_suppressable(value);
+  // @@protoc_insertion_point(field_set:bandicoot.Loc.suppressable)
+}
+inline bool Loc::_internal_suppressable() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.suppressable_;
+}
+inline void Loc::_internal_set_suppressable(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.suppressable_ = value;
+}
+
+// .bandicoot.Stack trace = 9;
+inline bool Loc::has_trace() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.trace_ != nullptr);
+  return value;
+}
+inline void Loc::clear_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ != nullptr) _impl_.trace_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::bandicoot::Stack& Loc::_internal_trace() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::bandicoot::Stack* p = _impl_.trace_;
+  return p != nullptr ? *p : reinterpret_cast<const ::bandicoot::Stack&>(::bandicoot::_Stack_default_instance_);
+}
+inline const ::bandicoot::Stack& Loc::trace() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.Loc.trace)
+  return _internal_trace();
+}
+inline void Loc::unsafe_arena_set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.trace_);
+  }
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:bandicoot.Loc.trace)
+}
+inline ::bandicoot::Stack* Loc::release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* released = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::bandicoot::Stack* Loc::unsafe_arena_release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.Loc.trace)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* temp = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  return temp;
+}
+inline ::bandicoot::Stack* Loc::_internal_mutable_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::bandicoot::Stack>(GetArena());
+    _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(p);
+  }
+  return _impl_.trace_;
+}
+inline ::bandicoot::Stack* Loc::mutable_trace() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::bandicoot::Stack* _msg = _internal_mutable_trace();
+  // @@protoc_insertion_point(field_mutable:bandicoot.Loc.trace)
+  return _msg;
+}
+inline void Loc::set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete (_impl_.trace_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.Loc.trace)
+}
+
+// -------------------------------------------------------------------
+
+// MutexInfo
+
+// uint32 idx = 1;
+inline void MutexInfo::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t MutexInfo::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.MutexInfo.idx)
+  return _internal_idx();
+}
+inline void MutexInfo::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.MutexInfo.idx)
+}
+inline ::uint32_t MutexInfo::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void MutexInfo::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// uint64 mutex_id = 2;
+inline void MutexInfo::clear_mutex_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.mutex_id_ = ::uint64_t{0u};
+}
+inline ::uint64_t MutexInfo::mutex_id() const {
+  // @@protoc_insertion_point(field_get:bandicoot.MutexInfo.mutex_id)
+  return _internal_mutex_id();
+}
+inline void MutexInfo::set_mutex_id(::uint64_t value) {
+  _internal_set_mutex_id(value);
+  // @@protoc_insertion_point(field_set:bandicoot.MutexInfo.mutex_id)
+}
+inline ::uint64_t MutexInfo::_internal_mutex_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.mutex_id_;
+}
+inline void MutexInfo::_internal_set_mutex_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.mutex_id_ = value;
+}
+
+// uint64 addr = 3;
+inline void MutexInfo::clear_addr() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = ::uint64_t{0u};
+}
+inline ::uint64_t MutexInfo::addr() const {
+  // @@protoc_insertion_point(field_get:bandicoot.MutexInfo.addr)
+  return _internal_addr();
+}
+inline void MutexInfo::set_addr(::uint64_t value) {
+  _internal_set_addr(value);
+  // @@protoc_insertion_point(field_set:bandicoot.MutexInfo.addr)
+}
+inline ::uint64_t MutexInfo::_internal_addr() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.addr_;
+}
+inline void MutexInfo::_internal_set_addr(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.addr_ = value;
+}
+
+// bool destroyed = 4;
+inline void MutexInfo::clear_destroyed() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.destroyed_ = false;
+}
+inline bool MutexInfo::destroyed() const {
+  // @@protoc_insertion_point(field_get:bandicoot.MutexInfo.destroyed)
+  return _internal_destroyed();
+}
+inline void MutexInfo::set_destroyed(bool value) {
+  _internal_set_destroyed(value);
+  // @@protoc_insertion_point(field_set:bandicoot.MutexInfo.destroyed)
+}
+inline bool MutexInfo::_internal_destroyed() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.destroyed_;
+}
+inline void MutexInfo::_internal_set_destroyed(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.destroyed_ = value;
+}
+
+// .bandicoot.Stack trace = 5;
+inline bool MutexInfo::has_trace() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.trace_ != nullptr);
+  return value;
+}
+inline void MutexInfo::clear_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ != nullptr) _impl_.trace_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::bandicoot::Stack& MutexInfo::_internal_trace() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::bandicoot::Stack* p = _impl_.trace_;
+  return p != nullptr ? *p : reinterpret_cast<const ::bandicoot::Stack&>(::bandicoot::_Stack_default_instance_);
+}
+inline const ::bandicoot::Stack& MutexInfo::trace() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.MutexInfo.trace)
+  return _internal_trace();
+}
+inline void MutexInfo::unsafe_arena_set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.trace_);
+  }
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:bandicoot.MutexInfo.trace)
+}
+inline ::bandicoot::Stack* MutexInfo::release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* released = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::bandicoot::Stack* MutexInfo::unsafe_arena_release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.MutexInfo.trace)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* temp = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  return temp;
+}
+inline ::bandicoot::Stack* MutexInfo::_internal_mutable_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::bandicoot::Stack>(GetArena());
+    _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(p);
+  }
+  return _impl_.trace_;
+}
+inline ::bandicoot::Stack* MutexInfo::mutable_trace() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::bandicoot::Stack* _msg = _internal_mutable_trace();
+  // @@protoc_insertion_point(field_mutable:bandicoot.MutexInfo.trace)
+  return _msg;
+}
+inline void MutexInfo::set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete (_impl_.trace_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.MutexInfo.trace)
+}
+
+// -------------------------------------------------------------------
+
+// ThreadInfo
+
+// uint32 idx = 1;
+inline void ThreadInfo::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t ThreadInfo::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.idx)
+  return _internal_idx();
+}
+inline void ThreadInfo::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.idx)
+}
+inline ::uint32_t ThreadInfo::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void ThreadInfo::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// uint32 tid = 2;
+inline void ThreadInfo::clear_tid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = 0u;
+}
+inline ::uint32_t ThreadInfo::tid() const {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.tid)
+  return _internal_tid();
+}
+inline void ThreadInfo::set_tid(::uint32_t value) {
+  _internal_set_tid(value);
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.tid)
+}
+inline ::uint32_t ThreadInfo::_internal_tid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tid_;
+}
+inline void ThreadInfo::_internal_set_tid(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = value;
+}
+
+// uint64 os_id = 3;
+inline void ThreadInfo::clear_os_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.os_id_ = ::uint64_t{0u};
+}
+inline ::uint64_t ThreadInfo::os_id() const {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.os_id)
+  return _internal_os_id();
+}
+inline void ThreadInfo::set_os_id(::uint64_t value) {
+  _internal_set_os_id(value);
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.os_id)
+}
+inline ::uint64_t ThreadInfo::_internal_os_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.os_id_;
+}
+inline void ThreadInfo::_internal_set_os_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.os_id_ = value;
+}
+
+// bool running = 4;
+inline void ThreadInfo::clear_running() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.running_ = false;
+}
+inline bool ThreadInfo::running() const {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.running)
+  return _internal_running();
+}
+inline void ThreadInfo::set_running(bool value) {
+  _internal_set_running(value);
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.running)
+}
+inline bool ThreadInfo::_internal_running() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.running_;
+}
+inline void ThreadInfo::_internal_set_running(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.running_ = value;
+}
+
+// string name = 5;
+inline void ThreadInfo::clear_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& ThreadInfo::name() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.name)
+  return _internal_name();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void ThreadInfo::set_name(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.name)
+}
+inline std::string* ThreadInfo::mutable_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:bandicoot.ThreadInfo.name)
+  return _s;
+}
+inline const std::string& ThreadInfo::_internal_name() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.name_.Get();
+}
+inline void ThreadInfo::_internal_set_name(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.Set(value, GetArena());
+}
+inline std::string* ThreadInfo::_internal_mutable_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.name_.Mutable( GetArena());
+}
+inline std::string* ThreadInfo::release_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.ThreadInfo.name)
+  return _impl_.name_.Release();
+}
+inline void ThreadInfo::set_allocated_name(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.ThreadInfo.name)
+}
+
+// uint32 parent_tid = 6;
+inline void ThreadInfo::clear_parent_tid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.parent_tid_ = 0u;
+}
+inline ::uint32_t ThreadInfo::parent_tid() const {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.parent_tid)
+  return _internal_parent_tid();
+}
+inline void ThreadInfo::set_parent_tid(::uint32_t value) {
+  _internal_set_parent_tid(value);
+  // @@protoc_insertion_point(field_set:bandicoot.ThreadInfo.parent_tid)
+}
+inline ::uint32_t ThreadInfo::_internal_parent_tid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.parent_tid_;
+}
+inline void ThreadInfo::_internal_set_parent_tid(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.parent_tid_ = value;
+}
+
+// .bandicoot.Stack trace = 7;
+inline bool ThreadInfo::has_trace() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.trace_ != nullptr);
+  return value;
+}
+inline void ThreadInfo::clear_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ != nullptr) _impl_.trace_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::bandicoot::Stack& ThreadInfo::_internal_trace() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::bandicoot::Stack* p = _impl_.trace_;
+  return p != nullptr ? *p : reinterpret_cast<const ::bandicoot::Stack&>(::bandicoot::_Stack_default_instance_);
+}
+inline const ::bandicoot::Stack& ThreadInfo::trace() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.ThreadInfo.trace)
+  return _internal_trace();
+}
+inline void ThreadInfo::unsafe_arena_set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.trace_);
+  }
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:bandicoot.ThreadInfo.trace)
+}
+inline ::bandicoot::Stack* ThreadInfo::release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* released = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::bandicoot::Stack* ThreadInfo::unsafe_arena_release_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.ThreadInfo.trace)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* temp = _impl_.trace_;
+  _impl_.trace_ = nullptr;
+  return temp;
+}
+inline ::bandicoot::Stack* ThreadInfo::_internal_mutable_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.trace_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::bandicoot::Stack>(GetArena());
+    _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(p);
+  }
+  return _impl_.trace_;
+}
+inline ::bandicoot::Stack* ThreadInfo::mutable_trace() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::bandicoot::Stack* _msg = _internal_mutable_trace();
+  // @@protoc_insertion_point(field_mutable:bandicoot.ThreadInfo.trace)
+  return _msg;
+}
+inline void ThreadInfo::set_allocated_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete (_impl_.trace_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.ThreadInfo.trace)
+}
+
+// -------------------------------------------------------------------
+
+// UniqueTid
+
+// uint32 idx = 1;
+inline void UniqueTid::clear_idx() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = 0u;
+}
+inline ::uint32_t UniqueTid::idx() const {
+  // @@protoc_insertion_point(field_get:bandicoot.UniqueTid.idx)
+  return _internal_idx();
+}
+inline void UniqueTid::set_idx(::uint32_t value) {
+  _internal_set_idx(value);
+  // @@protoc_insertion_point(field_set:bandicoot.UniqueTid.idx)
+}
+inline ::uint32_t UniqueTid::_internal_idx() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.idx_;
+}
+inline void UniqueTid::_internal_set_idx(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.idx_ = value;
+}
+
+// uint32 tid = 2;
+inline void UniqueTid::clear_tid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = 0u;
+}
+inline ::uint32_t UniqueTid::tid() const {
+  // @@protoc_insertion_point(field_get:bandicoot.UniqueTid.tid)
+  return _internal_tid();
+}
+inline void UniqueTid::set_tid(::uint32_t value) {
+  _internal_set_tid(value);
+  // @@protoc_insertion_point(field_set:bandicoot.UniqueTid.tid)
+}
+inline ::uint32_t UniqueTid::_internal_tid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tid_;
+}
+inline void UniqueTid::_internal_set_tid(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// TsanReport
+
+// string description = 1;
+inline void TsanReport::clear_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.ClearToEmpty();
+}
+inline const std::string& TsanReport::description() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.description)
+  return _internal_description();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void TsanReport::set_description(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.TsanReport.description)
+}
+inline std::string* TsanReport::mutable_description() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_description();
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.description)
+  return _s;
+}
+inline const std::string& TsanReport::_internal_description() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.description_.Get();
+}
+inline void TsanReport::_internal_set_description(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.Set(value, GetArena());
+}
+inline std::string* TsanReport::_internal_mutable_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.description_.Mutable( GetArena());
+}
+inline std::string* TsanReport::release_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.TsanReport.description)
+  return _impl_.description_.Release();
+}
+inline void TsanReport::set_allocated_description(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.description_.IsDefault()) {
+    _impl_.description_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.TsanReport.description)
+}
+
+// uint32 duplicate_count = 2;
+inline void TsanReport::clear_duplicate_count() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duplicate_count_ = 0u;
+}
+inline ::uint32_t TsanReport::duplicate_count() const {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.duplicate_count)
+  return _internal_duplicate_count();
+}
+inline void TsanReport::set_duplicate_count(::uint32_t value) {
+  _internal_set_duplicate_count(value);
+  // @@protoc_insertion_point(field_set:bandicoot.TsanReport.duplicate_count)
+}
+inline ::uint32_t TsanReport::_internal_duplicate_count() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.duplicate_count_;
+}
+inline void TsanReport::_internal_set_duplicate_count(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.duplicate_count_ = value;
+}
+
+// .bandicoot.Stack sleep_trace = 3;
+inline bool TsanReport::has_sleep_trace() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.sleep_trace_ != nullptr);
+  return value;
+}
+inline void TsanReport::clear_sleep_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.sleep_trace_ != nullptr) _impl_.sleep_trace_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::bandicoot::Stack& TsanReport::_internal_sleep_trace() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::bandicoot::Stack* p = _impl_.sleep_trace_;
+  return p != nullptr ? *p : reinterpret_cast<const ::bandicoot::Stack&>(::bandicoot::_Stack_default_instance_);
+}
+inline const ::bandicoot::Stack& TsanReport::sleep_trace() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.sleep_trace)
+  return _internal_sleep_trace();
+}
+inline void TsanReport::unsafe_arena_set_allocated_sleep_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.sleep_trace_);
+  }
+  _impl_.sleep_trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:bandicoot.TsanReport.sleep_trace)
+}
+inline ::bandicoot::Stack* TsanReport::release_sleep_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* released = _impl_.sleep_trace_;
+  _impl_.sleep_trace_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::bandicoot::Stack* TsanReport::unsafe_arena_release_sleep_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.TsanReport.sleep_trace)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::bandicoot::Stack* temp = _impl_.sleep_trace_;
+  _impl_.sleep_trace_ = nullptr;
+  return temp;
+}
+inline ::bandicoot::Stack* TsanReport::_internal_mutable_sleep_trace() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.sleep_trace_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::bandicoot::Stack>(GetArena());
+    _impl_.sleep_trace_ = reinterpret_cast<::bandicoot::Stack*>(p);
+  }
+  return _impl_.sleep_trace_;
+}
+inline ::bandicoot::Stack* TsanReport::mutable_sleep_trace() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::bandicoot::Stack* _msg = _internal_mutable_sleep_trace();
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.sleep_trace)
+  return _msg;
+}
+inline void TsanReport::set_allocated_sleep_trace(::bandicoot::Stack* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete (_impl_.sleep_trace_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.sleep_trace_ = reinterpret_cast<::bandicoot::Stack*>(value);
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.TsanReport.sleep_trace)
+}
+
+// repeated .bandicoot.Stack stacks = 4;
+inline int TsanReport::_internal_stacks_size() const {
+  return _internal_stacks().size();
+}
+inline int TsanReport::stacks_size() const {
+  return _internal_stacks_size();
+}
+inline void TsanReport::clear_stacks() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.stacks_.Clear();
+}
+inline ::bandicoot::Stack* TsanReport::mutable_stacks(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.stacks)
+  return _internal_mutable_stacks()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>* TsanReport::mutable_stacks()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.stacks)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_stacks();
+}
+inline const ::bandicoot::Stack& TsanReport::stacks(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.stacks)
+  return _internal_stacks().Get(index);
+}
+inline ::bandicoot::Stack* TsanReport::add_stacks() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::Stack* _add = _internal_mutable_stacks()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.stacks)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>& TsanReport::stacks() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.stacks)
+  return _internal_stacks();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>&
+TsanReport::_internal_stacks() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.stacks_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Stack>*
+TsanReport::_internal_mutable_stacks() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.stacks_;
+}
+
+// repeated .bandicoot.Mop mops = 5;
+inline int TsanReport::_internal_mops_size() const {
+  return _internal_mops().size();
+}
+inline int TsanReport::mops_size() const {
+  return _internal_mops_size();
+}
+inline void TsanReport::clear_mops() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.mops_.Clear();
+}
+inline ::bandicoot::Mop* TsanReport::mutable_mops(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.mops)
+  return _internal_mutable_mops()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>* TsanReport::mutable_mops()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.mops)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_mops();
+}
+inline const ::bandicoot::Mop& TsanReport::mops(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.mops)
+  return _internal_mops().Get(index);
+}
+inline ::bandicoot::Mop* TsanReport::add_mops() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::Mop* _add = _internal_mutable_mops()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.mops)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>& TsanReport::mops() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.mops)
+  return _internal_mops();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>&
+TsanReport::_internal_mops() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.mops_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Mop>*
+TsanReport::_internal_mutable_mops() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.mops_;
+}
+
+// repeated .bandicoot.Loc locs = 6;
+inline int TsanReport::_internal_locs_size() const {
+  return _internal_locs().size();
+}
+inline int TsanReport::locs_size() const {
+  return _internal_locs_size();
+}
+inline void TsanReport::clear_locs() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.locs_.Clear();
+}
+inline ::bandicoot::Loc* TsanReport::mutable_locs(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.locs)
+  return _internal_mutable_locs()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>* TsanReport::mutable_locs()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.locs)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_locs();
+}
+inline const ::bandicoot::Loc& TsanReport::locs(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.locs)
+  return _internal_locs().Get(index);
+}
+inline ::bandicoot::Loc* TsanReport::add_locs() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::Loc* _add = _internal_mutable_locs()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.locs)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>& TsanReport::locs() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.locs)
+  return _internal_locs();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>&
+TsanReport::_internal_locs() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.locs_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::Loc>*
+TsanReport::_internal_mutable_locs() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.locs_;
+}
+
+// repeated .bandicoot.MutexInfo mutexes = 7;
+inline int TsanReport::_internal_mutexes_size() const {
+  return _internal_mutexes().size();
+}
+inline int TsanReport::mutexes_size() const {
+  return _internal_mutexes_size();
+}
+inline void TsanReport::clear_mutexes() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.mutexes_.Clear();
+}
+inline ::bandicoot::MutexInfo* TsanReport::mutable_mutexes(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.mutexes)
+  return _internal_mutable_mutexes()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>* TsanReport::mutable_mutexes()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.mutexes)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_mutexes();
+}
+inline const ::bandicoot::MutexInfo& TsanReport::mutexes(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.mutexes)
+  return _internal_mutexes().Get(index);
+}
+inline ::bandicoot::MutexInfo* TsanReport::add_mutexes() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::MutexInfo* _add = _internal_mutable_mutexes()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.mutexes)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>& TsanReport::mutexes() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.mutexes)
+  return _internal_mutexes();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>&
+TsanReport::_internal_mutexes() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.mutexes_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::MutexInfo>*
+TsanReport::_internal_mutable_mutexes() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.mutexes_;
+}
+
+// repeated .bandicoot.ThreadInfo threads = 8;
+inline int TsanReport::_internal_threads_size() const {
+  return _internal_threads().size();
+}
+inline int TsanReport::threads_size() const {
+  return _internal_threads_size();
+}
+inline void TsanReport::clear_threads() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.threads_.Clear();
+}
+inline ::bandicoot::ThreadInfo* TsanReport::mutable_threads(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.threads)
+  return _internal_mutable_threads()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>* TsanReport::mutable_threads()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.threads)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_threads();
+}
+inline const ::bandicoot::ThreadInfo& TsanReport::threads(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.threads)
+  return _internal_threads().Get(index);
+}
+inline ::bandicoot::ThreadInfo* TsanReport::add_threads() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::ThreadInfo* _add = _internal_mutable_threads()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.threads)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>& TsanReport::threads() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.threads)
+  return _internal_threads();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>&
+TsanReport::_internal_threads() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.threads_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::ThreadInfo>*
+TsanReport::_internal_mutable_threads() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.threads_;
+}
+
+// repeated .bandicoot.UniqueTid unique_tids = 9;
+inline int TsanReport::_internal_unique_tids_size() const {
+  return _internal_unique_tids().size();
+}
+inline int TsanReport::unique_tids_size() const {
+  return _internal_unique_tids_size();
+}
+inline void TsanReport::clear_unique_tids() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.unique_tids_.Clear();
+}
+inline ::bandicoot::UniqueTid* TsanReport::mutable_unique_tids(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.unique_tids)
+  return _internal_mutable_unique_tids()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>* TsanReport::mutable_unique_tids()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:bandicoot.TsanReport.unique_tids)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_unique_tids();
+}
+inline const ::bandicoot::UniqueTid& TsanReport::unique_tids(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.unique_tids)
+  return _internal_unique_tids().Get(index);
+}
+inline ::bandicoot::UniqueTid* TsanReport::add_unique_tids() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::bandicoot::UniqueTid* _add = _internal_mutable_unique_tids()->Add();
+  // @@protoc_insertion_point(field_add:bandicoot.TsanReport.unique_tids)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>& TsanReport::unique_tids() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:bandicoot.TsanReport.unique_tids)
+  return _internal_unique_tids();
+}
+inline const ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>&
+TsanReport::_internal_unique_tids() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.unique_tids_;
+}
+inline ::google::protobuf::RepeatedPtrField<::bandicoot::UniqueTid>*
+TsanReport::_internal_mutable_unique_tids() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.unique_tids_;
+}
+
+// string raw_output = 10;
+inline void TsanReport::clear_raw_output() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.raw_output_.ClearToEmpty();
+}
+inline const std::string& TsanReport::raw_output() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:bandicoot.TsanReport.raw_output)
+  return _internal_raw_output();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void TsanReport::set_raw_output(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.raw_output_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:bandicoot.TsanReport.raw_output)
+}
+inline std::string* TsanReport::mutable_raw_output() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_raw_output();
+  // @@protoc_insertion_point(field_mutable:bandicoot.TsanReport.raw_output)
+  return _s;
+}
+inline const std::string& TsanReport::_internal_raw_output() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.raw_output_.Get();
+}
+inline void TsanReport::_internal_set_raw_output(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.raw_output_.Set(value, GetArena());
+}
+inline std::string* TsanReport::_internal_mutable_raw_output() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.raw_output_.Mutable( GetArena());
+}
+inline std::string* TsanReport::release_raw_output() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:bandicoot.TsanReport.raw_output)
+  return _impl_.raw_output_.Release();
+}
+inline void TsanReport::set_allocated_raw_output(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.raw_output_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.raw_output_.IsDefault()) {
+    _impl_.raw_output_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:bandicoot.TsanReport.raw_output)
 }
 
 // -------------------------------------------------------------------

@@ -36,41 +36,41 @@ class DesktopApp final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    virtual ::grpc::Status OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::bandicoot::Void* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>> AsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+    virtual ::grpc::Status OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::bandicoot::Void* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>> AsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>>(AsyncOnSanitizerReportRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>> PrepareAsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>> PrepareAsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>>(PrepareAsyncOnSanitizerReportRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      virtual void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>* AsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>* PrepareAsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>* AsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::bandicoot::Void>* PrepareAsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::bandicoot::Void* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>> AsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::bandicoot::Void* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>> AsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>>(AsyncOnSanitizerReportRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>> PrepareAsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>> PrepareAsyncOnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>>(PrepareAsyncOnSanitizerReportRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, std::function<void(::grpc::Status)>) override;
-      void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response, std::function<void(::grpc::Status)>) override;
+      void OnSanitizerReport(::grpc::ClientContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -82,8 +82,8 @@ class DesktopApp final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* AsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* PrepareAsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TestMsg& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* AsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::bandicoot::Void>* PrepareAsyncOnSanitizerReportRaw(::grpc::ClientContext* context, const ::bandicoot::TsanReport& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_OnSanitizerReport_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -92,7 +92,7 @@ class DesktopApp final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status OnSanitizerReport(::grpc::ServerContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response);
+    virtual ::grpc::Status OnSanitizerReport(::grpc::ServerContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_OnSanitizerReport : public BaseClass {
@@ -106,11 +106,11 @@ class DesktopApp final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestOnSanitizerReport(::grpc::ServerContext* context, ::bandicoot::TestMsg* request, ::grpc::ServerAsyncResponseWriter< ::bandicoot::Void>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestOnSanitizerReport(::grpc::ServerContext* context, ::bandicoot::TsanReport* request, ::grpc::ServerAsyncResponseWriter< ::bandicoot::Void>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -122,25 +122,25 @@ class DesktopApp final {
    public:
     WithCallbackMethod_OnSanitizerReport() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::bandicoot::TestMsg, ::bandicoot::Void>(
+          new ::grpc::internal::CallbackUnaryHandler< ::bandicoot::TsanReport, ::bandicoot::Void>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::bandicoot::TestMsg* request, ::bandicoot::Void* response) { return this->OnSanitizerReport(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::bandicoot::TsanReport* request, ::bandicoot::Void* response) { return this->OnSanitizerReport(context, request, response); }));}
     void SetMessageAllocatorFor_OnSanitizerReport(
-        ::grpc::MessageAllocator< ::bandicoot::TestMsg, ::bandicoot::Void>* allocator) {
+        ::grpc::MessageAllocator< ::bandicoot::TsanReport, ::bandicoot::Void>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::bandicoot::TestMsg, ::bandicoot::Void>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::bandicoot::TsanReport, ::bandicoot::Void>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_OnSanitizerReport() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* OnSanitizerReport(
-      ::grpc::CallbackServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/)  { return nullptr; }
   };
   typedef WithCallbackMethod_OnSanitizerReport<Service > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
@@ -156,7 +156,7 @@ class DesktopApp final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -173,7 +173,7 @@ class DesktopApp final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -196,7 +196,7 @@ class DesktopApp final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -211,10 +211,10 @@ class DesktopApp final {
     WithStreamedUnaryMethod_OnSanitizerReport() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::bandicoot::TestMsg, ::bandicoot::Void>(
+          ::bandicoot::TsanReport, ::bandicoot::Void>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::bandicoot::TestMsg, ::bandicoot::Void>* streamer) {
+                     ::bandicoot::TsanReport, ::bandicoot::Void>* streamer) {
                        return this->StreamedOnSanitizerReport(context,
                          streamer);
                   }));
@@ -223,12 +223,12 @@ class DesktopApp final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TestMsg* /*request*/, ::bandicoot::Void* /*response*/) override {
+    ::grpc::Status OnSanitizerReport(::grpc::ServerContext* /*context*/, const ::bandicoot::TsanReport* /*request*/, ::bandicoot::Void* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedOnSanitizerReport(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::bandicoot::TestMsg,::bandicoot::Void>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedOnSanitizerReport(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::bandicoot::TsanReport,::bandicoot::Void>* server_unary_streamer) = 0;
   };
   typedef WithStreamedUnaryMethod_OnSanitizerReport<Service > StreamedUnaryService;
   typedef Service SplitStreamedService;

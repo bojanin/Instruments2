@@ -35,7 +35,7 @@ class IPCServer : public bandicoot::DesktopApp::Service {
   void RunForever();
   int32_t Port() const { return port_; }
   ::grpc::Status OnSanitizerReport(grpc::ServerContext* context,
-                                   const bandicoot::TestMsg* msg,
+                                   const bandicoot::TsanReport* msg,
                                    bandicoot::Void* out) override;
 
   // Init related functions

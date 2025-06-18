@@ -31,8 +31,9 @@ IPCServer::~IPCServer() {
 }
 
 ::grpc::Status IPCServer::OnSanitizerReport(grpc::ServerContext* context,
-                                            const bandicoot::TestMsg* msg,
+                                            const bandicoot::TsanReport* msg,
                                             bandicoot::Void* out) {
+  SPDLOG_INFO("GOt Something");
   SPDLOG_INFO("RECEIVED: {}", msg->DebugString());
   return grpc::Status::OK;
 }

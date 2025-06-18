@@ -1,16 +1,89 @@
 syntax = "proto3";
 package bandicoot;
 
-
-message TestMsg{
-  string first = 1;
-  string second = 2;
-
+// ───────── low-level frames ─────────
+message StackFrame {
+  string file_name = 1;
+  uint32 line      = 2;
+  string function  = 3;
+  string repr      = 4;   // full text line
 }
 
-message Void{}
+// ───────── arrays from __tsan_get_report_* ─────────
+message Stack {
+  uint32 idx              = 1;
+  repeated StackFrame frames = 2;
+}
+
+message Mop {
+  uint32 idx              = 1;
+  uint32 tid              = 2;
+  uint32 size             = 3;
+  bool   write            = 4;
+  bool   atomic           = 5;
+  uint64 addr             = 6;
+  Stack trace   = 7;
+}
+
+message Loc {
+  uint32 idx              = 1;
+  string type             = 2;   // "stack" | "heap" | "global" | …
+  uint64 addr             = 3;
+  uint64 start            = 4;
+  uint64 size             = 5;
+  uint32 tid              = 6;
+  int32  fd               = 7;
+  bool   suppressable     = 8;
+  Stack trace   = 9;
+}
+
+message MutexInfo {
+  uint32 idx              = 1;
+  uint64 mutex_id         = 2;
+  uint64 addr             = 3;
+  bool   destroyed        = 4;
+  Stack trace   = 5;
+}
+
+message ThreadInfo {
+  uint32 idx              = 1;
+  uint32 tid              = 2;
+  uint64 os_id            = 3;
+  bool   running          = 4;
+  string name             = 5;
+  uint32 parent_tid       = 6;
+  Stack trace   = 7;
+}
+
+message UniqueTid {
+  uint32 idx              = 1;
+  uint32 tid              = 2;
+}
+
+// ───────── top-level report ─────────
+message TsanReport {
+  // headline
+  string description       = 1;
+  uint32 duplicate_count   = 2;
+
+  // sleep() trace (rarely used but exposed by the API)
+  Stack sleep_trace = 3;
+
+  // full arrays from the report
+  repeated Stack      stacks       = 4;
+  repeated Mop        mops         = 5;
+  repeated Loc        locs         = 6;
+  repeated MutexInfo  mutexes      = 7;
+  repeated ThreadInfo threads      = 8;
+  repeated UniqueTid  unique_tids  = 9;
+
+  // verbatim human-readable TSan text
+  string raw_output               = 10;
+}
+
+// ───────── RPC service ─────────
+message Void {}
 
 service DesktopApp {
-  rpc OnSanitizerReport(TestMsg) returns (Void);
+  rpc OnSanitizerReport (TsanReport) returns (Void);
 }
-
