@@ -70,11 +70,11 @@ static instruments2::StackFrame MakeFrame(void* pc) {
   // TODO(bojanin): Consider extracting out each line into the buffer and
   // populating that, then prettifying it client side?
   static char buf[2048] = {};
+  std::memset(buf, 0, sizeof(buf));
   // "%s:%l:%f"  →  "file.cc:42:func"
   __sanitizer_symbolize_pc(pc, "%s:%l:%f", buf, sizeof(buf));
 
   instruments2::StackFrame f;
-  f.set_repr(buf);
 
   const char* c1 = strchr(buf, ':');
   const char* c2 = c1 ? strchr(c1 + 1, ':') : nullptr;
@@ -83,6 +83,10 @@ static instruments2::StackFrame MakeFrame(void* pc) {
     f.set_line(static_cast<int64_t>(std::atoi(c1 + 1)));
     f.set_function(c2 + 1);
   }
+
+  std::memset(buf, 0, sizeof(buf));
+  __sanitizer_symbolize_pc(pc, "%M", buf, sizeof(buf));
+  f.set_repr(buf);
   return f;
 }
 
@@ -236,7 +240,9 @@ instruments2::TsanReport BuildTsanReport(void* report) {
     tp->set_tid(tid);
     tp->set_os_id(osid);
     tp->set_running(running);
-    if (name) tp->set_name(name);
+    if (name) {
+      tp->set_name(name);
+    }
     tp->set_parent_tid(ptid);
     AppendFrames(trace, *tp->mutable_trace());
   }
@@ -270,5 +276,6 @@ extern "C" void __tsan_on_report(void* report) {
                   static_cast<int>(status.error_code()), status.error_details(),
                   status.error_message());
     }
+    SPDLOG_INFO("Sending: \n{}", pb_repr.DebugString());
   });
 }

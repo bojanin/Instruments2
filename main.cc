@@ -33,8 +33,9 @@ static void ShowArray(const char* name, const Range& range,
 
   if (empty) {  // grey, non-openable header
     ImGui::BeginDisabled();
-    ImGui::TreeNodeEx(
-        name, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+    const std::string lbl = std::format("{} <no information provided>", name);
+    ImGui::TreeNodeEx(lbl.c_str(), ImGuiTreeNodeFlags_Leaf |
+                                       ImGuiTreeNodeFlags_NoTreePushOnOpen);
     ImGui::EndDisabled();
     return;
   }
@@ -57,8 +58,8 @@ static void DrawStackFrames(const instruments2::Stack& st) {
     const auto& f = st.frames(i);
 
     //  #0  path/to/file.cc:123  in  myFunc()
-    ImGui::Text("#%-2d  %s:%u  in  %s()", i, f.file_name().c_str(), f.line(),
-                f.function().c_str());
+    ImGui::Text("#%-2d  %s:%u  in  %s() [%s]", i, f.file_name().c_str(),
+                f.line(), f.function().c_str(), f.repr().c_str());
   }
   ImGui::Unindent();
 }
@@ -248,13 +249,54 @@ int main(int, char**) {
         });
 
         // Locs, Mutexes, Threads, … (same pattern) …
-        ShowArray("Memory Locations", r.locs(),
-                  [](const instruments2::Loc& loc) { (void)loc; });
+        ShowArray(
+            "Memory Locations", r.locs(), [](const instruments2::Loc& loc) {
+              // title:   <type>  @0xSTART-0xEND  size:N  tid:M  [suppressible]
+              std::string label = std::format(
+                  "{}  @0x{:X}-0x{:X}  size:{}B  tid:{}{}", loc.type(),
+                  loc.start(), loc.start() + loc.size(), loc.size(), loc.tid(),
+                  loc.suppressable() ? "  [suppressible]" : "");
+
+              if (ImGui::TreeNode(label.c_str())) {
+                if (loc.fd() >= 0) ImGui::Text("fd: %d", loc.fd());
+
+                DrawStackFrames(loc.trace());  // <-- helper from earlier
+                ImGui::TreePop();
+              }
+            });
         ShowArray("Mutexes", r.mutexes(),
-                  [](const instruments2::MutexInfo& mut) { (void)mut; });
+                  [](const instruments2::MutexInfo& mut) {
+                    // title:   mutex:0xID  addr:0xADDR  [destroyed]
+                    std::string label = std::format(
+                        "mutex:0x{:X}  addr:0x{:X}{}", mut.mutex_id(),
+                        mut.addr(), mut.destroyed() ? "  [destroyed]" : "");
+
+                    if (ImGui::TreeNode(label.c_str())) {
+                      DrawStackFrames(mut.trace());
+                      ImGui::TreePop();
+                    }
+                  });
         ShowArray("Threads", r.threads(),
-                  [](const instruments2::ThreadInfo& thread_info) {
-                    (void)thread_info;
+                  [](const instruments2::ThreadInfo& th) {
+                    // title:   tid:N  os:N  running/blocked  "name"
+                    const std::string tid = th.tid() == 0
+                                                ? "0 (main thread)"
+                                                : std::format("{}", th.tid());
+                    const std::string name =
+                        th.name().empty() ? "<unnamed thread>" : th.name();
+                    const std::string label =
+                        std::format("tid:{} os:{} state={} {}", tid, th.os_id(),
+                                    th.running() ? "running" : "blocked", name);
+
+                    if (ImGui::TreeNode(label.c_str())) {
+                      if (th.trace().frames().empty()) {
+                        ImGui::Text("parent tid: %u <no stack trace>",
+                                    th.parent_tid());
+                      } else {
+                        DrawStackFrames(th.trace());
+                      }
+                      ImGui::TreePop();
+                    }
                   });
       }
       ImGui::PopID();
