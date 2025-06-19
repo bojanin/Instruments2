@@ -147,7 +147,7 @@ int main(int, char**) {
                         SDL_WINDOW_ALLOW_HIGHDPI);
   SDL_Window* window =
       SDL_CreateWindow("Instruments2", SDL_WINDOWPOS_CENTERED,
-                       SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+                       SDL_WINDOWPOS_CENTERED, 1920, 1080, window_flags);
   if (window == nullptr) {
     printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
     return -1;

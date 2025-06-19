@@ -43,7 +43,7 @@ Linux:
 `cmake --build build --target captain_hook && LD_PRELOAD=build/captain_hook/libcaptain_hook.so ./captain_hook/tiny_race`
 
 How to standalone compile captain_hook:
-`clang++ -std=c++23 -g -fsanitize=thread -shared -fPIC -o libcaptain_hook.so tsan_ipc.cc`
+`clang++ -std=c++23 -g -fsanitize=thread -shared -fPIC -o libcaptain_hook.so tsan.cc`
 
 PBTypes:
 `cmake --build build --target pbtypes -j12`
