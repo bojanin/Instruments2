@@ -16,6 +16,7 @@
 #include <tsb/ipc.h>
 #include <tsb/log_reporter.h>
 
+#include <filesystem>
 #include <format>
 #include <string>
 #include <vector>
@@ -23,6 +24,15 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
+
+#if defined(_WIN32)
+const char* kSystemFont = "C:\\Windows\\Fonts\\segoeui.ttf";
+#elif defined(__APPLE__)
+const char* kSystemFont = "/System/Library/Fonts/SFNSMono.ttf";
+#else
+const char* kSystemFont = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
+#endif
+
 template <typename Range, typename DrawFn>
 static void ShowArray(const char* name, const Range& range,
                       DrawFn&& draw_elem)  // <- accept any callable
@@ -151,7 +161,14 @@ int main(int, char**) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO();
-  (void)io;
+  io.Fonts->Clear();
+  const bool exists = std::filesystem::exists(kSystemFont);
+  if (!exists) {
+    SPDLOG_WARN("{} doesnt exist...", kSystemFont);
+  }
+
+  ImFont* system_font = io.Fonts->AddFontFromFileTTF(
+      kSystemFont, 17, NULL, io.Fonts->GetGlyphRangesDefault());
   io.ConfigFlags |=
       ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
                                            // io.ConfigFlags |=
@@ -162,7 +179,6 @@ int main(int, char**) {
   io.ConfigFlags |= ImGuiWindowFlags_NoTitleBar;
   // Multi-Viewport io.ConfigViewportsNoAutoMerge = true;
   // io.ConfigViewportsNoTaskBarIcon = true;
-
   // Setup Dear ImGui style
   ImGui::StyleColorsDark();
   // ImGui::StyleColorsLight();
@@ -192,12 +208,13 @@ int main(int, char**) {
     // Poll and handle events (inputs, window resize, etc.)
     // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to
     // tell if dear imgui wants to use your inputs.
-    // - When io.WantCaptureMouse is true, do not dispatch mouse input data to
-    // your main application, or clear/overwrite your copy of the mouse data.
+    // - When io.WantCaptureMouse is true, do not dispatch mouse input data
+    // to your main application, or clear/overwrite your copy of the mouse
+    // data.
     // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input
     // data to your main application, or clear/overwrite your copy of the
-    // keyboard data. Generally you may always pass all inputs to dear imgui,
-    // and hide them from your application based on those two flags.
+    // keyboard data. Generally you may always pass all inputs to dear
+    // imgui, and hide them from your application based on those two flags.
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
       ImGui_ImplSDL2_ProcessEvent(&event);
@@ -216,6 +233,7 @@ int main(int, char**) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+    ImGui::PushFont(system_font);
 
     ImGui::Begin("Instruments2");
     for (size_t i = 0; i < reports.size(); ++i) {
@@ -315,6 +333,7 @@ int main(int, char**) {
       }
       ImGui::PopID();
     }
+    ImGui::PopFont();
     ImGui::End();
 
     // 1. Show the big demo window (Most of the sample code is in
