@@ -15,7 +15,9 @@ void* threadfunc(void* p) {
 int main() {
   map_t m;
   pthread_t t;
-  pthread_create(&t, 0, threadfunc, &m);
-  printf("foo=%s\n", m["foo"].c_str());
+  for (int i = 0; i < 5; i++) {
+    pthread_create(&t, 0, threadfunc, &m);
+    printf("foo=%s\n", m["foo"].c_str());
+  }
   pthread_join(t, 0);
 }

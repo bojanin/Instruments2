@@ -265,7 +265,10 @@ instruments2::TsanReport BuildTsanReport(void* report) {
 
 // NOTE(bojanin): Do not spawn fucking threads in here!!! TSAN will DEADLOCK.
 extern "C" void __tsan_on_report(void* report) {
+  std::println("HERE");
   const instruments2::TsanReport pb_repr = BuildTsanReport(report);
+  std::println("HERE2");
+
   GetQueue().Dispatch([pb_repr]() {
     ::grpc::ClientContext context;
     ::instruments2::Void response;
@@ -276,6 +279,6 @@ extern "C" void __tsan_on_report(void* report) {
                   static_cast<int>(status.error_code()), status.error_details(),
                   status.error_message());
     }
-    SPDLOG_INFO("Sending: \n{}", pb_repr.DebugString());
+    // SPDLOG_INFO("Sending: \n{}", pb_repr.DebugString());
   });
 }
