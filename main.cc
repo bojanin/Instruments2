@@ -51,10 +51,8 @@ static void ShowArray(const char* name, const Range& range,
   }
 
   if (ImGui::TreeNode(name)) {  // normal expandable branch
-    if (draw_elem) {
-      for (const auto& elem : range) {
-        draw_elem(elem);
-      }
+    for (const auto& elem : range) {
+      draw_elem(elem);
     }
     ImGui::TreePop();
   }
@@ -351,28 +349,31 @@ int main(int, char**) {
                       ImGui::TreePop();
                     }
                   });
-        ShowArray("Threads", r.threads(),
-                  [](const instruments2::ThreadInfo& th) {
-                    // title:   tid:N  os:N  running/blocked  "name"
-                    const std::string tid = th.tid() == 0
-                                                ? "0 (main thread)"
-                                                : std::format("{}", th.tid());
-                    const std::string name =
-                        th.name().empty() ? "<unnamed thread>" : th.name();
-                    const std::string label =
-                        std::format("tid:{} os:{} state={} {}", tid, th.os_id(),
-                                    th.running() ? "running" : "blocked", name);
+        ShowArray(
+            "Threads", r.threads(), [&r](const instruments2::ThreadInfo& th) {
+              // title:   tid:N  os:N  running/blocked  "name" <num threads
+              // leaked | null>
+              const std::string tid = th.tid() == 0
+                                          ? "0 (main thread)"
+                                          : std::format("{}", th.tid());
+              const std::string duplicates =
+                  std::format("{} duplicate threads", r.duplicate_count());
+              const std::string name =
+                  th.name().empty() ? "<unnamed thread>" : th.name();
+              const std::string label = std::format(
+                  "tid:{} os:{} state={} {} ({})", tid, th.os_id(),
+                  th.running() ? "running" : "blocked", name, duplicates);
 
-                    if (ImGui::TreeNode(label.c_str())) {
-                      if (th.trace().frames().empty()) {
-                        ImGui::Text("parent tid: %u <no stack trace>",
-                                    th.parent_tid());
-                      } else {
-                        DrawStackFrames(th.trace());
-                      }
-                      ImGui::TreePop();
-                    }
-                  });
+              if (ImGui::TreeNode(label.c_str())) {
+                if (th.trace().frames().empty()) {
+                  ImGui::Text("parent tid: %u <no stack trace>",
+                              th.parent_tid());
+                } else {
+                  DrawStackFrames(th.trace());
+                }
+                ImGui::TreePop();
+              }
+            });
       }
       ImGui::PopID();
     }
