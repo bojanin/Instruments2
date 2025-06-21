@@ -1,11 +1,13 @@
 #include <spdlog/spdlog.h>
 #include <tsb/dispatch_queue.h>
 
+#include <print>
 #include <utility>
 
 namespace tsb {
 
 DispatchQueue::~DispatchQueue() {  // graceful shutdown
+  std::println("Deinit: DispatchQueue");
   {
     std::lock_guard lk(m_);
     stop_ = true;
@@ -29,6 +31,7 @@ void DispatchQueue::Dispatch(WorkItem w) {
 }
 
 void DispatchQueue::Worker() {
+  pthread_setname_np("tsb-dispatch-queue");
   for (;;) {
     WorkItem job;
     {

@@ -17,14 +17,19 @@
 #include <tsb/ipc.h>
 
 static char gSymbolicationScratchPad[8196];
+
+// NOTE(bojanin): this leaks memory but we can't use unique_ptr because it will
+// be destructed before the sanitizer compiler runtime finishes finding issues.
+// TODO(bojanin): potentially parameterize this? i suspect memsan will complain
+// about the raw ptr?
 static tsb::DispatchQueue& GetQueue() {
-  static tsb::DispatchQueue q;
-  return q;
+  static tsb::DispatchQueue* q = new tsb::DispatchQueue();
+  return *q;
 }
 
 static tsb::IPCClient& GetClient() {
-  static tsb::IPCClient c;
-  return c;
+  static tsb::IPCClient* c = new tsb::IPCClient();
+  return *c;
 }
 
 __attribute__((constructor)) void Init() {
@@ -33,15 +38,11 @@ __attribute__((constructor)) void Init() {
   // before.
   (void)GetClient();
   GetQueue().Dispatch([]() {});
-  SPDLOG_INFO("==TSAN SHLIB Init==");
-  SPDLOG_INFO("using protobuf {}", google::protobuf::internal::VersionString(
-                                       GOOGLE_PROTOBUF_VERSION));
-  SPDLOG_INFO("==TSAN SHLIB End Init==");
+  SPDLOG_INFO("Instruments2: Shlib Init");
 }
 
 __attribute__((destructor)) void Deinit() {
-  SPDLOG_INFO("Deinit Started");
-  SPDLOG_INFO("Deinit Complete");
+  SPDLOG_INFO("Instruments2: Shlib Deinit");
   //
 }
 // Here's the full list of available placeholders:
@@ -262,12 +263,14 @@ instruments2::TsanReport BuildTsanReport(void* report) {
   rep.set_raw_output(std::move(raw));
   return rep;
 }
+extern "C" int __tsan_on_finalize(int failed) {
+  std::println("Tsan finalized: {}", failed);
+  return failed;
+}
 
 // NOTE(bojanin): Do not spawn fucking threads in here!!! TSAN will DEADLOCK.
 extern "C" void __tsan_on_report(void* report) {
-  std::println("HERE");
   const instruments2::TsanReport pb_repr = BuildTsanReport(report);
-  std::println("HERE2");
 
   GetQueue().Dispatch([pb_repr]() {
     ::grpc::ClientContext context;
