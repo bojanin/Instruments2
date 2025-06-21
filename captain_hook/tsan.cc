@@ -22,6 +22,7 @@ static char gSymbolicationScratchPad[8196];
 // be destructed before the sanitizer compiler runtime finishes finding issues.
 // TODO(bojanin): potentially parameterize this? i suspect memsan will complain
 // about the raw ptr?
+std::atomic_bool deinit = false;
 static tsb::DispatchQueue& GetQueue() {
   static tsb::DispatchQueue* q = new tsb::DispatchQueue();
   return *q;
@@ -42,6 +43,7 @@ __attribute__((constructor)) void Init() {
 }
 
 __attribute__((destructor)) void Deinit() {
+  deinit = true;
   SPDLOG_INFO("Instruments2: Shlib Deinit");
   //
 }
@@ -81,7 +83,7 @@ static instruments2::StackFrame MakeFrame(void* pc) {
   const char* c2 = c1 ? strchr(c1 + 1, ':') : nullptr;
   if (c1 && c2) {
     f.set_file_name({buf, static_cast<size_t>(c1 - buf)});
-    f.set_line(static_cast<int64_t>(std::atoi(c1 + 1)));
+    f.set_line(static_cast<uint32_t>(std::atoi(c1 + 1)));
     f.set_function(c2 + 1);
   }
 
@@ -272,16 +274,24 @@ extern "C" int __tsan_on_finalize(int failed) {
 extern "C" void __tsan_on_report(void* report) {
   const instruments2::TsanReport pb_repr = BuildTsanReport(report);
 
-  GetQueue().Dispatch([pb_repr]() {
+  const auto rpc_msg = [pb_repr]() {
     ::grpc::ClientContext context;
     ::instruments2::Void response;
     ::grpc::Status status =
         GetClient().stub_->OnSanitizerReport(&context, pb_repr, &response);
     if (!status.ok()) {
-      SPDLOG_WARN("Error sending gRPC: {} {} {}",
-                  static_cast<int>(status.error_code()), status.error_details(),
-                  status.error_message());
+      std::println("Error sending gRPC: {} {} {}",
+                   static_cast<int>(status.error_code()),
+                   status.error_details(), status.error_message());
     }
-    // SPDLOG_INFO("Sending: \n{}", pb_repr.DebugString());
-  });
+    std::println("Sending: \n{}", pb_repr.DebugString());
+  };
+
+  // NOTE(bojanin): the c++ runtime will deinit our shlib but the compiler
+  // runtime can still call this function after atexit() has been called.
+  if (deinit) {
+    rpc_msg();
+  } else {
+    GetQueue().Dispatch(rpc_msg);
+  }
 }
