@@ -222,7 +222,7 @@ int main(int, char**) {
       kSystemFont, 18, NULL, io.Fonts->GetGlyphRangesDefault());
   io.ConfigFlags |=
       ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-  io.ConfigFlags |= ImGuiWindowFlags_NoTitleBar;
+  // io.ConfigFlags |= ImGuiWindowFlags_NoTitleBar;
 
   // DEBUG TOOLS:
   // https://github.com/ocornut/imgui/wiki/Debug-Tools
@@ -273,9 +273,18 @@ int main(int, char**) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize, ImGuiCond_Always);
+    ImGui::Begin("Main Window", nullptr,
+                 ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+                     ImGuiWindowFlags_NoMove |
+                     ImGuiWindowFlags_NoBringToFrontOnFocus);
     ImGui::PushFont(system_font);
 
-    ImGui::Begin("Instruments2");
+    ImVec2 display_size = ImGui::GetContentRegionAvail();
+
+    // Left child for current view (reports)
+    ImGui::BeginChild("Left", ImVec2(display_size.x * 0.5f, 0), true);
     for (size_t i = 0; i < reports.size(); ++i) {
       auto& r = reports[i];
       ImGui::PushID(static_cast<int>(i));  // ensure stable IDs
@@ -376,14 +385,32 @@ int main(int, char**) {
       }
       ImGui::PopID();
     }
-    ImGui::PopFont();
-    ImGui::End();
+    ImGui::EndChild();
+    ImGui::SameLine();
+
+    ImGui::BeginChild("Right", ImVec2(0, 0), true);
+    ImGui::BeginChild("Terminal", ImVec2(0, display_size.y * 0.5f), true);
+    if (1 == 2) {
+      ImGui::TextUnformatted("AHHHH THIS IS TERMINAL OUTPUT");
+    } else {
+      ImGui::Text("No terminal output available.");
+    }
+    ImGui::EndChild();
+
+    // Bottom right for code search
+    ImGui::BeginChild("CodeSearch", ImVec2(0, 0),
+                      true);  // 0,0 takes remaining space
+    ImGui::Text("Implement your code search tool here.");
+    ImGui::EndChild();
 
     // 1. Show the big demo window (Most of the sample code is in
     // ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear
     // ImGui!).
     ImGui::ShowDemoWindow(&show_demo_window);
 
+    ImGui::EndChild();
+    ImGui::PopFont();
+    ImGui::End();
     // Rendering
     ImGui::Render();
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);

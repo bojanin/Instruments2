@@ -7,3 +7,4 @@ compile_commands.json
 *.dylib
 librt/tiny_race
 tiny_race
+imgui.ini
