@@ -246,6 +246,8 @@ int main(int, char**) {
   // Main loop
   bool done = false;
   std::vector<std::string> headers = {"Stack Frame", "File Info", "Extra"};
+  // TODO(bojanin): enum class this and static cast to int for selection/logic
+  static int selected_sanitizer = 0;
   while (!done) {
     // Poll and handle events (inputs, window resize, etc.)
     // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to
@@ -282,6 +284,17 @@ int main(int, char**) {
                      ImGuiWindowFlags_NoMove |
                      ImGuiWindowFlags_NoBringToFrontOnFocus);
     ImGui::PushFont(system_font);
+
+    ImGui::Text("Select Sanitizer:");
+    const char* sanitizers[] = {"Address", "Thread",   "Memory", "Undefined",
+                                "Leak",    "DataFlow", "CFI",    "SafeStack"};
+    for (int i = 0; i < 8; ++i) {
+      if (ImGui::RadioButton(sanitizers[i], &selected_sanitizer, i)) {
+        // TODO
+      }
+      if (i < 7) ImGui::SameLine();
+    }
+    ImGui::Spacing();
 
     ImVec2 display_size = ImGui::GetContentRegionAvail();
 
