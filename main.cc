@@ -393,14 +393,14 @@ int main(int, char**) {
     if (1 == 2) {
       ImGui::TextUnformatted("AHHHH THIS IS TERMINAL OUTPUT");
     } else {
-      ImGui::Text("No terminal output available.");
+      ImGui::Text("<No sanitizer output>");
     }
     ImGui::EndChild();
 
     // Bottom right for code search
     ImGui::BeginChild("CodeSearch", ImVec2(0, 0),
                       true);  // 0,0 takes remaining space
-    ImGui::Text("Implement your code search tool here.");
+    ImGui::Text("<Symbol location not found>");
     ImGui::EndChild();
 
     // 1. Show the big demo window (Most of the sample code is in
