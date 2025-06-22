@@ -300,6 +300,12 @@ int main(int, char**) {
 
     // Left child for current view (reports)
     ImGui::BeginChild("Left", ImVec2(display_size.x * 0.5f, 0), true);
+    size_t total_issues = reports.size();
+    // TODO add icons
+    std::string issues_lbl =
+        std::format("⚠️ Total issues found: {}", total_issues);
+    ImGui::Text("%s", issues_lbl.c_str());
+    ImGui::Separator();
     for (size_t i = 0; i < reports.size(); ++i) {
       auto& r = reports[i];
       ImGui::PushID(static_cast<int>(i));  // ensure stable IDs
