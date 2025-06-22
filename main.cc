@@ -290,8 +290,7 @@ int main(int, char**) {
       ImGui::PushID(static_cast<int>(i));  // ensure stable IDs
 
       std::string hdr = std::format("[{}]  {}", i, r.description());
-      if (ImGui::CollapsingHeader(hdr.c_str(),
-                                  ImGuiTreeNodeFlags_DefaultOpen)) {
+      if (ImGui::CollapsingHeader(hdr.c_str())) {
         // ── Stacks ────────────────────────────────
         ShowArray("Stacks", r.stacks(), [](const instruments2::Stack& s) {
           // Each Stack is itself a mini-tree
