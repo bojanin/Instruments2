@@ -284,7 +284,6 @@ extern "C" void __tsan_on_report(void* report) {
                    static_cast<int>(status.error_code()),
                    status.error_details(), status.error_message());
     }
-    std::println("Sending: \n{}", pb_repr.DebugString());
   };
 
   // NOTE(bojanin): the c++ runtime will deinit our shlib but the compiler
