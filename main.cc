@@ -157,7 +157,6 @@ int main(int, char**) {
     printf("123");
     return -1;
   }
-  SPDLOG_INFO("HERE2");
 
   // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
