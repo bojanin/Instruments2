@@ -35,19 +35,22 @@ const char* kSystemFont = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
 
 template <typename Range, typename DrawFn>
 static void ShowArray(const char* name, const Range& range,
-                      DrawFn&& draw_elem)  // <- accept any callable
-{
+                      DrawFn&& draw_elem) {
   using std::begin;
   using std::end;
   const bool empty = (begin(range) == end(range));
 
-  if (empty) {  // grey, non-openable header
-    ImGui::BeginDisabled();
-    const std::string lbl = std::format("{} <no information provided>", name);
-    ImGui::TreeNodeEx(lbl.c_str(), ImGuiTreeNodeFlags_Leaf |
-                                       ImGuiTreeNodeFlags_NoTreePushOnOpen);
-    ImGui::EndDisabled();
+  if (empty) {
     return;
+    // TODO(bojanin): Receive UX feedback on this....?
+    // I like the verbosity, but others perhaps wont?
+
+    // ImGui::BeginDisabled();
+    // const std::string lbl = std::format("{} <no information provided>",
+    // name); ImGui::TreeNodeEx(lbl.c_str(), ImGuiTreeNodeFlags_Leaf |
+    //                                    ImGuiTreeNodeFlags_NoTreePushOnOpen);
+    // ImGui::EndDisabled();
+    // return;
   }
 
   if (ImGui::TreeNode(name)) {  // normal expandable branch
@@ -222,7 +225,6 @@ int main(int, char**) {
       kSystemFont, 18, NULL, io.Fonts->GetGlyphRangesDefault());
   io.ConfigFlags |=
       ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-  // io.ConfigFlags |= ImGuiWindowFlags_NoTitleBar;
 
   // DEBUG TOOLS:
   // https://github.com/ocornut/imgui/wiki/Debug-Tools
