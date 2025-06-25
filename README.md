@@ -1,5 +1,18 @@
 # Instruments2
 
+Instruments2 is a GUI interface around clang sanitizers inspired by Xcode & Apple Instruments.
+
+
+# Roadmap
+[x] TSAN
+[] ASAN
+[] UBSAN
+[] MEMSAN
+[] LSAN
+[] DFSAN
+[] RTSAN
+
+
 requirements:
 - clang (ALL versions that have tsan support)
 - spdlog 
