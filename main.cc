@@ -286,13 +286,17 @@ int main(int, char**) {
     ImGui::PushFont(system_font);
 
     ImGui::Text("Select Sanitizer:");
-    const char* sanitizers[] = {"Address", "Thread",   "Memory", "Undefined",
-                                "Leak",    "DataFlow", "CFI",    "SafeStack"};
-    for (int i = 0; i < 8; ++i) {
-      if (ImGui::RadioButton(sanitizers[i], &selected_sanitizer, i)) {
+    const std::vector<std::string> sanitizers = {
+        "Address Sanitizer", "Thread Sanitizer",
+        "Memory Sanitizer",  "Undefined Behavior Sanitizer",
+        "Leak Sanitizer",    "DataFlow Sanitizer",
+        "RealTime Sanitizer"};
+    for (size_t i = 0; i < 7; ++i) {
+      if (ImGui::RadioButton(sanitizers[i].c_str(), &selected_sanitizer,
+                             static_cast<int>(i))) {
         // TODO
       }
-      if (i < 7) ImGui::SameLine();
+      if (i < 6) ImGui::SameLine();
     }
     ImGui::Spacing();
 
