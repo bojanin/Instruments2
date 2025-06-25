@@ -2,7 +2,7 @@
 
 Instruments2 is a GUI interface around clang sanitizers inspired by Xcode & Apple Instruments.
 
-![GUI](https://github.com/bojanin/Instruments2/assets/instruments-gui.png)
+![GUI](https://raw.githubusercontent.com/bojanin/Instruments2/refs/heads/master/assets/instruments-gui.png)
 
 # Roadmap
 - [x] TSAN
