@@ -2130,7 +2130,6 @@ class TsanReport final : public ::google::protobuf::Message
     kThreadsFieldNumber = 8,
     kUniqueTidsFieldNumber = 9,
     kDescriptionFieldNumber = 1,
-    kRawOutputFieldNumber = 10,
     kSleepTraceFieldNumber = 3,
     kDuplicateCountFieldNumber = 2,
   };
@@ -2252,22 +2251,6 @@ class TsanReport final : public ::google::protobuf::Message
   std::string* _internal_mutable_description();
 
   public:
-  // string raw_output = 10;
-  void clear_raw_output() ;
-  const std::string& raw_output() const;
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_raw_output(Arg_&& arg, Args_... args);
-  std::string* mutable_raw_output();
-  PROTOBUF_NODISCARD std::string* release_raw_output();
-  void set_allocated_raw_output(std::string* value);
-
-  private:
-  const std::string& _internal_raw_output() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_raw_output(
-      const std::string& value);
-  std::string* _internal_mutable_raw_output();
-
-  public:
   // .instruments2.Stack sleep_trace = 3;
   bool has_sleep_trace() const;
   void clear_sleep_trace() ;
@@ -2298,8 +2281,8 @@ class TsanReport final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 10, 7,
-      61, 2>
+      4, 9, 7,
+      51, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -2325,7 +2308,6 @@ class TsanReport final : public ::google::protobuf::Message
     ::google::protobuf::RepeatedPtrField< ::instruments2::ThreadInfo > threads_;
     ::google::protobuf::RepeatedPtrField< ::instruments2::UniqueTid > unique_tids_;
     ::google::protobuf::internal::ArenaStringPtr description_;
-    ::google::protobuf::internal::ArenaStringPtr raw_output_;
     ::instruments2::Stack* sleep_trace_;
     ::uint32_t duplicate_count_;
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -4081,54 +4063,6 @@ inline ::google::protobuf::RepeatedPtrField<::instruments2::UniqueTid>*
 TsanReport::_internal_mutable_unique_tids() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.unique_tids_;
-}
-
-// string raw_output = 10;
-inline void TsanReport::clear_raw_output() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_output_.ClearToEmpty();
-}
-inline const std::string& TsanReport::raw_output() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:instruments2.TsanReport.raw_output)
-  return _internal_raw_output();
-}
-template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void TsanReport::set_raw_output(Arg_&& arg,
-                                                     Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_output_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:instruments2.TsanReport.raw_output)
-}
-inline std::string* TsanReport::mutable_raw_output() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  std::string* _s = _internal_mutable_raw_output();
-  // @@protoc_insertion_point(field_mutable:instruments2.TsanReport.raw_output)
-  return _s;
-}
-inline const std::string& TsanReport::_internal_raw_output() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.raw_output_.Get();
-}
-inline void TsanReport::_internal_set_raw_output(const std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_output_.Set(value, GetArena());
-}
-inline std::string* TsanReport::_internal_mutable_raw_output() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.raw_output_.Mutable( GetArena());
-}
-inline std::string* TsanReport::release_raw_output() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:instruments2.TsanReport.raw_output)
-  return _impl_.raw_output_.Release();
-}
-inline void TsanReport::set_allocated_raw_output(std::string* value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_output_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.raw_output_.IsDefault()) {
-    _impl_.raw_output_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:instruments2.TsanReport.raw_output)
 }
 
 // -------------------------------------------------------------------

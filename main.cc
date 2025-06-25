@@ -412,10 +412,11 @@ int main(int, char**) {
 
     ImGui::BeginChild("Right", ImVec2(0, 0), true);
     ImGui::BeginChild("Terminal", ImVec2(0, display_size.y * 0.5f), true);
-    if (1 == 2) {
-      ImGui::TextUnformatted("AHHHH THIS IS TERMINAL OUTPUT");
+    if (tsb::LogReporter::Shared()->SanitizerOutputExists()) {
+      ImGui::TextUnformatted(
+          tsb::LogReporter::Shared()->SanitizerOutput().c_str());
     } else {
-      ImGui::Text("<No sanitizer output>");
+      ImGui::Text("<No sanitizer output available: <Insert reason why>>");
     }
     ImGui::EndChild();
 

@@ -16,8 +16,6 @@
 #include <tsb/dispatch_queue.h>
 #include <tsb/ipc.h>
 
-static char gSymbolicationScratchPad[8196];
-
 // NOTE(bojanin): this leaks memory but we can't use unique_ptr because it will
 // be destructed before the sanitizer compiler runtime finishes finding issues.
 // TODO(bojanin): potentially parameterize this? i suspect memsan will complain
@@ -133,7 +131,6 @@ static void AppendFrames(void** trace, instruments2::Stack& dst) {
 // -----------------------------------------------------------------------------
 instruments2::TsanReport BuildTsanReport(void* report) {
   instruments2::TsanReport rep;
-  std::string raw;
 
   // ── headline ---------------------------------------------------------------
   const char* desc = nullptr;
@@ -149,10 +146,6 @@ instruments2::TsanReport BuildTsanReport(void* report) {
   for (int i = 0; i < tsb::TRACE_MAX && sleep_trace[i]; ++i) {
     AppendFrames(sleep_trace, *rep.mutable_sleep_trace());
   }
-
-  raw = "==================\n";
-  raw += fmt::format("WARNING: ThreadSanitizer: {}\n", desc ? desc : "unknown");
-  raw += "==================\n";
 
   // ── STACKS -----------------------------------------------------------------
   stack_cnt = std::min(stack_cnt, tsb::ARRAY_MAX);
@@ -261,8 +254,6 @@ instruments2::TsanReport BuildTsanReport(void* report) {
   }
 
   // ── High-level read/write stacks for UX ------------------------------------
-  raw += "==================\n";
-  rep.set_raw_output(std::move(raw));
   return rep;
 }
 extern "C" int __tsan_on_finalize(int failed) {

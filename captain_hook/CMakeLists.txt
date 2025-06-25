@@ -27,6 +27,7 @@ target_link_libraries(captain_hook PUBLIC tsb gRPC::grpc++ pbtypes)
 
 # Options
 target_compile_options(captain_hook PRIVATE -Wall -gfull -gcolumn-info -O3 -fPIC)
+
 target_compile_options(captain_hook PRIVATE
                            -resource-dir=${CLANG_RESOURCE_DIR})
 target_link_options(captain_hook PRIVATE -fsanitize=thread)

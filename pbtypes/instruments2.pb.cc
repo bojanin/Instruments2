@@ -270,9 +270,6 @@ inline constexpr TsanReport::Impl_::Impl_(
         description_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        raw_output_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
         sleep_trace_{nullptr},
         duplicate_count_{0u} {}
 
@@ -440,11 +437,9 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::instruments2::TsanReport, _impl_.mutexes_),
         PROTOBUF_FIELD_OFFSET(::instruments2::TsanReport, _impl_.threads_),
         PROTOBUF_FIELD_OFFSET(::instruments2::TsanReport, _impl_.unique_tids_),
-        PROTOBUF_FIELD_OFFSET(::instruments2::TsanReport, _impl_.raw_output_),
         ~0u,
         ~0u,
         0,
-        ~0u,
         ~0u,
         ~0u,
         ~0u,
@@ -470,8 +465,8 @@ static const ::_pbi::MigrationSchema
         {70, 83, -1, sizeof(::instruments2::MutexInfo)},
         {88, 103, -1, sizeof(::instruments2::ThreadInfo)},
         {110, -1, -1, sizeof(::instruments2::UniqueTid)},
-        {120, 138, -1, sizeof(::instruments2::TsanReport)},
-        {148, -1, -1, sizeof(::instruments2::Void)},
+        {120, 137, -1, sizeof(::instruments2::TsanReport)},
+        {146, -1, -1, sizeof(::instruments2::Void)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::instruments2::_StackFrame_default_instance_._instance,
@@ -505,7 +500,7 @@ const char descriptor_table_protodef_instruments2_2eproto[] ABSL_ATTRIBUTE_SECTI
     "unning\030\004 \001(\010\022\014\n\004name\030\005 \001(\t\022\022\n\nparent_tid"
     "\030\006 \001(\r\022\"\n\005trace\030\007 \001(\0132\023.instruments2.Sta"
     "ck\"%\n\tUniqueTid\022\013\n\003idx\030\001 \001(\r\022\013\n\003tid\030\002 \001("
-    "\r\"\342\002\n\nTsanReport\022\023\n\013description\030\001 \001(\t\022\027\n"
+    "\r\"\316\002\n\nTsanReport\022\023\n\013description\030\001 \001(\t\022\027\n"
     "\017duplicate_count\030\002 \001(\r\022(\n\013sleep_trace\030\003 "
     "\001(\0132\023.instruments2.Stack\022#\n\006stacks\030\004 \003(\013"
     "2\023.instruments2.Stack\022\037\n\004mops\030\005 \003(\0132\021.in"
@@ -513,16 +508,15 @@ const char descriptor_table_protodef_instruments2_2eproto[] ABSL_ATTRIBUTE_SECTI
     "ts2.Loc\022(\n\007mutexes\030\007 \003(\0132\027.instruments2."
     "MutexInfo\022)\n\007threads\030\010 \003(\0132\030.instruments"
     "2.ThreadInfo\022,\n\013unique_tids\030\t \003(\0132\027.inst"
-    "ruments2.UniqueTid\022\022\n\nraw_output\030\n \001(\t\"\006"
-    "\n\004Void2O\n\nDesktopApp\022A\n\021OnSanitizerRepor"
-    "t\022\030.instruments2.TsanReport\032\022.instrument"
-    "s2.Voidb\006proto3"
+    "ruments2.UniqueTid\"\006\n\004Void2O\n\nDesktopApp"
+    "\022A\n\021OnSanitizerReport\022\030.instruments2.Tsa"
+    "nReport\032\022.instruments2.Voidb\006proto3"
 };
 static ::absl::once_flag descriptor_table_instruments2_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_instruments2_2eproto = {
     false,
     false,
-    1215,
+    1195,
     descriptor_table_protodef_instruments2_2eproto,
     "instruments2.proto",
     &descriptor_table_instruments2_2eproto_once,
@@ -3018,8 +3012,7 @@ inline PROTOBUF_NDEBUG_INLINE TsanReport::Impl_::Impl_(
         mutexes_{visibility, arena, from.mutexes_},
         threads_{visibility, arena, from.threads_},
         unique_tids_{visibility, arena, from.unique_tids_},
-        description_(arena, from.description_),
-        raw_output_(arena, from.raw_output_) {}
+        description_(arena, from.description_) {}
 
 TsanReport::TsanReport(
     ::google::protobuf::Arena* arena,
@@ -3052,8 +3045,7 @@ inline PROTOBUF_NDEBUG_INLINE TsanReport::Impl_::Impl_(
         mutexes_{visibility, arena},
         threads_{visibility, arena},
         unique_tids_{visibility, arena},
-        description_(arena),
-        raw_output_(arena) {}
+        description_(arena) {}
 
 inline void TsanReport::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -3073,7 +3065,6 @@ inline void TsanReport::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.description_.Destroy();
-  this_._impl_.raw_output_.Destroy();
   delete this_._impl_.sleep_trace_;
   this_._impl_.~Impl_();
 }
@@ -3146,15 +3137,15 @@ const ::google::protobuf::internal::ClassData* TsanReport::GetClassData() const 
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 7, 61, 2> TsanReport::_table_ = {
+const ::_pbi::TcParseTable<4, 9, 7, 51, 2> TsanReport::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TsanReport, _impl_._has_bits_),
     0, // no _extensions_
-    10, 120,  // max_field_number, fast_idx_mask
+    9, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966272,  // skipmap
+    4294966784,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
+    9,  // num_field_entries
     7,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     _class_data_.base(),
@@ -3192,9 +3183,7 @@ const ::_pbi::TcParseTable<4, 10, 7, 61, 2> TsanReport::_table_ = {
     // repeated .instruments2.UniqueTid unique_tids = 9;
     {::_pbi::TcParser::FastMtR1,
      {74, 63, 6, PROTOBUF_FIELD_OFFSET(TsanReport, _impl_.unique_tids_)}},
-    // string raw_output = 10;
-    {::_pbi::TcParser::FastUS1,
-     {82, 63, 0, PROTOBUF_FIELD_OFFSET(TsanReport, _impl_.raw_output_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -3230,9 +3219,6 @@ const ::_pbi::TcParseTable<4, 10, 7, 61, 2> TsanReport::_table_ = {
     // repeated .instruments2.UniqueTid unique_tids = 9;
     {PROTOBUF_FIELD_OFFSET(TsanReport, _impl_.unique_tids_), -1, 6,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
-    // string raw_output = 10;
-    {PROTOBUF_FIELD_OFFSET(TsanReport, _impl_.raw_output_), -1, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }}, {{
     {::_pbi::TcParser::GetTable<::instruments2::Stack>()},
     {::_pbi::TcParser::GetTable<::instruments2::Stack>()},
@@ -3242,10 +3228,9 @@ const ::_pbi::TcParseTable<4, 10, 7, 61, 2> TsanReport::_table_ = {
     {::_pbi::TcParser::GetTable<::instruments2::ThreadInfo>()},
     {::_pbi::TcParser::GetTable<::instruments2::UniqueTid>()},
   }}, {{
-    "\27\13\0\0\0\0\0\0\0\0\12\0\0\0\0\0"
+    "\27\13\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
     "instruments2.TsanReport"
     "description"
-    "raw_output"
   }},
 };
 
@@ -3263,7 +3248,6 @@ PROTOBUF_NOINLINE void TsanReport::Clear() {
   _impl_.threads_.Clear();
   _impl_.unique_tids_.Clear();
   _impl_.description_.ClearToEmpty();
-  _impl_.raw_output_.ClearToEmpty();
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     ABSL_DCHECK(_impl_.sleep_trace_ != nullptr);
@@ -3378,14 +3362,6 @@ PROTOBUF_NOINLINE void TsanReport::Clear() {
                     target, stream);
           }
 
-          // string raw_output = 10;
-          if (!this_._internal_raw_output().empty()) {
-            const std::string& _s = this_._internal_raw_output();
-            ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "instruments2.TsanReport.raw_output");
-            target = stream->WriteStringMaybeAliased(10, _s, target);
-          }
-
           if (PROTOBUF_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
             target =
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -3460,11 +3436,6 @@ PROTOBUF_NOINLINE void TsanReport::Clear() {
               total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                               this_._internal_description());
             }
-            // string raw_output = 10;
-            if (!this_._internal_raw_output().empty()) {
-              total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                              this_._internal_raw_output());
-            }
           }
            {
             // .instruments2.Stack sleep_trace = 3;
@@ -3509,9 +3480,6 @@ void TsanReport::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goog
   if (!from._internal_description().empty()) {
     _this->_internal_set_description(from._internal_description());
   }
-  if (!from._internal_raw_output().empty()) {
-    _this->_internal_set_raw_output(from._internal_raw_output());
-  }
   cached_has_bits = from._impl_._has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     ABSL_DCHECK(from._impl_.sleep_trace_ != nullptr);
@@ -3550,7 +3518,6 @@ void TsanReport::InternalSwap(TsanReport* PROTOBUF_RESTRICT other) {
   _impl_.threads_.InternalSwap(&other->_impl_.threads_);
   _impl_.unique_tids_.InternalSwap(&other->_impl_.unique_tids_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.description_, &other->_impl_.description_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.raw_output_, &other->_impl_.raw_output_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TsanReport, _impl_.duplicate_count_)
       + sizeof(TsanReport::_impl_.duplicate_count_)

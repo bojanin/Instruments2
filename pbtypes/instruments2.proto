@@ -76,9 +76,6 @@ message TsanReport {
   repeated MutexInfo  mutexes      = 7;
   repeated ThreadInfo threads      = 8;
   repeated UniqueTid  unique_tids  = 9;
-
-  // verbatim human-readable TSan text
-  string raw_output               = 10;
 }
 
 // ───────── RPC service ─────────
