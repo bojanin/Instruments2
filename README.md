@@ -2,16 +2,21 @@
 
 Instruments2 is a GUI interface around clang sanitizers inspired by Xcode & Apple Instruments.
 
+![GUI](https://github.com/bojanin/Instruments2/assets/instruments-gui.png)
 
 # Roadmap
-[x] TSAN
-[] ASAN
-[] UBSAN
-[] MEMSAN
-[] LSAN
-[] DFSAN
-[] RTSAN
+- [x] TSAN
+- [] ASAN
+- [] UBSAN
+- [] MEMSAN
+- [] LSAN
+- [] DFSAN
+- [] RTSAN
 
+
+# Development Instructions
+
+// TODO(bojanin): Write a technical implementation doc
 
 requirements:
 - clang (ALL versions that have tsan support)
